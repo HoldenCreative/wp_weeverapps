@@ -44,10 +44,13 @@ function weever_init() {
     if ( ! session_id() )
 	    session_start();
     
+	// Load i18n
+    load_plugin_textdomain( 'weever', false, 'weever/languages' );	
+	    
 	// Check if a feed or the admin site is being accessed
 	if ( is_feed() || is_admin() )
 	    return;
-
+    
 	// Verify the app is enabled
 	if ( get_option( 'weever_api_key' ) && get_option( 'weever_app_enabled' ) )
 	{
@@ -66,7 +69,7 @@ function weever_parse_request($wp) {
     // only process requests with "weever=i18n" and later "weever=ajax..."
     if ( array_key_exists('weever', $wp->query_vars) && $wp->query_vars['weever'] == 'i18n' && isset($wp->query_vars['weever_i18n_file']) ) {
         // process the request.
-        function _repl($x) { return '"' . __($x[1]) . '"'; }
+        function _repl($x) { return '"' . __($x[1], 'weever') . '"'; }
         
         $js = file_get_contents( dirname( __FILE__ ) . '/' . $wp->query_vars['weever_i18n_file'] );
         $js = preg_replace_callback( '~_e\("(.+?)"\)~', '_repl', $js );

@@ -8,7 +8,7 @@ function weever_admin_warnings() {
 	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) ) {
 		function weever_warning() {
 			echo "
-			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever is almost ready.')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever API key</a> for it to work.'), "plugins.php?page=weever-key-config")."</p></div>
+			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever API key</a> for it to work.', 'weever'), "plugins.php?page=weever-key-config")."</p></div>
 			";
 		}
 		add_action( 'admin_notices', 'weever_warning' );
@@ -24,7 +24,7 @@ function weever_admin_init() {
 
         function weever_version_warning() {
             echo "
-            <div id='weever-warning' class='updated fade'><p><strong>".sprintf(__('Weever %s requires WordPress 3.0 or higher.'), WEEVER_VERSION) ."</strong> ".sprintf(__('Please <a href="%s">upgrade WordPress</a> to a current version.'), 'http://codex.wordpress.org/Upgrading_WordPress'). "</p></div>
+            <div id='weever-warning' class='updated fade'><p><strong>".sprintf(__('Weever %s requires WordPress 3.0 or higher.', 'weever'), WEEVER_VERSION) ."</strong> ".sprintf(__('Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever'), 'http://codex.wordpress.org/Upgrading_WordPress'). "</p></div>
             ";
         }
         add_action( 'admin_notices', 'weever_version_warning' ); 
@@ -66,13 +66,13 @@ function weever_api_key_validate($weever_api_key) {
 
 function weever_admin_add_page() {
     if ( function_exists('add_submenu_page') )
-		add_submenu_page('plugins.php', __('Weever Configuration'), __('Weever Configuration'), 'manage_options', 'weever-key-config', 'weever_conf');
+		add_submenu_page('plugins.php', __('Weever Configuration', 'weever'), __('Weever Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_conf');
 }
 
 function weever_conf() {
 	if ( isset($_POST['submit']) ) {
 		if ( function_exists('current_user_can') && ! current_user_can('manage_options') )
-			die(__('Access denied'));
+			die(__('Access denied', 'weever'));
 			
 	    
 	}
@@ -80,17 +80,17 @@ function weever_conf() {
 ?>
 
 <div class="wrap">
-    <h2><?php _e('Weever Apps Configuration'); ?></h2>
+    <h2><?php _e('Weever Apps Configuration', 'weever'); ?></h2>
     <form action="options.php" method="post">
     	<?php $errors = get_settings_errors(); ?>
     	<?php if (is_array($errors)): ?>
 	    	<?php foreach($errors as $error): ?>
-			<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message']); ?></strong></p></div>
+			<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
 	    	<?php endforeach; ?>
 	    <?php endif; ?>
         <?php settings_fields('weever_options'); ?>
         <?php do_settings_sections('weever'); ?>
-        <input name="submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
+        <input name="submit" type="submit" value="<?php _e('Save Changes', 'weever'); ?>" />
     </form>
 </div>
 <?php 
