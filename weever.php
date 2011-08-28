@@ -58,3 +58,31 @@ function weever_init() {
 
 add_action( 'init', 'weever_init', 0 );
 
+/*
+ * i18n handing
+ */
+
+function weever_parse_request($wp) {
+    // only process requests with "weever=i18n" and later "weever=ajax..."
+    if ( array_key_exists('weever', $wp->query_vars) && $wp->query_vars['weever'] == 'i18n' && isset($wp->query_vars['weever_i18n_file']) ) {
+        // process the request.
+        function _repl($x) { return '"' . __($x[1]) . '"'; }
+        
+        $js = file_get_contents( dirname( __FILE__ ) . '/' . $wp->query_vars['weever_i18n_file'] );
+        $js = preg_replace_callback( '~_e\("(.+?)"\)~', '_repl', $js );
+        echo $js;
+        
+        // Don't use wp_die(), as it will wrap in a basic template
+        die();
+    }
+}
+
+add_action('parse_request', 'weever_parse_request');
+
+function weever_query_vars($vars) {
+    $vars[] = 'weever';
+    $vars[] = 'weever_i18n_file';
+    return $vars;
+}
+
+add_filter('query_vars', 'weever_query_vars');

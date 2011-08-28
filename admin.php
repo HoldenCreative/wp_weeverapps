@@ -38,7 +38,7 @@ function weever_admin_init() {
     
 	wp_register_style( 'weever.css', WEEVER_PLUGIN_URL . 'weever.css' );
 	wp_enqueue_style( 'weever.css' );
-	wp_register_script( 'weever.js', WEEVER_PLUGIN_URL . 'weever.js', array( 'jquery' ) );
+	wp_register_script( 'weever.js', site_url() . '?weever=i18n&weever_i18n_file=weever.js', array( 'jquery' ) );
 	wp_enqueue_script( 'weever.js' );
 }
 add_action( 'admin_init', 'weever_admin_init' );
