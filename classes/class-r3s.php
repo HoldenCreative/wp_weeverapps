@@ -17,7 +17,7 @@
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
 *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 *   GNU General Public License for more details <http://www.gnu.org/licenses/>.
-* 
+*
 *
 */
 
@@ -34,7 +34,7 @@ class R3SHtmlContentDetailsMap {
 	public 		$uuid;
 	public 		$author;
 	public 		$publisher;
-	public 		$generator		= "Weever Cartographer R3S Template for Joomla";
+	public 		$generator		= "Weever R3S Template for Wordpress";
 	public 		$copyright;
 	public 		$rating;
 	public 		$r3sVersion		= "0.8";
@@ -69,7 +69,7 @@ class R3SChannelMap {
 	public 		$language;
 	public 		$copyright;
 	public 		$license;
-	public 		$generator		= "Weever Cartographer R3S Template for Joomla";
+	public 		$generator		= "Weever R3S Template for Wordpress";
 	public 		$publisher;
 	public 		$rating;
 	public 		$url;

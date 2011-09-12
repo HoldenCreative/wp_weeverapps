@@ -25,9 +25,13 @@ License: GPL3
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WEEVER_VERSION', '0.1');
-define('WEEVER_PLUGIN_URL', plugin_dir_url( __FILE__ ));
-define('WEEVER_LIVE_SERVER', 'http://weeverapp.com/');
+define( 'WEEVER_VERSION', '0.1' );
+define( 'WEEVER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WEEVER_LIVE_SERVER', 'http://weeverapp.com/' );
+
+// Weever debug flag
+if ( ! defined( 'WEEVER_DEV' ) )
+    define( 'WEEVER_DEV', false );
 
 if ( ! function_exists( 'add_action' ) ) {
 	echo "Plugin file cannot be called directly.";
@@ -37,10 +41,16 @@ if ( ! function_exists( 'add_action' ) ) {
 // TODO: Check for earliest WP version tested and functional
 
 // Weever constants
-require_once dirname( __FILE__ ) . '/classes/const.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-const.php';
 
 // R3S classes for app content output
-require_once dirname( __FILE__ ) . '/classes/r3s.php';
+require_once dirname( __FILE__ ) . '/classes/class-r3s.php';
+
+// SimpleDOM HTML parser
+require_once dirname( __FILE__ ) . '/classes/class-simpledom.php';
+
+// Weever plugin helper functions
+require_once dirname( __FILE__ ) . '/classes/class-weever-helper.php';
 
 if ( is_admin() )
 	require_once dirname( __FILE__ ) . '/admin.php';
@@ -76,16 +86,37 @@ function weever_create_r3sfeed() {
     load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
 }
 
-add_action('do_feed_r3s', 'weever_create_r3sfeed', 10, 1);
+add_action( 'do_feed_r3s', 'weever_create_r3sfeed', 10, 1 );
+
+function weever_no_limits_for_feed( $limits ) {
+    global $wp_query;
+
+    if ( isset( $wp_query->query_vars['feed'] ) and ( $wp_query->query_vars['feed'] == 'r3s' ) )
+	    return '';
+}
+
+add_filter( 'post_limits', 'weever_no_limits_for_feed' );
+
+
+/**
+ * Disable the feed cache if we're in development mode
+ */
+function weever_disable_feed_cache(&$feed) {
+	$feed->enable_cache(false);
+}
+if ( defined('WP_DEBUG') && WP_DEBUG )
+{
+	add_action( 'wp_feed_options', 'weever_disable_feed_cache' );
+}
 
 /*
- * Test handling of feeding content to app
+ * Handling the sending of individual pieces of content to the Weever app
  */
 
 function weever_app_request() {
     global $wp_query;
 
-    if ( array_key_exists('weever', $wp_query->query_vars ) )
+    if ( array_key_exists( 'weever', $wp_query->query_vars ) && $wp_query->query_vars['weever'] == 'r3s' )
     {
         include( dirname( __FILE__ ) . '/templates/content-single.php' );
         exit;
@@ -95,12 +126,12 @@ function weever_app_request() {
 add_action('template_redirect', 'weever_app_request');
 
 /*
- * i18n handing
+ * i18n handing from Javascript
  */
 
 function weever_parse_request($wp) {
     // only process requests with "weever=i18n" and later "weever=ajax..."
-    if ( array_key_exists('weever', $wp->query_vars) && $wp->query_vars['weever'] == 'i18n' && isset($wp->query_vars['weever_i18n_file']) ) {
+    if ( array_key_exists( 'weever', $wp->query_vars ) && $wp->query_vars['weever'] == 'i18n' && isset( $wp->query_vars['weever_i18n_file'] ) ) {
         // process the request.
         function _repl($x) { return '"' . __($x[1], 'weever') . '"'; }
 
@@ -128,6 +159,9 @@ add_action('parse_request', 'weever_parse_request');
 function weever_query_vars($vars) {
     $vars[] = 'weever';
     $vars[] = 'weever_i18n_file';
+
+    // For including a callback function for R3S feed/document
+    $vars[] = 'callback';
     return $vars;
 }
 

@@ -40,6 +40,12 @@ function weever_admin_init() {
 	wp_enqueue_style( 'weever.css' );
 	wp_register_script( 'weever.js', site_url() . '?weever=i18n&weever_i18n_file=weever.js', array( 'jquery' ) );
 	wp_enqueue_script( 'weever.js' );
+
+	// Needed for uploaders
+	wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_enqueue_style('thickbox');
+
 }
 add_action( 'admin_init', 'weever_admin_init' );
 
@@ -109,7 +115,20 @@ function weever_conf() {
 
 <div class="wrap">
     <h2><?php _e('Weever Apps Configuration', 'weever'); ?></h2>
+
     <form action="options.php" method="post">
+
+<table>
+<tr valign="top">
+<th scope="row">Upload Image</th>
+<td><label for="upload_image">
+<input id="upload_image" type="text" size="36" name="upload_image" value="" />
+<input id="upload_image_button" type="button" value="Upload Image" />
+<br />Enter an URL or upload an image for the banner.
+</label></td>
+</tr>
+</table>
+
     	<?php $errors = get_settings_errors(); ?>
     	<?php if (is_array($errors)): ?>
 	    	<?php foreach($errors as $error): ?>

@@ -1,9 +1,86 @@
 <?php
 /**
- * RSS2 Feed Template for displaying RSS2 Posts feed.
+ * Script to format a feed as an R3S json object
  *
- * @package WordPress
+ * @package Weever
  */
+
+    $feed = new R3SChannelMap;
+
+	$feed->count = count($wp_query->post_count);
+	$feed->thisPage = 1;
+	$feed->lastPage = 1;
+	$feed->language = get_locale();
+	$feed->sort = "normal";
+	$feed->url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+	$feed->description = get_bloginfo_rss("description");
+	$feed->name = get_bloginfo_rss('name') . get_wp_title_rss();
+	$feed->items = array();
+
+	$feed->url = str_replace("?feed=r3s","",$feed->url);
+	$feed->url = str_replace("&feed=r3s","",$feed->url);
+
+
+	while( have_posts() ) {
+	    the_post();
+
+		$image = null;
+
+		$html = SimpleHTMLDomHelper::str_get_html(get_the_content());
+
+		foreach(@$html->find('img') as $vv)
+		{
+			if($vv->src)
+				$image = WeeverHelper::make_absolute($vv->src, get_site_url());
+		}
+
+		// TODO: Get the url of the currently selected icon image
+		if(!$image)
+			$image = WEEVER_PLUGIN_URL."media/icon_.png";
+
+		$feedItem = new R3SItemMap;
+
+		$feedItem->type = "htmlContent";
+		$feedItem->description = ""; // TODO: Replace with title/description?
+		$feedItem->name = get_the_title();
+		$feedItem->datetime["published"] = get_lastpostdate('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostdate('GMT'), false);  //$v->created;
+		$feedItem->datetime["modified"] = get_lastpostmodified('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostmodified('GMT'), false); //$v->modified;
+		$feedItem->image["mobile"] = $image;
+		$feedItem->image["full"] = $image;
+		$feedItem->url = get_permalink(); //JURI::root()."index.php?option=com_content&view=article&id=".$v->id;
+		$feedItem->author = get_the_author_meta('display_name'); // $v->created_by;
+
+		// TODO: Get the site name from the current state object
+		$feedItem->publisher = ""; //$mainframe->getCfg('sitename');
+
+//		$feedItem->url = str_replace("?template=weever_cartographer","",$feedItem->url);
+//		$feedItem->url = str_replace("&template=weever_cartographer","",$feedItem->url);
+
+		$feed->items[] = $feedItem;
+	}
+
+	// Set the MIME type for JSON output.
+	header('Content-type: application/json');
+	header('Cache-Control: no-cache, must-revalidate');
+
+	$callback = get_query_var('callback');
+
+	$json = json_encode($feed);
+
+	if($callback)
+		$json = $callback . "(". $json .")";
+
+	print_r($json);
+
+
+
+/*
+
+
+
+
+
+
 
 header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
 $more = 1;
@@ -58,4 +135,4 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	</item>
 	<?php endwhile; ?>
 </channel>
-</rss>
+</rss> */
