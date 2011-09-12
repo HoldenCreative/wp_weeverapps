@@ -116,7 +116,7 @@ if ( defined('WP_DEBUG') && WP_DEBUG )
 function weever_app_request() {
     global $wp_query;
 
-    if ( array_key_exists( 'weever', $wp_query->query_vars ) && $wp_query->query_vars['weever'] == 'r3s' )
+    if ( array_key_exists( 'template', $wp_query->query_vars ) && $wp_query->query_vars['template'] == 'weever_cartographer' )
     {
         include( dirname( __FILE__ ) . '/templates/content-single.php' );
         exit;
@@ -159,6 +159,7 @@ add_action('parse_request', 'weever_parse_request');
 function weever_query_vars($vars) {
     $vars[] = 'weever';
     $vars[] = 'weever_i18n_file';
+    $vars[] = 'template';
 
     // For including a callback function for R3S feed/document
     $vars[] = 'callback';
