@@ -21,17 +21,20 @@
 	$feed->url = str_replace("&feed=r3s","",$feed->url);
 
 
-	while( have_posts() ) {
+	while ( have_posts() ) {
 	    the_post();
 
 		$image = null;
 
 		$html = SimpleHTMLDomHelper::str_get_html(get_the_content());
 
-		foreach(@$html->find('img') as $vv)
+		foreach ( @$html->find('img') as $vv )
 		{
-			if($vv->src)
+			if ( $vv->src )
+			{
 				$image = WeeverHelper::make_absolute($vv->src, get_site_url());
+				break;
+			}
 		}
 
 		// TODO: Get the url of the currently selected icon image
