@@ -99,8 +99,8 @@ function weever_api_key_validate($weever_api_key) {
 }
 
 function weever_admin_add_page() {
-    if ( function_exists('add_submenu_page') )
-		add_submenu_page('plugins.php', __('Weever Configuration', 'weever'), __('Weever Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_conf');
+    if ( function_exists('add_menu_page') )
+		add_menu_page(__('Weever Configuration', 'weever'), __('Weever Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_conf', '');
 }
 
 function weever_conf() {
