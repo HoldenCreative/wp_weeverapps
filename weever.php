@@ -97,22 +97,19 @@ function weever_no_limits_for_feed( $limits ) {
 
 add_filter( 'post_limits', 'weever_no_limits_for_feed' );
 
-
 /**
  * Disable the feed cache if we're in development mode
  */
 function weever_disable_feed_cache(&$feed) {
 	$feed->enable_cache(false);
 }
-if ( defined('WP_DEBUG') && WP_DEBUG )
-{
+if ( WEEVER_DEV ) {
 	add_action( 'wp_feed_options', 'weever_disable_feed_cache' );
 }
 
-/*
+/**
  * Handling the sending of individual pieces of content to the Weever app
  */
-
 function weever_app_request() {
     global $wp_query;
 
@@ -125,10 +122,9 @@ function weever_app_request() {
 
 add_action('template_redirect', 'weever_app_request');
 
-/*
- * i18n handing from Javascript
+/**
+ * i18n handing from Javascript (using _e() function)
  */
-
 function weever_parse_request($wp) {
     // only process requests with "weever=i18n" and later "weever=ajax..."
     if ( array_key_exists( 'weever', $wp->query_vars ) && $wp->query_vars['weever'] == 'i18n' && isset( $wp->query_vars['weever_i18n_file'] ) ) {
@@ -140,9 +136,9 @@ function weever_parse_request($wp) {
         {
             // Further clean the filename
             $filename = preg_replace( '/[^a-zA-Z0-9\.]/', "", $wp->query_vars['weever_i18n_file'] );
-            if ( file_exists( dirname( __FILE__ ) . '/' . $filename ) )
+            if ( file_exists( dirname( __FILE__ ) . '/static/js/' . $filename ) )
             {
-                $js = file_get_contents( dirname( __FILE__ ) . '/' . $filename );
+                $js = file_get_contents( dirname( __FILE__ ) . '/static/js/' . $filename );
                 $js = preg_replace_callback( '~_e\("(.+?)"\)~', '_repl', $js );
                 header( 'Content-type: text/javascript' );
                 echo $js;
@@ -156,6 +152,9 @@ function weever_parse_request($wp) {
 
 add_action('parse_request', 'weever_parse_request');
 
+/**
+ * Additional query variables needed by Weever Apps
+ */
 function weever_query_vars($vars) {
     $vars[] = 'weever';
     $vars[] = 'weever_i18n_file';
