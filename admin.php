@@ -82,6 +82,12 @@ function weever_page_scripts_init() {
     wp_enqueue_script( 'thickbox' );
 }
 
+function weever_app_toggle() {
+    echo '<p><b>' . __( 'Weever App Enabled', 'weever' ) . '</b> | <a href="#">Disable</a></p>';
+}
+
+add_action( 'admin_notices', 'weever_app_toggle' );
+
 function weever_section_text() {
 	echo '<p></p>';
 }
@@ -145,60 +151,67 @@ function weever_conf() {
 <div class="wrap">
     <h2><?php _e('Weever Apps Configuration', 'weever'); ?></h2>
 
-    <form action="options.php" method="post">
-
-<table>
-<tr valign="top">
-<th scope="row">Upload Image</th>
-<td><label for="upload_image">
-<input id="upload_image" type="text" size="36" name="upload_image" value="" />
-<input id="upload_image_button" type="button" value="Upload Image" />
-<br />Enter an URL or upload an image for the banner.
-</label></td>
-</tr>
-</table>
-
-    	<?php $errors = get_settings_errors(); ?>
-    	<?php if (is_array($errors)): ?>
-	    	<?php foreach($errors as $error): ?>
-			<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
-	    	<?php endforeach; ?>
-	    <?php endif; ?>
-        <?php settings_fields('weever_options'); ?>
-        <?php do_settings_sections('weever'); ?>
-        <input name="submit" type="submit" value="<?php _e('Save Changes', 'weever'); ?>" />
-    </form>
-
-
-<script>
-	jQuery(document).ready(function() {
-		jQuery( "#tabs" ).tabs();
-	});
+	<script>
+    	jQuery(document).ready(function() {
+    		jQuery( "#tabs" ).tabs();
+    		jQuery( "#toptabs li" ).hover(function(){jQuery(this).addClass('ui-state-hover');}, function(){jQuery(this).removeClass('ui-state-hover');});
+    	});
 	</script>
 
+    <form action="options.php" method="post">
+
+  	<?php $errors = get_settings_errors(); ?>
+
+	<?php if (is_array($errors)): ?>
+    	<?php foreach($errors as $error): ?>
+		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
+    	<?php endforeach; ?>
+    <?php endif; ?>
+
+	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+		<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-tabs"><?php _e('App Features and Nativation', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-theme"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-mobile-publishing"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="<?php echo get_admin_url(); ?>?page=weever-key-config"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-support"><?php _e('Support, Feedback and News', 'weever'); ?></a></li>
+		</ul>
+		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <input name="submit" type="submit" value="<?php _e('Save Changes', 'weever'); ?>" />
+
+            <div id="tabs">
+            	<ul>
+            		<li><a href="#tabs-1"><?php _e('Account Information', 'weever'); ?></a></li>
+            		<li><a href="#tabs-2"><?php _e('Staging Mode (Advanced)', 'weever'); ?></a></li>
+            	</ul>
+            	<div id="tabs-1">
 
 
-<div class="demo">
+                    <table>
+                    <tr valign="top">
+                    <th scope="row">Upload Image</th>
+                    <td><label for="upload_image">
+                    <input id="upload_image" type="text" size="36" name="upload_image" value="" />
+                    <input id="upload_image_button" type="button" value="Upload Image" />
+                    <br />Enter an URL or upload an image for the banner.
+                    </label></td>
+                    </tr>
+                    </table>
 
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">Nunc tincidunt</a></li>
-		<li><a href="#tabs-2">Proin dolor</a></li>
-		<li><a href="#tabs-3">Aenean lacinia</a></li>
-	</ul>
-	<div id="tabs-1">
-		<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+                    <?php settings_fields('weever_options'); ?>
+                    <?php do_settings_sections('weever'); ?>
+
+            	</div>
+            	<div id="tabs-2">
+            		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            	</div>
+            </div>
+		</div>
 	</div>
-	<div id="tabs-2">
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-	</div>
-	<div id="tabs-3">
-		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-		<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-	</div>
-</div>
 
-</div><!-- End demo -->
+
+    </form>
 
 
 </div>
