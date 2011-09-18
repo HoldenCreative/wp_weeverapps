@@ -114,9 +114,9 @@ function weever_page_styles_init() {
  * Loads scripts needed for Weever Apps
  */
 function weever_page_scripts_init() {
-	wp_register_script( 'weever.js', site_url() . '?weever=i18n&weever_i18n_file=weever.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs' ) );
-
+	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs' ) );
 	wp_enqueue_script( 'weever.js' );
+	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
 
 	// Needed for uploaders
 	wp_enqueue_script( 'media-upload' );
