@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
 });
 
 // TODO: Remove the below
-console.debug(WPText.WEEVER_JS_APP_UPDATED);
+// TODO: Hook in more complete uploader js
 
 jQuery(document).ready(function() {
 

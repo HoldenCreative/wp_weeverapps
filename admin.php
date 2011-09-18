@@ -23,7 +23,7 @@ function weever_admin_add_page() {
         else
         {
 //    		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
-    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_admin_page', '');
+    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
             add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
@@ -65,7 +65,7 @@ function weever_admin_warnings() {
 	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) ) {
 		function weever_warning() {
 			echo "
-			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps API key</a> for it to work.', 'weever'), "plugins.php?page=weever-key-config")."</p></div>
+			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps API key</a> for it to work.', 'weever'), "plugins.php?page=weever-account")."</p></div>
 			";
 		}
 		add_action( 'admin_notices', 'weever_warning' );
@@ -114,9 +114,62 @@ function weever_page_styles_init() {
  * Loads scripts needed for Weever Apps
  */
 function weever_page_scripts_init() {
-	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs' ) );
+    wp_register_script( 'jquery-impromptu.js', plugins_url( 'static/js/jquery-impromptu.js', __FILE__ ) );
+    wp_enqueue_script( 'jquery-impromptu.js' );
+
+	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs', 'jquery-ui-sortable' ) );
 	wp_enqueue_script( 'weever.js' );
 	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
+
+	// Page-specific scripts
+	if ( isset( $_GET['page'] ) )
+	{
+    	$page = basename( $_GET['page'] );
+
+    	switch ( $page ) {
+    	    case 'weever-account':
+                wp_register_script( 'weever.account.js', plugins_url( 'static/js/account.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.account.js' );
+                wp_localize_script( 'weever.account.js', 'WPText', WeeverHelper::get_js_strings() );
+                break;
+
+            case 'weever-list':
+                wp_register_script( 'weever.list_icons.js', plugins_url( 'static/js/list_icons.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.list_icons.js' );
+                wp_localize_script( 'weever.list-icons.js', 'WPText', WeeverHelper::get_js_strings() );
+
+                wp_register_script( 'weever.list_select.js', plugins_url( 'static/js/list_select.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.list_select.js' );
+                wp_localize_script( 'weever.list_select.js', 'WPText', WeeverHelper::get_js_strings() );
+
+                wp_register_script( 'weever.list_submit.js', plugins_url( 'static/js/list_submit.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.list_submit.js' );
+                wp_localize_script( 'weever.list_submit.js', 'WPText', WeeverHelper::get_js_strings() );
+
+                wp_register_script( 'weever.list.js', plugins_url( 'static/js/list.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.list.js' );
+                wp_localize_script( 'weever.list.js', 'WPText', WeeverHelper::get_js_strings() );
+                break;
+
+    	    case 'weever-theme':
+                wp_register_script( 'weever.theme.js', plugins_url( 'static/js/theme.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.theme.js' );
+                wp_localize_script( 'weever.theme.js', 'WPText', WeeverHelper::get_js_strings() );
+                break;
+
+            case 'weever-config':
+                wp_register_script( 'weever.config.js', plugins_url( 'static/js/config.js', __FILE__ ) );
+                wp_enqueue_script( 'weever.config.js' );
+                wp_localize_script( 'weever.config.js', 'WPText', WeeverHelper::get_js_strings() );
+                break;
+
+            case 'weever-support':
+    	        break;
+
+            default:
+                wp_die();
+    	}
+	}
 
 	// Needed for uploaders
 	wp_enqueue_script( 'media-upload' );

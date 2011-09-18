@@ -14,8 +14,8 @@
 		<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features and Nativation', 'weever'); ?></a></li>
 			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-mobile-publishing' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-mobile-publishing' ); ?>"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-key-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-key-config' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
+			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
 			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support, Feedback and News', 'weever'); ?></a></li>
 		</ul>
 		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">

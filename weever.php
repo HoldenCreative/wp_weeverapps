@@ -27,6 +27,7 @@ License: GPL3
 
 define( 'WEEVER_VERSION', '0.1' );
 define( 'WEEVER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WEEVER_ADMIN_TEMPLATE_DIR', plugins_url( 'templates/admin/', __FILE__ ) );
 
 // Weever debug flag
 if ( ! defined( 'WEEVER_DEV' ) )
@@ -51,8 +52,9 @@ require_once dirname( __FILE__ ) . '/classes/class-simpledom.php';
 // Weever plugin helper functions
 require_once dirname( __FILE__ ) . '/classes/class-weever-helper.php';
 
-// Weever App state object
+// Weever App state object classes
 require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
 
 if ( is_admin() )
 	require_once dirname( __FILE__ ) . '/admin.php';
