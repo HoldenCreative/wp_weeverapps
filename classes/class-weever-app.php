@@ -11,7 +11,26 @@ class WeeverApp {
         $this->_data['theme'] = new WeeverAppThemeStyles();
         $this->_data['appEnabled'] = get_option( 'weever_app_enabled' );
         $this->_data['site_key'] = get_option( 'weever_api_key' );
-        $this->_data['tabRows'] = array();
+
+        // Stub of rows
+        $blogTabRow = new stdClass();
+        $blogTabRow->component = "blog";
+        $blogTabRow->name = "Blogs";
+        $socialTabRow = new stdClass();
+        $socialTabRow->component = "social";
+        $socialTabRow->name = "Social";
+
+        $this->_data['tabRows'] = array($blogTabRow, $socialTabRow);
+
+        // Stub of subrows for each tab
+        $subrow = new stdClass();
+        $subrow->name = 'Parks Home';
+        $subrow->type = 'blog';
+        $subrow->ordering = rand(1, 10);
+        $subrow->published = 1;
+
+        $this->_data['blogRows'] = array($subrow);
+        $this->_data['socialRows'] = array();
 
         if ( $load_from_server ) {
             $this->reload_from_server();

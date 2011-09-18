@@ -49,26 +49,21 @@ if ($weeverapp->appEnabled) {
 
         <?php
 
-        for ($i = 0, $n = count( $weeverapp->tabRows ); $i < $n; $i++ )
-        {
-        	$row = &$weeverapp->tabRows[$i];
+        foreach ( $weeverapp->tabRows as $row ) {
+        	//$row = &$weeverapp->tabRows[$i];
         	$componentRowsName = $row->component . 'Rows';
         	$componentRows = $weeverapp->{$componentRowsName};
         	$tabActive = false;
 
-        	for ( $ii = 0, $nn = count( $componentRows ); $ii < $nn; $ii++ )
-        	{
-
-        		$subrow = &$componentRows[$ii];
-
-        		if ( $subrow->published )
-        		{
+        	// Tab is active if at least one row in the tab is published
+        	foreach ( $weeverapp->{$componentRowsName} as $subrow ) {
+        		if ( $subrow->published ) {
         			$tabActive = true;
         			break;
         		}
         	}
 
-        	$componentRowsCount = count($componentRows);
+        	$componentRowsCount = count( $weeverapp->{$componentRowsName} );
         	$tabIcon = $row->component . "Icon";
 
         	if ( ! $componentRowsCount || ! $tabActive )
@@ -77,7 +72,7 @@ if ($weeverapp->appEnabled) {
         		echo '<li id="' . $row->component . 'TabID" class="wx-nav-tabs" ><a href="#'. $row->component . 'Tab" class="wx-tab-sortable"><div class="'.$row->icon.' wx-nav-icon" style="height:32px;width:auto;min-width:32px;text-align:center" rel="'.$weeverapp->site_key.'" title="'.$row->component.'"><img class="wx-nav-icon-img" src="data:image/png;base64,'.$weeverapp->theme->{$tabIcon}.'" /></div><div class="wx-nav-label" title="ID #'.$row->id.'">'.$row->name.'</div></a></li>';
         }
 
-         ?>
+        ?>
 
 	</ul>
 
@@ -93,11 +88,7 @@ if ($weeverapp->appEnabled) {
 
     <?php
 
-    for ( $i = 0, $n = count( $weeverapp->tabRows ); $i < $n; $i++ ) {
-    	$row = &$weeverapp->tabRows[$i];
-
-    	$link = JFilterOutput::ampReplace('index.php?option=' . $option . '&task=edit&layout=tab&cid[]='.$row->id);
-
+    foreach ( $weeverapp->tabRows as $row ) {
     	$componentRowsName = $row->component . 'Rows';
     	$componentRows = $weeverapp->{$componentRowsName};
 
@@ -137,8 +128,8 @@ if ($weeverapp->appEnabled) {
     	}
 
     	if ( count( $componentRows ) ) {
-    		$published = JHTML::_('grid.published', $row, $iii);
-    		$checked = JHTML::_('grid.id', $iii, $row->id);
+    		$published = ''; //JHTML::_('grid.published', $row, $iii);
+    		$checked = ''; //JHTML::_('grid.id', $iii, $row->id);
 
     		if ( $row->published == 0 )
     			$tabsUnpublished++;
@@ -150,72 +141,63 @@ if ($weeverapp->appEnabled) {
 
     	?>
 
-
     	<div id="<?php echo $row->component . 'Tab' ?>">
 
     	<?php echo 'TEMPLATE'; //echo $weeverapp->loadTemplate($row->component.'dropdown'); ?>
 
     	<input type="hidden" name="boxchecked<?php echo $row->component; ?>" id="boxchecked<?php echo $row->component; ?>" value="0" />
     	<table class='adminlist'>
-    	<thead>
-    	<tr>
-    	<th width='20'>
-    		<input type='checkbox' name='toggle<?php echo $row->component; ?>' id='toggle<?php echo $row->component; ?>' value='' onclick='checkAllTab(<?php echo count($componentRows); ?>, "cb", document.getElementById("boxchecked<?php echo $row->component; ?>"), document.getElementById("toggle<?php echo $row->component; ?>"), <?php echo $iii; ?> + 1);' />
-    	</th>
+        	<thead>
+            	<tr>
+                	<th width='20'>
+                		<input type='checkbox' name='toggle<?php echo $row->component; ?>' id='toggle<?php echo $row->component; ?>' value='' onclick='checkAllTab(<?php echo count($componentRows); ?>, "cb", document.getElementById("boxchecked<?php echo $row->component; ?>"), document.getElementById("toggle<?php echo $row->component; ?>"), <?php echo $iii; ?> + 1);' />
+                	</th>
 
-    	<th class='title'><?php echo __( 'NAME' ); ?></th>
-    	<th width='8%' nowrap='nowrap'><?php echo __( 'PUBLISHED' ); ?></th>
-    	<th width='8%' nowrap='nowrap'><?php echo __( 'ORDER' ); ?></th>
-    	<th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>
-    	<th width='8%' nowrap='nowrap'><?php echo __( 'Delete' ); ?></th>
-    	</tr>
-    	</thead>
+                	<th class='title'><?php echo __( 'NAME' ); ?></th>
+                	<th width='8%' nowrap='nowrap'><?php echo __( 'PUBLISHED' ); ?></th>
+                	<th width='8%' nowrap='nowrap'><?php echo __( 'ORDER' ); ?></th>
+                	<th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>
+                	<th width='8%' nowrap='nowrap'><?php echo __( 'Delete' ); ?></th>
+            	</tr>
+        	</thead>
 
-    	<?php
+        	<?php
 
-    	$k = 1 - $k;
-    	$sub = 0;
+        	$k = 1 - $k;
+        	$sub = 0;
 
-    	for ( $ii = 0, $nn = count( $componentRows ); $ii < $nn; $ii++ ) {
+        	foreach ( $componentRows as $row ) : $iii++; $sub++;
+        	?>
+        		<tr class='<?php echo "row$k"; ?>'>
+            		<td>
+            			<input type="checkbox" id="cb<?php echo $iii; ?>" name="cid[]" value="<?php echo $row->id; ?>" onclick="isChecked(this.checked);" title="Checkbox for row <?php echo $row->id; ?>">
+            			<?php //echo JHTML::_('grid.id', $iii, $row->id); ?>
+            		</td>
+            		<td>
+            			<a href='#' title="ID #<?php echo $row->id; ?>" class="wx-subtab-link"><?php echo $row->name; ?></a>
+            		</td>
+            		<td align='center'>
+            			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="components/com_weever/assets/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="components/com_weever/assets/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
+            		</td>
+            		<td align="center">
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/downarrow.png" width="16" height="16" border="0" alt="Move Down"></a>
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/uparrow.png" width="16" height="16" border="0" alt="Move Up"></a>
+            			(<?php echo floor($row->ordering); ?>)
+            		</td>
+            		<td align='center'>
+            			<?php echo $row->id; ?>
+            		</td>
+            		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" title="<?php echo __( 'Delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="components/com_weever/assets/icons/wx-delete-mark.png" /></a></td>
+        		</tr>
 
-    		$iii++; $sub++;
-    		$row = &$componentRows[$ii];
+        	<?php
+        	$k = 1 - $k; endforeach;
 
-    		?>
+        	if ( ! count( $componentRows ) ) {
+        		echo "<tr><td colspan='6'>".__('WEEVER_NO_ITEMS_IN_TAB')."</td></tr>";
+        	}
 
-    		<tr class='<?php echo "row$k"; ?>'>
-        		<td>
-        			<input type="checkbox" id="cb<?php echo $iii; ?>" name="cid[]" value="<?php echo $row->id; ?>" onclick="isChecked(this.checked);" title="Checkbox for row <?php echo $row->id; ?>">
-        			<?php //echo JHTML::_('grid.id', $iii, $row->id); ?>
-        		</td>
-
-        		<td>
-        			<a href='#' title="ID #<?php echo $row->id; ?>" class="wx-subtab-link"><?php echo $row->name; ?></a>
-        		</td>
-        		<td align='center'>
-        			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="components/com_weever/assets/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="components/com_weever/assets/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
-        		</td>
-        		<td align="center">
-        			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/downarrow.png" width="16" height="16" border="0" alt="Move Down"></a>
-        			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/uparrow.png" width="16" height="16" border="0" alt="Move Up"></a>
-        			(<?php echo floor($row->ordering); ?>)
-        		</td>
-        		<td align='center'>
-        			<?php echo $row->id; ?>
-        		</td>
-        		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" title="<?php echo __( 'Delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="components/com_weever/assets/icons/wx-delete-mark.png" /></a></td>
-    		</tr>
-
-    		<?php
-    		$k = 1 - $k;
-
-    	}
-
-    	if ( ! count( $componentRows ) ) {
-    		echo "<tr><td colspan='6'>".__('WEEVER_NO_ITEMS_IN_TAB')."</td></tr>";
-    	}
-
-    	?>
+        	?>
 
     	</table>
     	</div>
