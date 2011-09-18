@@ -10,14 +10,55 @@ weever_admin_warnings();
 function weever_admin_add_page() {
     if ( function_exists('add_menu_page') )
     {
-		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_conf', '');
-		add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
-		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
+        // Ensure there are no directory references
+        $page = basename( $_GET['page'] );
 
-		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
-		add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
-		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
+        // If this is a weever page, add it as the admin menu item (so it is always highlighted properly between admin page tabs)
+        if ( substr( $page, 0, strlen('weever-') ) == 'weever-' && file_exists( dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php' ) )
+        {
+    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', $page, 'weever_admin_page', '');
+    		add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
+    		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
+        }
+        else
+        {
+//    		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
+    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-key-config', 'weever_admin_page', '');
+            add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
+    		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
+        }
 	}
+}
+
+/**
+ * Page controller, loads the wrapper layout and the indivdual page content
+ *
+ * TODO: Wrap all tabs into one so they can flip between them sans refresh?
+ */
+function weever_admin_page() {
+
+	if ( isset($_POST['submit']) ) {
+		if ( function_exists('current_user_can') && ! current_user_can('manage_options') )
+			die( __( 'Access denied', 'weever' ) );
+
+        // Most form control handled via AJAX calls rather than direct post
+        // TODO: Any additional post handling here
+	}
+
+	// Set the content
+	// Should never get here without the page get var being set
+	// TODO: Create a WeeverView class wrapper to pass arbitrary options to the view?
+	$page = basename( $_GET['page'] );
+	$content = dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php';
+
+	// Load the weeverapp object, which fetches the admin page content
+    $weeverapp = new WeeverApp();
+
+	if ( ! file_exists( $content ) )
+	    die( __( 'Invalid page given', 'weever' ) );
+
+	// Include the main content to fire things off
+	require( dirname( __FILE__) . '/templates/admin/layout.php' );
 }
 
 function weever_admin_warnings() {
@@ -137,86 +178,3 @@ function weever_api_key_validate($weever_api_key) {
 	return $weever_api_key;
 }
 
-function weever_conf() {
-
-	if ( isset($_POST['submit']) ) {
-		if ( function_exists('current_user_can') && ! current_user_can('manage_options') )
-			die(__('Access denied', 'weever'));
-
-
-	}
-
-?>
-
-<div class="wrap">
-    <h2><?php _e('Weever Apps Configuration', 'weever'); ?></h2>
-
-	<script>
-    	jQuery(document).ready(function() {
-    		jQuery( "#tabs" ).tabs();
-    		jQuery( "#toptabs li" ).hover(function(){jQuery(this).addClass('ui-state-hover');}, function(){jQuery(this).removeClass('ui-state-hover');});
-    	});
-	</script>
-
-    <form action="options.php" method="post">
-
-  	<?php $errors = get_settings_errors(); ?>
-
-	<?php if (is_array($errors)): ?>
-    	<?php foreach($errors as $error): ?>
-		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
-    	<?php endforeach; ?>
-    <?php endif; ?>
-
-	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-		<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-tabs"><?php _e('App Features and Nativation', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-theme"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-mobile-publishing"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="<?php echo get_admin_url(); ?>?page=weever-key-config"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top"><a href="<?php echo get_admin_url(); ?>?page=weever-support"><?php _e('Support, Feedback and News', 'weever'); ?></a></li>
-		</ul>
-		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-            <input name="submit" type="submit" value="<?php _e('Save Changes', 'weever'); ?>" />
-
-            <div id="tabs">
-            	<ul>
-            		<li><a href="#tabs-1"><?php _e('Account Information', 'weever'); ?></a></li>
-            		<li><a href="#tabs-2"><?php _e('Staging Mode (Advanced)', 'weever'); ?></a></li>
-            	</ul>
-            	<div id="tabs-1">
-
-
-                    <table>
-                    <tr valign="top">
-                    <th scope="row">Upload Image</th>
-                    <td><label for="upload_image">
-                    <input id="upload_image" type="text" size="36" name="upload_image" value="" />
-                    <input id="upload_image_button" type="button" value="Upload Image" />
-                    <br />Enter an URL or upload an image for the banner.
-                    </label></td>
-                    </tr>
-                    </table>
-
-                    <?php settings_fields('weever_options'); ?>
-                    <?php do_settings_sections('weever'); ?>
-
-            	</div>
-            	<div id="tabs-2">
-            		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-            		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-            	</div>
-            </div>
-		</div>
-	</div>
-
-
-    </form>
-
-
-</div>
-
-
-
-<?php
-}

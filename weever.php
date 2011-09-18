@@ -52,6 +52,9 @@ require_once dirname( __FILE__ ) . '/classes/class-simpledom.php';
 // Weever plugin helper functions
 require_once dirname( __FILE__ ) . '/classes/class-weever-helper.php';
 
+// Weever App state object
+require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
+
 if ( is_admin() )
 	require_once dirname( __FILE__ ) . '/admin.php';
 
