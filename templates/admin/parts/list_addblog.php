@@ -1,24 +1,52 @@
+<div class="wx-add-ui">
+	<div class='wx-add-item-blog wx-add-item-dropdown'>
+		<select id='wx-select-blog'>
+			<option value="0"><?php echo __( '+ Add Blog Content' ); ?></option>
+			<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
+			<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
+			<option value="<?php echo $taxonomy->query_var; ?>"><?php echo sprintf( __( 'From taxonomy: %s' ), $taxonomy->label ); ?></option>
+			<?php endforeach; ?>
+			<option value="s"><?php echo __( 'From a Search Term' ); ?></option>
+		</select>
+	</div>
 
-		<?php foreach ( get_taxonomies( array( 'public' => true, 'show_in_nav_menus' => true ), 'objects' ) as $taxonomy ): ?>
-			<h3><?php echo $taxonomy->label; ?></h3>
-        	<select name="cms_feed">
-        	<?php foreach ( get_terms( $taxonomy->name ) as $term ): ?>
-			<option value="<?php
-			    $feed = 'r3s';
-			    $term_id = $term->term_id;
-			    $taxonomy = $term->taxonomy;
-				if ( 'category' == $taxonomy ) {
-        			$link = "index.php?feed=$feed&amp;cat=$term_id";
-        		}
-        		elseif ( 'post_tag' == $taxonomy ) {
-        			$link = "index.php?feed=$feed&amp;tag=$term->slug";
-        		} else {
-        			$t = get_taxonomy( $taxonomy );
-        			$link = "index.php?feed=$feed&amp;$t->query_var=$term->slug";
-        		}
-                  echo $link;
+	<div class='wx-dummy wx-blog-dummy'>
+		<select disabled='disabled'><option><?php echo __( '&nbsp;' ); ?></option></select>
+	</div>
 
-			//echo get_term_feed_link( $term ); ?>"><?php echo $term->name; ?></option>
-        	<?php endforeach; ?>
+	<div class='wx-dummy wx-blog-dummy'>
+		<input type='text' disabled='disabled' placeholder='<?php echo __( '&nbsp;' ); ?>' />
+	</div>
+
+	<div class='wx-add-item-option wx-blog-reveal wx-reveal'>
+
+		<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
+		<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
+		<div id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-item" class="wx-blog-item-choose">
+    		<select id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-blog-item-select">
+    			<option><?php echo __( '(Choose an option)' ); ?></option>
+            	<?php foreach ( get_terms( $taxonomy->name ) as $term ): ?>
+    			<option value="<?php echo WeeverHelper::get_term_feed_link_relative( $term ); ?>"><?php echo $term->name; ?></option>
+            	<?php endforeach; ?>
     		</select>
+    	</div>
 		<?php endforeach; ?>
+
+		<div id="wx-add-blog-s-item" class="wx-blog-item-choose">
+    		<input type='text' value='' id='wx-add-blog-s-input' class='wx-input wx-blog-input' name='s' placeholder='<?php echo __( 'Search Term' ); ?>' />
+    		<label for='wx-add-blog-s-input' id='wx-add-blog-s-input-label' class='wx-blog-label'><?php echo __( 'Search Term Description' ); ?></label>
+		</div>
+
+	</div>
+
+	<div class='wx-add-title wx-blog-reveal wx-reveal'>
+
+		<input type='text' id='wx-blog-title' value='' class='wx-title wx-input wx-blog-input' name='noname' />
+		<label for='wx-blog-title'><?php echo __( 'Submenu Tab Name/Description' ); ?></label>
+	</div>
+
+	<div class='wx-add-submit'>
+		<input type='submit' id='wx-blog-submit' class='wx-submit' value='<?php echo __( 'Submit' ); ?>' name='add' disabled='disabled' />
+	</div>
+
+</div>

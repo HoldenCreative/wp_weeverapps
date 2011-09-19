@@ -9,8 +9,7 @@
          * @param string $url
          * @param string $base
          */
-        public static function make_absolute($url, $base)
-        {
+        public static function make_absolute($url, $base) {
             // Return base if no url
             if( ! $url) return $base;
 
@@ -48,8 +47,7 @@
          *
          * @return array
          */
-        public static function get_js_strings()
-        {
+        public static function get_js_strings() {
 		    return array(
     			'WEEVER_JS_ENTER_NEW_APP_ICON_NAME' => __( 'Enter a New App Icon Name:' ),
     			'WEEVER_JS_APP_UPDATED' => __( 'App Updated' ),
@@ -64,6 +62,31 @@
 <p>To create a new icon, please upload your icon-image to a <a href="http://www.opinionatedgeek.com/dotnet/tools/base64encode/" target="_blank">Base64 Encoder</a> and paste in the results below. We strongly recommend using a black monochrome, transparent 64 x 64 pixel PNG image. [<a href="http://cartanova.ca/images/blog-icon.png" target="_blank">Example</a>]</p>' ),
     			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here' ),
             );
+        }
+
+        /**
+         * Get the url of the feed for the given term
+         *
+         * @param term $term
+         * @param string $feed
+         * @return string or bool false on error
+         */
+        public static function get_term_feed_link_relative( $term, $feed = 'r3s' ) {
+		    $term_id = $term->term_id;
+		    $taxonomy = $term->taxonomy;
+		    $link = false;
+			if ( 'category' == $taxonomy ) {
+    			$link = "index.php?feed=$feed&amp;cat=$term_id";
+    		}
+    		elseif ( 'post_tag' == $taxonomy ) {
+    			$link = "index.php?feed=$feed&amp;tag=$term->slug";
+    		} else {
+    			$t = get_taxonomy( $taxonomy );
+    			if ( ! $t->query_var )
+    			$link = "index.php?feed=$feed&amp;$t->query_var=$term->slug";
+    		}
+
+    		return $link;
         }
 
     }

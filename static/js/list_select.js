@@ -269,6 +269,9 @@ jQuery(document).ready(function(){
 		
 	});
 	
+	/*
+	 * User interface for the Blogs tab
+	 */
 	jQuery('#wx-select-blog').change(function() {
 	
 		jQuery('.wx-title').attr('name','noname');
@@ -277,57 +280,27 @@ jQuery(document).ready(function(){
 		jQuery('.wx-blog-help').hide();
 		jQuery('.wx-dummy').hide();
 		jQuery('.wx-submit').attr('disabled', 'disabled');
+		
+		// Clear value of the description box
+		jQuery('input#wx-blog-title').val('');
 	
-		if(jQuery(this).val() == "menu") 
-		{
-			jQuery('#wx-add-blog-menu-item').show();
-			jQuery('#wx-add-blog-menu-item-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-blog-jcategory-item').hide();
-			jQuery('#wx-add-blog-jcategory-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-category-item').hide();
-			jQuery('#wx-add-blog-k2-category-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-tag').hide();
-			jQuery('#wx-add-blog-k2-tag-input').attr('name', 'unnamed');
-		}
-		
-		if(jQuery(this).val() == "content-cat") 
-		{
-			jQuery('#wx-add-blog-menu-item').hide();
-			jQuery('#wx-add-blog-menu-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-jcategory-item').show();
-			jQuery('#wx-add-blog-jcategory-item-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-blog-k2-category-item').hide();
-			jQuery('#wx-add-blog-k2-category-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-tag').hide();
-			jQuery('#wx-add-blog-k2-tag-input').attr('name', 'unnamed');
-		}
-		
-		if(jQuery(this).val() == "k2-cat") 
-		{
-			jQuery('#wx-add-blog-menu-item').hide();
-			jQuery('#wx-add-blog-menu-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-jcategory-item').hide();
-			jQuery('#wx-add-blog-jcategory-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-category-item').show();
-			jQuery('#wx-add-blog-k2-category-item-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-blog-k2-tag').hide();
-			jQuery('#wx-add-blog-k2-tag-input').attr('name', 'unnamed');
-		}
-		
-		if(jQuery(this).val() == "k2-tags") 
-		{
-			jQuery('#wx-add-blog-menu-item').hide();
-			jQuery('#wx-add-blog-menu-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-jcategory-item').hide();
-			jQuery('#wx-add-blog-jcategory-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-category-item').hide();
-			jQuery('#wx-add-blog-k2-category-item-select').attr('name', 'unnamed');
-			jQuery('#wx-add-blog-k2-tag').show();
-			jQuery('#wx-add-blog-k2-tag-input').attr('name', 'tag');
-		}
-			
-		jQuery('.wx-blog-reveal').show();
-		
+		// Hide all items initially, then show the options for the selected one
+		jQuery('.wx-blog-item-choose').hide();
+		jQuery('.wx-blog-item-choose select').attr('name', 'unnamed');
+		if (jQuery(this).val() == '0') {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-submit').attr('disabled', 'disabled');
+			jQuery('.wx-blog-reveal').hide();
+		} else {
+			jQuery('#wx-add-blog-' + jQuery(this).val() + '-item').show();
+			jQuery('#wx-add-blog-' + jQuery(this).val() + '-item select').attr('name', 'cms_feed');
+			jQuery('.wx-blog-reveal').show();
+		}	
+
+	});
+	
+	jQuery('.wx-blog-item-select').change(function() {
+		jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
 	});
 	
 	jQuery('#wx-select-contact').change(function() {
