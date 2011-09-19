@@ -143,13 +143,13 @@ $tabsUnpublished = 0;
 			    $term_id = $term->term_id;
 			    $taxonomy = $term->taxonomy;
 				if ( 'category' == $taxonomy ) {
-        			$link = home_url("?feed=$feed&amp;cat=$term_id");
+        			$link = "index.php?feed=$feed&amp;cat=$term_id";
         		}
         		elseif ( 'post_tag' == $taxonomy ) {
-        			$link = home_url("?feed=$feed&amp;tag=$term->slug");
+        			$link = "index.php?feed=$feed&amp;tag=$term->slug";
         		} else {
         			$t = get_taxonomy( $taxonomy );
-        			$link = home_url("?feed=$feed&amp;$t->query_var=$term->slug");
+        			$link = "index.php?feed=$feed&amp;$t->query_var=$term->slug";
         		}
                   echo $link;
 
