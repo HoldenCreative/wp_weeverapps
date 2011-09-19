@@ -279,17 +279,13 @@ jQuery(document).ready(function(){
 		jQuery('.wx-cms-feed-select').attr('name','noname');
 		jQuery('.wx-blog-help').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
+		//jQuery('.wx-submit').attr('disabled', 'disabled');
 		
-		// Clear value of the description box
-		jQuery('input#wx-blog-title').val('');
-	
 		// Hide all items initially, then show the options for the selected one
 		jQuery('.wx-blog-item-choose').hide();
 		jQuery('.wx-blog-item-choose select').attr('name', 'unnamed');
 		if (jQuery(this).val() == '0') {
 			jQuery('.wx-dummy').show();
-			jQuery('.wx-submit').attr('disabled', 'disabled');
 			jQuery('.wx-blog-reveal').hide();
 		} else {
 			jQuery('#wx-add-blog-' + jQuery(this).val() + '-item').show();
@@ -300,7 +296,9 @@ jQuery(document).ready(function(){
 	});
 	
 	jQuery('.wx-blog-item-select').change(function() {
-		jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
+		if (jQuery(this).val() != '0') {
+			jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
+		}
 	});
 	
 	jQuery('#wx-select-contact').change(function() {

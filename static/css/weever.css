@@ -329,6 +329,8 @@ margin-right:20px;
     width: 100%;
 }
 
+.wx-add-ui .wx-error { border: 1px solid #ff0000 }
+
 .wx-add-item-value-help {
     background: none repeat scroll 0 0 #FFFFF0;
     color:#888;

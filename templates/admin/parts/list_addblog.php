@@ -24,7 +24,7 @@
 		<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
 		<div id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-item" class="wx-blog-item-choose">
     		<select id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-blog-item-select">
-    			<option><?php echo __( '(Choose an option)' ); ?></option>
+    			<option value="0"><?php echo __( '(Choose an option)' ); ?></option>
             	<?php foreach ( get_terms( $taxonomy->name ) as $term ): ?>
     			<option value="<?php echo WeeverHelper::get_term_feed_link_relative( $term ); ?>"><?php echo $term->name; ?></option>
             	<?php endforeach; ?>
@@ -46,7 +46,7 @@
 	</div>
 
 	<div class='wx-add-submit'>
-		<input type='submit' id='wx-blog-submit' class='wx-submit' value='<?php echo __( 'Submit' ); ?>' name='add' disabled='disabled' />
+		<input type='submit' id='wx-blog-submit' class='wx-submit' value='<?php echo __( 'Submit' ); ?>' name='add' />
 	</div>
 
 </div>
