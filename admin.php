@@ -141,15 +141,15 @@ function weever_page_scripts_init() {
 
                 wp_register_script( 'weever.list_select.js', plugins_url( 'static/js/list_select.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list_select.js' );
-                wp_localize_script( 'weever.list_select.js', 'WPText', WeeverHelper::get_js_strings() );
+//                wp_localize_script( 'weever.list_select.js', 'WPText', WeeverHelper::get_js_strings() );
 
                 wp_register_script( 'weever.list_submit.js', plugins_url( 'static/js/list_submit.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list_submit.js' );
-                wp_localize_script( 'weever.list_submit.js', 'WPText', WeeverHelper::get_js_strings() );
+//                wp_localize_script( 'weever.list_submit.js', 'WPText', WeeverHelper::get_js_strings() );
 
                 wp_register_script( 'weever.list.js', plugins_url( 'static/js/list.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list.js' );
-                wp_localize_script( 'weever.list.js', 'WPText', WeeverHelper::get_js_strings() );
+//                wp_localize_script( 'weever.list.js', 'WPText', WeeverHelper::get_js_strings() );
                 break;
 
     	    case 'weever-theme':
