@@ -104,51 +104,57 @@ jQuery(document).ready(function(){
   	  	var tabSearchTerm = jQuery('input[name=s]').val();
   	  	var siteKey = jQuery("input#wx-site-key").val();
   	  	
-  	  	// Remove any previous errors
-  	  	jQuery('.wx-error').removeClass('wx-error');
-  	  	
-  	  	if ( optionVal == '0' || ( optionVal != 's' && cmsFeed == '0' ) || tabName.trim() == '' || ( optionVal == 's' && tabSearchTerm.trim() == '' ) ) {
-  	  		if ( optionVal == 's' && tabSearchTerm == '' )
-  	  			jQuery( 'input[name=s]' ).addClass('wx-error');
+  	  	// Validation
+  	  	jQuery('#adminForm').validate({ 
+  	  		rules: {
+  	  	  		s: { required: true },
+  	  			cms_feed: { required: true },
+  	  			name: { required: true },
+  	  			"wx-select-blog": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
   	  		
-  	  		if ( optionVal != 's' && cmsFeed == '0' )
-  	  			jQuery('select[name=cms_feed]').addClass('wx-error');
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
   	  		
-  	  		if ( tabName == '' )
-  	  			jQuery('input#wx-blog-title').addClass('wx-error');
-  	  	} else {
-	  	  	jQuery.ajax({
-	  	  	   type: "POST",
-	  	  	   url: ajaxurl,
-	  	  	   data: {
-	  	  		   action: 'ajaxSaveNewTab',
-	  	  		   type: 'blog',
-	  	  		   component: 'blog',
-	  	  		   weever_action: 'add',
-	  	  		   published: '1',
-	  	  		   cms_feed: cmsFeed,
-	  	  		   name: tabName,
-	  	  		   site_key: siteKey
-	  	  	   },
-	  	  	   success: function(msg){
-	  	  	     jQuery('#wx-modal-loading-text').html(msg);
-	  	  	     
-	  	  	     if(msg == "Item Added")
-	  	  	     {
-	  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-	  	  	     	document.location.href = "index.php?option=com_weever#blogTab";
-	  	  	     	document.location.reload(true);
-	  	  	     }
-	  	  	     else
-	  	  	     {
-	  	  	     	jQuery('#wx-modal-secondary-text').html('');
-	  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-	  	  	     }
-	  	  	   }
-	  	  	 });
-  	  	}  	  	 
-  	  	
-  	  	e.preventDefault();
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+  	  			
+  	  			if (jQuery('#wx-select-blog').val() == 's') {
+  	  				cmsFeed = 'index.php?s='+encodeURIComponent(jQuery('input[name=s]').val())+'&feed=r3s';
+  	  			}
+  	  			
+  		  	  	jQuery.ajax({
+  		  	  	   type: "POST",
+  		  	  	   url: ajaxurl,
+  		  	  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+  		  	  		   type: 'blog',
+  		  	  		   component: 'blog',
+  		  	  		   weever_action: 'add',
+  		  	  		   published: '1',
+  		  	  		   cms_feed: cmsFeed,
+  		  	  		   name: tabName,
+  		  	  		   site_key: siteKey
+  		  	  	   },
+  		  	  	   success: function(msg){
+  		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+  		  	  	     
+  		  	  	     if(msg == "Item Added")
+  		  	  	     {
+  		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+  		  	  	     	document.location.href = "index.php?option=com_weever#blogTab";
+  		  	  	     	//document.location.reload(true);
+  		  	  	     }
+  		  	  	     else
+  		  	  	     {
+  		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+  		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+  		  	  	     }
+  		  	  	   }
+  		  	  	 });
+  	  		}
+  	  	});
 	});
 	
 	jQuery('input#wx-video-submit').click(function(e) {

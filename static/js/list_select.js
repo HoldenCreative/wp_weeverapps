@@ -284,7 +284,8 @@ jQuery(document).ready(function(){
 		// Hide all items initially, then show the options for the selected one
 		jQuery('.wx-blog-item-choose').hide();
 		jQuery('.wx-blog-item-choose select').attr('name', 'unnamed');
-		if (jQuery(this).val() == '0') {
+		
+		if (jQuery(this).val() == "") {
 			jQuery('.wx-dummy').show();
 			jQuery('.wx-blog-reveal').hide();
 		} else {
@@ -296,7 +297,7 @@ jQuery(document).ready(function(){
 	});
 	
 	jQuery('.wx-blog-item-select').change(function() {
-		if (jQuery(this).val() != '0') {
+		if (jQuery(this).val() != "") {
 			jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
 		}
 	});

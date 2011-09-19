@@ -1,7 +1,7 @@
 <div class="wx-add-ui">
 	<div class='wx-add-item-blog wx-add-item-dropdown'>
-		<select id='wx-select-blog'>
-			<option value="0"><?php echo __( '+ Add Blog Content' ); ?></option>
+		<select id='wx-select-blog' name="wx-select-blog">
+			<option value=""><?php echo __( '+ Add Blog Content' ); ?></option>
 			<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 			<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
 			<option value="<?php echo $taxonomy->query_var; ?>"><?php echo sprintf( __( 'From taxonomy: %s' ), $taxonomy->label ); ?></option>
@@ -23,8 +23,8 @@
 		<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 		<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
 		<div id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-item" class="wx-blog-item-choose">
-    		<select id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-blog-item-select">
-    			<option value="0"><?php echo __( '(Choose an option)' ); ?></option>
+    		<select id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-blog-item-select required">
+    			<option value=""><?php echo __( '(Choose an option)' ); ?></option>
             	<?php foreach ( get_terms( $taxonomy->name ) as $term ): ?>
     			<option value="<?php echo WeeverHelper::get_term_feed_link_relative( $term ); ?>"><?php echo $term->name; ?></option>
             	<?php endforeach; ?>

@@ -118,6 +118,9 @@ function weever_page_scripts_init() {
     wp_register_script( 'jquery-impromptu.js', plugins_url( 'static/js/jquery-impromptu.js', __FILE__ ) );
     wp_enqueue_script( 'jquery-impromptu.js' );
 
+    wp_register_script( 'jquery-validate.js', plugins_url( 'static/js/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );
+    wp_enqueue_script( 'jquery-validate.js' );
+
 	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs', 'jquery-ui-sortable' ) );
 	wp_enqueue_script( 'weever.js' );
 	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
