@@ -93,6 +93,7 @@ function weever_admin_init() {
     add_settings_section( 'weever_main', __('Weever Apps Settings'), 'weever_section_text', 'weever' );
     add_settings_field( 'weever_api_key', __('Weever Apps API Key'), 'weever_api_key_string', 'weever', 'weever_main' );
 }
+
 add_action( 'admin_init', 'weever_admin_init' );
 
 /**
@@ -177,7 +178,13 @@ function weever_page_scripts_init() {
 }
 
 function weever_app_toggle() {
-    echo '<p><b>' . __( 'Weever App Enabled', 'weever' ) . '</b> | <a href="#">Disable</a></p>';
+    echo '<div>';
+    if ( get_option( 'weever_app_enabled' ) ) {
+        echo '<b>' . __( 'Weever App Enabled', 'weever' ) . '</b> | <a href="#">' . __( 'Disable' ) . '</a>';
+    } else {
+        echo '<b>' . __( 'Weever App Disabled', 'weever' ) . '</b> | <a href="#">' . __( 'Enable' ) . '</a>';
+    }
+    echo '</div>';
 }
 
 add_action( 'admin_notices', 'weever_app_toggle' );

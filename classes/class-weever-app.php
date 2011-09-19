@@ -19,18 +19,42 @@ class WeeverApp {
         $socialTabRow = new stdClass();
         $socialTabRow->component = "social";
         $socialTabRow->name = "Social";
+        $photoRow = new stdClass();
+        $photoRow->component = 'photo';
+        $photoRow->name = 'Photos';
+        $pageRow = new stdClass();
+        $pageRow->component = 'page';
+        $pageRow->name = 'Pages';
+        $videoRow = new stdClass();
+        $videoRow->component = 'video';
+        $videoRow->name = 'Videos';
+        $contactRow = new stdClass();
+        $contactRow->component = 'contact';
+        $contactRow->name = 'Contact';
+        $calendarRow = new stdClass();
+        $calendarRow->component = 'calendar';
+        $calendarRow->name = 'Events';
 
-        $this->_data['tabRows'] = array($blogTabRow, $socialTabRow);
+        $this->_data['tabRows'] = array($blogTabRow, $socialTabRow, $photoRow, $pageRow, $videoRow, $contactRow, $calendarRow);
 
         // Stub of subrows for each tab
-        $subrow = new stdClass();
-        $subrow->name = 'Parks Home';
-        $subrow->type = 'blog';
-        $subrow->ordering = rand(1, 10);
-        $subrow->published = 1;
+        $subrow = array();
+        $subrow[0] = new stdClass();
+        $subrow[0]->id = 5;
+        $subrow[0]->name = 'Parks Home';
+        $subrow[0]->type = 'blog';
+        $subrow[0]->ordering = rand(1, 10);
+        $subrow[0]->published = 1;
 
-        $this->_data['blogRows'] = array($subrow);
-        $this->_data['socialRows'] = array();
+        $subrow[1] = new stdClass();
+        $subrow[1]->id = 7;
+        $subrow[1]->name = 'Another Blog';
+        $subrow[1]->type = 'blog';
+        $subrow[1]->ordering = rand(1, 10);
+        $subrow[1]->published = 0;
+
+        $this->_data['blogRows'] = $subrow;
+        $this->_data['socialRows'] = $this->_data['photoRows'] = $this->_data['pageRows'] = $this->_data['videoRows'] = $this->_data['contactRows'] = $this->_data['calendarRows'] = array();
 
         if ( $load_from_server ) {
             $this->reload_from_server();

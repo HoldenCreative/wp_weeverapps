@@ -29,20 +29,7 @@ $child_html = "";
 $k = 0; // for alternating shaded rows
 $iii = 0; // for making checkboxes line up right
 $tabsUnpublished = 0;
-$onlineSpan = "";
-$offlineSpan = "";
-
-if ($weeverapp->appEnabled) {
-	$offlineSpan = 'class="wx-app-hide-status"';
-	$offlineStatusClass = "";
-} else {
-	$onlineSpan = 'class="wx-app-hide-status"';
-	$offlineStatusClass = "class=\"wx-app-status-button-offline\"";
-}
-
 ?>
-
-<div id="wx-app-status-button" <?php echo $offlineStatusClass; ?>><img id="wx-app-status-img" src="../media/com_weever/icon_live.png?nocache=<?php echo microtime(); ?>" /><br /><span id="wx-app-status-online" <?php echo $onlineSpan; ?>><?php echo __('WEEVER_ONLINE'); ?></span><span id="wx-app-status-offline" <?php echo $offlineSpan; ?>><?php echo __('WEEVER_OFFLINE'); ?></span></div>
 
 <div id="listTabs">
 	<ul id="listTabsSortable" style="padding-right: 50%">
@@ -76,7 +63,7 @@ if ($weeverapp->appEnabled) {
 
 	</ul>
 
-    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __('WEEVER_ICON_HAS_NO_PUB_ITEMS'); ?></div><img id="wx-overlay-drag-img" src="components/com_weever/assets/icons/drag.png" /><div><?php echo __('WEEVER_DOUBLE_CLICK_EDIT'); ?></div></div>
+    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __('WEEVER_ICON_HAS_NO_PUB_ITEMS'); ?></div><img id="wx-overlay-drag-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/drag.png" /><div><?php echo __('WEEVER_DOUBLE_CLICK_EDIT'); ?></div></div>
 
     <div id='wx-modal-loading'>
         <div id='wx-modal-loading-text'></div>
@@ -85,6 +72,8 @@ if ($weeverapp->appEnabled) {
     </div>
 
     <form action='' method='post' name='adminForm' id='adminForm'>
+
+	<input type="hidden" id="nonce" name="nonce" value="<?php echo wp_create_nonce( 'weever-list-js' ); ?>" />
 
     <?php
 
@@ -143,7 +132,7 @@ if ($weeverapp->appEnabled) {
 
     	<div id="<?php echo $row->component . 'Tab' ?>">
 
-    	<?php echo 'TEMPLATE'; //echo $weeverapp->loadTemplate($row->component.'dropdown'); ?>
+    	<?php echo '<p>TEMPLATE</p>'; //echo $weeverapp->loadTemplate($row->component.'dropdown'); ?>
 
     	<input type="hidden" name="boxchecked<?php echo $row->component; ?>" id="boxchecked<?php echo $row->component; ?>" value="0" />
     	<table class='adminlist'>
@@ -177,17 +166,17 @@ if ($weeverapp->appEnabled) {
             			<a href='#' title="ID #<?php echo $row->id; ?>" class="wx-subtab-link"><?php echo $row->name; ?></a>
             		</td>
             		<td align='center'>
-            			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="components/com_weever/assets/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="components/com_weever/assets/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
+            			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
             		</td>
             		<td align="center">
-            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/downarrow.png" width="16" height="16" border="0" alt="Move Down"></a>
-            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="components/com_weever/assets/icons/uparrow.png" width="16" height="16" border="0" alt="Move Up"></a>
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/downarrow.png" width="16" height="16" border="0" alt="Move Down"></a>
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/uparrow.png" width="16" height="16" border="0" alt="Move Up"></a>
             			(<?php echo floor($row->ordering); ?>)
             		</td>
             		<td align='center'>
             			<?php echo $row->id; ?>
             		</td>
-            		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" title="<?php echo __( 'Delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="components/com_weever/assets/icons/wx-delete-mark.png" /></a></td>
+            		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" alt="<?php echo __( 'delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" /></a></td>
         		</tr>
 
         	<?php

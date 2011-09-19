@@ -57,7 +57,14 @@ require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
 
 if ( is_admin() )
+{
 	require_once dirname( __FILE__ ) . '/admin.php';
+	require_once dirname( __FILE__ ) . '/classes/class-weever-controller.php';
+
+}
+
+// Register the ajax call
+add_action( 'wp_ajax_ajaxSubtabDelete', array( 'WeeverController', 'ajaxSubtabDelete' ) );
 
 function weever_init() {
 

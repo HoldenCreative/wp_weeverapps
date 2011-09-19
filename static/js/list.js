@@ -475,12 +475,12 @@ jQuery(document).ready(function(){
 	
 	});
 	
-	
 		jQuery("a.wx-subtab-delete").click(function() {
 		
 			var tabId = jQuery(this).attr('title');
 			tabId = tabId.substring(4);
 			var siteKey = jQuery("input#wx-site-key").val();
+			var nonce = jQuery("input#nonce").val();
 			var tabType = jQuery(this).attr('rel');
 			var tabName = jQuery(this).attr('alt');
 			
@@ -491,8 +491,8 @@ jQuery(document).ready(function(){
 			
 			jQuery.ajax({
 			   type: "POST",
-			   url: "index.php",
-			   data: "option=com_weever&task=ajaxSubtabDelete&id="+tabId+'&site_key='+siteKey,
+			   url: ajaxurl,
+			   data: { id: tabId, site_key: siteKey, nonce: nonce, action: 'ajaxSubtabDelete' },
 			   success: function(msg){
 			     jQuery('#wx-modal-loading-text').html(msg);
 			     
