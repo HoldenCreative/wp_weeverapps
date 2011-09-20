@@ -34,8 +34,11 @@ class WeeverApp {
         $calendarRow = new stdClass();
         $calendarRow->component = 'calendar';
         $calendarRow->name = 'Events';
+        $formRow = new stdClass();
+        $formRow->component = 'form';
+        $formRow->name = 'Forms';
 
-        $this->_data['tabRows'] = array($blogTabRow, $socialTabRow, $photoRow, $pageRow, $videoRow, $contactRow, $calendarRow);
+        $this->_data['tabRows'] = array($socialTabRow, $blogTabRow, $photoRow, $pageRow, $videoRow, $contactRow, $calendarRow, $formRow);
 
         // Stub of subrows for each tab
         $subrow = array();
@@ -54,8 +57,9 @@ class WeeverApp {
         $subrow[1]->published = 0;
 
         $this->_data['blogRows'] = $subrow;
-        $this->_data['socialRows'] = $this->_data['photoRows'] = $this->_data['pageRows'] = $this->_data['videoRows'] = $this->_data['contactRows'] = $this->_data['calendarRows'] = array();
-
+        $this->_data['formRows'] = $this->_data['socialRows'] = $this->_data['photoRows'] = $this->_data['pageRows'] = $this->_data['videoRows'] = $this->_data['contactRows'] = $this->_data['calendarRows'] = array();
+        $this->_data['socialRows'] = $subrow;
+        
         if ( $load_from_server ) {
             $this->reload_from_server();
         }

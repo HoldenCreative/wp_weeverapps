@@ -135,12 +135,16 @@ jQuery(document).ready(function(){
 		jQuery('.wx-dummy').hide();
 		jQuery('.wx-form-reveal').show();
 		
-		if(jQuery(this).val() == "wufoo") 
-		{
-			jQuery('input#wx-form-url').attr('placeholder', 'http://');
-			jQuery('input#wx-form-api-key').attr('placeholder', 'WXYZ-1234-ABCD-9876');
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-form-reveal').hide();
+		} else {
+			if(jQuery(this).val() == "wufoo") 
+			{
+				jQuery('input#wx-form-url').attr('placeholder', 'http://');
+				jQuery('input#wx-form-api-key').attr('placeholder', 'WXYZ-1234-ABCD-9876');
+			}
 		}
-		
 	});
 	
 	
