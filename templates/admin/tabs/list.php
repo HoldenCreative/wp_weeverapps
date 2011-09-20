@@ -177,9 +177,8 @@ $tabsUnpublished = 0;
             			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
             		</td>
             		<td align="center">
-            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/downarrow.png" width="16" height="16" border="0" alt="Move Down"></a>
-            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/uparrow.png" width="16" height="16" border="0" alt="Move Up"></a>
-            			(<?php echo floor($row->ordering); ?>)
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/downarrow.png" width="16" height="16" border="0" title="Move Down"></a>
+            			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/uparrow.png" width="16" height="16" border="0" title="Move Up"></a>
             		</td>
             		<td align='center'>
             			<?php echo $row->id; ?>
