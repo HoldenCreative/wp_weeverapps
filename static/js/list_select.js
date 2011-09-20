@@ -21,7 +21,6 @@
 
 jQuery(document).ready(function(){ 
 
-
 	jQuery('#wx-select-social').change(function() {
 		
 		jQuery('.wx-title').attr('name','noname');
@@ -31,51 +30,56 @@ jQuery(document).ready(function(){
 		jQuery('.wx-social-help').hide();
 		jQuery('.wx-social-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		
-		if(jQuery(this).val() == "twitteruser") 
-		{
-			jQuery('#wx-add-social-twitter-user-help').show();
-			jQuery('label#wx-twitter-user').show();
-			jQuery('input#wx-social-value').val('@');
-			jQuery('input#wx-social-title').val('Twitter');
-		}
-		
-		if(jQuery(this).val() == "twitterhashtag") 
-		{
-			jQuery('#wx-add-social-twitter-hashtag-help').show();
-			jQuery('label#wx-twitter-hashtag').show();
-			jQuery('input#wx-social-value').val('#');
-			jQuery('input#wx-social-title').val('Twitter');
-		}
-		
-		if(jQuery(this).val() == "twitterquery") 
-		{
-			jQuery('#wx-add-social-twitter-query-help').show();
-			jQuery('label#wx-twitter-query').show();
-			jQuery('input#wx-social-value').val('');
-			jQuery('input#wx-social-title').val('Twitter');
-		}
-		
-		if(jQuery(this).val() == "identi.ca") 
-		{
-			jQuery('#wx-add-social-identica-query-help').show();
-			jQuery('label#wx-identica-query').show();
-			jQuery('input#wx-social-value').val('');
-			jQuery('input#wx-social-title').val('Identi.ca');
-		}
-		
-		if(jQuery(this).val() == "facebook") 
-		{
-			jQuery('#wx-add-social-facebook-help').show();
-			jQuery('label#wx-facebook-url').show();
-			jQuery('input#wx-social-value').val('');
-			jQuery('input#wx-social-value').attr('placeholder', 'http://');
-			jQuery('input#wx-social-title').val('Facebook');
-		}
-		
-		jQuery('.wx-social-reveal').show();
-		
+		jQuery('.wx-blog-item-choose').hide();
+
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-social-reveal').hide();
+		} else {
+			if(jQuery(this).val() == "twitteruser") 
+			{
+				jQuery('#wx-add-social-twitter-user-help').show();
+				jQuery('label#wx-twitter-user').show();
+				jQuery('input#wx-social-value').val('@');
+				jQuery('input#wx-social-title').val('Twitter');
+			}
+			
+			if(jQuery(this).val() == "twitterhashtag") 
+			{
+				jQuery('#wx-add-social-twitter-hashtag-help').show();
+				jQuery('label#wx-twitter-hashtag').show();
+				jQuery('input#wx-social-value').val('#');
+				jQuery('input#wx-social-title').val('Twitter');
+			}
+			
+			if(jQuery(this).val() == "twitterquery") 
+			{
+				jQuery('#wx-add-social-twitter-query-help').show();
+				jQuery('label#wx-twitter-query').show();
+				jQuery('input#wx-social-value').val('');
+				jQuery('input#wx-social-title').val('Twitter');
+			}
+			
+			if(jQuery(this).val() == "identi.ca") 
+			{
+				jQuery('#wx-add-social-identica-query-help').show();
+				jQuery('label#wx-identica-query').show();
+				jQuery('input#wx-social-value').val('');
+				jQuery('input#wx-social-title').val('Identi.ca');
+			}
+			
+			if(jQuery(this).val() == "facebook") 
+			{
+				jQuery('#wx-add-social-facebook-help').show();
+				jQuery('label#wx-facebook-url').show();
+				jQuery('input#wx-social-value').val('');
+				jQuery('input#wx-social-value').attr('placeholder', 'http://');
+				jQuery('input#wx-social-title').val('Facebook');
+			}
+			
+			jQuery('.wx-social-reveal').show();
+		}		
 	});
 	
 	jQuery('#wx-select-calendar').change(function() {

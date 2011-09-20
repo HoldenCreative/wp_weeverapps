@@ -1,10 +1,19 @@
+<form action='' method='post' name='blogAdminForm' id='blogAdminForm'>
+
 <div class="wx-add-ui">
 	<div class='wx-add-item-blog wx-add-item-dropdown'>
 		<select id='wx-select-blog' name="wx-select-blog">
 			<option value=""><?php echo __( '+ Add Blog Content' ); ?></option>
 			<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 			<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
-			<option value="<?php echo $taxonomy->query_var; ?>"><?php echo sprintf( __( 'From taxonomy: %s' ), $taxonomy->label ); ?></option>
+			<option value="<?php echo $taxonomy->query_var; ?>"><?php 
+			if ( $taxonomy->name == 'category' )
+			    echo __( 'From a Category' );
+			elseif ( $taxonomy->name == 'post_tag' )
+			    echo __( 'From a Tag' );
+			else    
+			    echo sprintf( __( 'From taxonomy: %s' ), $taxonomy->label ); 
+			?></option>
 			<?php endforeach; ?>
 			<option value="s"><?php echo __( 'From a Search Term' ); ?></option>
 		</select>
@@ -50,3 +59,5 @@
 	</div>
 
 </div>
+
+</form>

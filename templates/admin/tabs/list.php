@@ -67,7 +67,7 @@ $tabsUnpublished = 0;
 
 	</ul>
 
-    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __('WEEVER_ICON_HAS_NO_PUB_ITEMS'); ?></div><img id="wx-overlay-drag-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/drag.png" /><div><?php echo __('WEEVER_DOUBLE_CLICK_EDIT'); ?></div></div>
+    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __( 'This icon has no published items' ); ?></div><img id="wx-overlay-drag-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/drag.png" /><div><?php echo __( '<b>Double-click</b> icon <b>name</b> or <b>image</b> to edit.' ); ?></div></div>
 
     <div id='wx-modal-loading'>
         <div id='wx-modal-loading-text'></div>
@@ -75,7 +75,6 @@ $tabsUnpublished = 0;
         <div id='wx-modal-error-text'></div>
     </div>
 
-    <form action='' method='post' name='adminForm' id='adminForm'>
 
 	<input type="hidden" id="nonce" name="nonce" value="<?php echo wp_create_nonce( 'weever-list-js' ); ?>" />
 
@@ -190,7 +189,7 @@ $tabsUnpublished = 0;
         	$k = 1 - $k; endforeach;
 
         	if ( ! count( $componentRows ) ) {
-        		echo "<tr><td colspan='6'>".__('WEEVER_NO_ITEMS_IN_TAB')."</td></tr>";
+        		echo "<tr><td colspan='6'>".__( 'There are no items in this tab.' )."</td></tr>";
         	}
 
         	?>
@@ -211,6 +210,6 @@ $tabsUnpublished = 0;
         <input type="hidden" name="view" value="list" />
         <input type="hidden" name="filter_order" value="<?php //echo $weeverapp->lists['order']; ?>" />
         <input type="hidden" name="filter_order_Dir" value="<?php //echo $weeverapp->lists['order_Dir']; ?>" />
-    </form>
+
 </div>
 

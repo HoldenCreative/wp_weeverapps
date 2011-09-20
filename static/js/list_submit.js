@@ -20,7 +20,7 @@
 
 jQuery(document).ready(function(){ 
 
-	jQuery('input#wx-contact-submit').click(function(e) {
+	jQuery('input#wx-contact-h').click(function(e) {
 	  
 		var componentId = jQuery("select[name=component_id]").val();
 		var tabName = jQuery('input#wx-contact-title').val();
@@ -105,7 +105,7 @@ jQuery(document).ready(function(){
   	  	var siteKey = jQuery("input#wx-site-key").val();
   	  	
   	  	// Validation
-  	  	jQuery('#adminForm').validate({ 
+  	  	jQuery('#blogAdminForm').validate({ 
   	  		rules: {
   	  	  		s: { required: true },
   	  			cms_feed: { required: true },
@@ -144,7 +144,7 @@ jQuery(document).ready(function(){
   		  	  	     {
   		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
   		  	  	     	document.location.href = "index.php?option=com_weever#blogTab";
-  		  	  	     	//document.location.reload(true);
+  		  	  	     	document.location.reload(true);
   		  	  	     }
   		  	  	     else
   		  	  	     {
@@ -195,30 +195,56 @@ jQuery(document).ready(function(){
   	  	var tabName = jQuery('input#wx-social-title').val();
   	  	var siteKey = jQuery("input#wx-site-key").val();
   	  	var component = jQuery("select#wx-select-social").val();
-  
+
+  	  	// Validation
+  	  	jQuery.validator.addMethod('twitteruserrequired', function(value, element, isactive) {
+  	  		return !isactive || (value.trim() != '@' && value.substr(0, 1) == '@');
+  	  	}, "Please enter a valid value");
   	  	
-  	  	jQuery.ajax({
-  	  	   type: "POST",
-  	  	   url: "index.php",
-  	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=social&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(query)+"&site_key="+siteKey,
-  	  	   success: function(msg){
-  	  	     jQuery('#wx-modal-loading-text').html(msg);
-  	  	     
-  	  	     if(msg == "Item Added")
-  	  	     {
-  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-  	  	     	document.location.href = "index.php?option=com_weever#socialTab";
-  	  	     	document.location.reload(true);
-  	  	     }
-  	  	     else
-  	  	     {
-  	  	     	jQuery('#wx-modal-secondary-text').html('');
-  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-  	  	     }
-  	  	   }
-  	  	 });
-  	  	 
-  	  	 e.preventDefault();
+  	  	jQuery.validator.addMethod('twitterhashtagrequired', function(value, element, isactive) {
+  	  		return !isactive || (value.trim() != '#' && value.substr(0, 1) == '#');
+  	  	}, "Please enter a valid value");
+  	  	
+  	  	jQuery('#socialAdminForm').validate({ 
+  	  		rules: {
+  	  	  		component: { required: true },
+  	  			name: { required: true },
+  	  			"component_behaviour": { required: true, twitteruserrequired: function(element) {
+  	    	  		return (jQuery("select#wx-select-social").val() == 'twitteruser');
+  	    	  	}, twitterhashtagrequired: function(element) {
+  	    	  		return (jQuery("select#wx-select-social").val() == 'twitterhashtag');
+  	    	  	} }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		debug: true,
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+  	  	
+		  	  	jQuery.ajax({
+		  	  	   type: "POST",
+		  	  	   url: "index.php",
+		  	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=social&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(query)+"&site_key="+siteKey,
+		  	  	   success: function(msg){
+		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+		  	  	     
+		  	  	     if(msg == "Item Added")
+		  	  	     {
+		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+		  	  	     	document.location.href = "index.php?option=com_weever#socialTab";
+		  	  	     	document.location.reload(true);
+		  	  	     }
+		  	  	     else
+		  	  	     {
+		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+		  	  	     }
+		  	  	   }
+		  	  	 });
+  	  		}
+  	  	});
 	});
 	
 	jQuery('input#wx-photo-submit').click(function(e) {
