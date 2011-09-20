@@ -89,6 +89,15 @@
     		return $link;
         }
         
+        public static function get_page_link_relative( $page ) {
+            return "index.php?page_id=$page->ID";
+        }
+        
+        /**
+         * Get the url to the user page/feed without any permalink
+         * 
+         * @param WPUser $user
+         */
         public static function get_user_link_relative( $user ) {
             $link = "index.php?author_name=$user->user_nicename";
             return $link;

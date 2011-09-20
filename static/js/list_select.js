@@ -241,49 +241,27 @@ jQuery(document).ready(function(){
 		jQuery('.wx-dummy').hide();
 		//jQuery('select.wx-cms-feed-select option[value="0"]').removeAttr('disabled');
 		
-		if(jQuery(this).val() == "menu") 
-		{
-			jQuery('#wx-add-page-menu-item').show();
-			jQuery('#wx-add-page-menu-item-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-page-menu-item-help').show();
-			jQuery('#wx-add-page-category-joomla').hide();
-			jQuery('#wx-add-page-category-joomla-select').attr('name', 'unnamed');
-			jQuery('#wx-add-page-category-k2').hide();
-			jQuery('#wx-add-page-category-k2-select').attr('name', 'unnamed');
-			jQuery('#wx-add-page-tags-k2').hide();
-			jQuery('#wx-add-page-tags-k2-select').attr('name', 'unnamed');
-		}
-		
-		if(jQuery(this).val() == "page-cat") 
-		{
-			jQuery('#wx-add-page-menu-item').hide();
-			jQuery('#wx-add-page-menu-item-select').attr('name', 'noname');
-			jQuery('#wx-add-page-category-joomla').show();
-			jQuery('#wx-add-page-category-joomla-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-page-category-joomla-help').show();
-			jQuery('#wx-add-page-category-k2').hide();
-			jQuery('#wx-add-page-category-k2-select').attr('name', 'unnamed');
-			jQuery('#wx-add-page-tags-k2').hide();
-			jQuery('#wx-add-page-tags-k2-select').attr('name', 'unnamed');
-		}
-		
-		if(jQuery(this).val() == "page-cat-k2") 
-		{
-			jQuery('#wx-add-page-menu-item').hide();
-			jQuery('#wx-add-page-menu-item-select').attr('name', 'noname');
-			jQuery('#wx-add-page-category-joomla').hide();
-			jQuery('#wx-add-page-category-joomla-select').attr('name', 'noname');
-			jQuery('#wx-add-page-category-k2').show();
-			jQuery('#wx-add-page-category-k2-select').attr('name', 'cms_feed');
-			jQuery('#wx-add-page-category-k2-help').show();
-			jQuery('#wx-add-page-tags-k2').hide();
-			jQuery('#wx-add-page-tags-k2-select').attr('name', 'unnamed');
-		}
-		
-		
-		jQuery('.wx-page-reveal').show();
-		
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-page-reveal').hide();
+			jQuery('.wx-dummy').show();
+		} else {
+				
+			if(jQuery(this).val() == "menu") 
+			{
+				jQuery('#wx-add-page-menu-item').show();
+				jQuery('#wx-add-page-menu-item-select').attr('name', 'cms_feed');
+				jQuery('#wx-add-page-menu-item-help').show();
+			}
+			
+			jQuery('.wx-page-reveal').show();
+		}		
 	});
+	
+	jQuery('.wx-cms-feed-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-page-title').val(jQuery('option:selected', this).text());
+		}
+	});	
 	
 	/*
 	 * User interface for the Blogs tab

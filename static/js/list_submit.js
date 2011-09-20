@@ -81,34 +81,47 @@ jQuery(document).ready(function(){
 	
 	jQuery('input#wx-page-submit').click(function(e) {
   
-	  	var cmsFeed = jQuery("select[name=cms_feed]").val();
-	  	var tabName = jQuery('input#wx-page-title').val();
-	  	var siteKey = jQuery("input#wx-site-key").val();
-	  	
-	  	jQuery.ajax({
-	  	   type: "POST",
-	  	   url: "index.php",
-	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=page&component=page&component_behaviour=leaf&weever_action=add&published=1&cms_feed="+encodeURIComponent(cmsFeed)+"&site_key="+siteKey,
-	  	   success: function(msg){
-	  	     jQuery('#wx-modal-loading-text').html(msg);
-	  	     
-	  	     if(msg == "Item Added")
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-	  	     	document.location.href = "index.php?option=com_weever#pageTab";
-	  	     	document.location.reload(true);
-	  	     }
-	  	     else
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html('');
-	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-	  	     	//document.location.href = "index.php?option=com_weever#photoTab";
-	  	     	//document.location.reload(true);
-	  	     }
-	  	   }
-	  	 });
-	  	 
-	  	 e.preventDefault();
+  	  	jQuery('#pageAdminForm').validate({ 
+  	  		rules: {
+  	  	  		cms_feed: { required: true },
+  	  			name: { required: true },
+  	  			"wx-select-page": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+	  	  	
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+	  	  						
+			  	var cmsFeed = jQuery("select[name=cms_feed]").val();
+			  	var tabName = jQuery('input#wx-page-title').val();
+			  	var siteKey = jQuery("input#wx-site-key").val();
+			  	
+			  	jQuery.ajax({
+			  	   type: "POST",
+			  	   url: ajaxurl,
+			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=page&component=page&component_behaviour=leaf&weever_action=add&published=1&cms_feed="+encodeURIComponent(cmsFeed)+"&site_key="+siteKey,
+			  	   success: function(msg){
+			  	     jQuery('#wx-modal-loading-text').html(msg);
+			  	     
+			  	     if(msg == "Item Added")
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+			  	     	document.location.href = "index.php?option=com_weever#pageTab";
+			  	     	document.location.reload(true);
+			  	     }
+			  	     else
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html('');
+			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+			  	     	//document.location.href = "index.php?option=com_weever#photoTab";
+			  	     	//document.location.reload(true);
+			  	     }
+			  	   }
+			  	 });
+  	  		}
+  	  	});
 	});
 	
 	jQuery('input#wx-blog-submit').click(function(e) {
