@@ -91,7 +91,6 @@ jQuery(document).ready(function(){
 		jQuery('.wx-calendar-help').hide();
 		jQuery('.wx-calendar-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		jQuery('.wx-calendar-reveal').show();
 		
 		if(jQuery(this).val() == "google.calendar") 
@@ -129,7 +128,6 @@ jQuery(document).ready(function(){
 		jQuery('.wx-form-help').hide();
 		jQuery('.wx-form-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		jQuery('.wx-form-reveal').show();
 		
 		if(jQuery(this).val() == "wufoo") 
@@ -151,37 +149,40 @@ jQuery(document).ready(function(){
 		jQuery('.wx-photo-help').hide();
 		jQuery('.wx-photo-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		
-		if(jQuery(this).val() == "flickr") 
-		{
-			jQuery('#wx-add-photo-flickr-help').show();
-			jQuery('label#wx-flickr-url').show();
-			jQuery('input#wx-photo-url').val('');
-			jQuery('input#wx-photo-url').attr('placeholder', 'http://');
-			jQuery('input#wx-photo-title').val('Flickr');
-		}
-		
-		if(jQuery(this).val() == "foursquare") 
-		{
-			jQuery('#wx-add-photo-foursquare-help').show();
-			jQuery('label#wx-foursquare-url').show();
-			jQuery('input#wx-photo-url').val('');
-			jQuery('input#wx-photo-url').attr('placeholder', 'http://');
-			jQuery('input#wx-photo-title').val('Foursquare');
-		}
-		
-		if(jQuery(this).val() == "google.picasa") 
-		{
-			jQuery('label#wx-google-picasa-email').show();
-			jQuery('input#wx-photo-url').val('');
-			jQuery('input#wx-photo-url').attr('placeholder', 'yourname@email.com');
-			jQuery('input#wx-photo-title').val('Picasa');
-		}
-		
-		
-		jQuery('.wx-photo-reveal').show();
-		
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-photo-reveal').hide();
+		} else {
+			if(jQuery(this).val() == "flickr") 
+			{
+				jQuery('#wx-add-photo-flickr-help').show();
+				jQuery('label#wx-flickr-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
+				jQuery('input#wx-photo-title').val('Flickr');
+			}
+			
+			if(jQuery(this).val() == "foursquare") 
+			{
+				jQuery('#wx-add-photo-foursquare-help').show();
+				jQuery('label#wx-foursquare-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
+				jQuery('input#wx-photo-title').val('Foursquare');
+			}
+			
+			if(jQuery(this).val() == "google.picasa") 
+			{
+				jQuery('label#wx-google-picasa-email').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'yourname@email.com');
+				jQuery('input#wx-photo-title').val('Picasa');
+			}
+			
+			
+			jQuery('.wx-photo-reveal').show();
+		}			
 	});
 	
 	
@@ -194,8 +195,7 @@ jQuery(document).ready(function(){
 		jQuery('.wx-video-help').hide();
 		jQuery('.wx-video-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
-
+		
 		if(jQuery(this).val() == "youtube") 
 		{
 			jQuery('#wx-add-video-youtube-help').show();
@@ -226,7 +226,6 @@ jQuery(document).ready(function(){
 		jQuery('.wx-cms-feed-select').attr('name','noname');
 		jQuery('.wx-page-help').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		//jQuery('select.wx-cms-feed-select option[value="0"]').removeAttr('disabled');
 		
 		if(jQuery(this).val() == "menu") 
@@ -283,7 +282,6 @@ jQuery(document).ready(function(){
 		jQuery('.wx-cms-feed-select').attr('name','noname');
 		jQuery('.wx-blog-help').hide();
 		jQuery('.wx-dummy').hide();
-		//jQuery('.wx-submit').attr('disabled', 'disabled');
 		
 		// Hide all items initially, then show the options for the selected one
 		jQuery('.wx-blog-item-choose').hide();
@@ -312,7 +310,6 @@ jQuery(document).ready(function(){
 		jQuery('#wx-contact-title').attr('name','name');
 		jQuery('.wx-contact-help').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 		
 		if(jQuery(this).val() == "jcontact") 
 		{
@@ -328,7 +325,6 @@ jQuery(document).ready(function(){
 		jQuery('#wx-component-title').attr('name','name');
 		jQuery('.wx-component-reveal').show();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 	});
 
 	jQuery('#wx-select-listingcomponent').change(function() {
@@ -336,7 +332,6 @@ jQuery(document).ready(function(){
 		jQuery('#wx-listingcomponent-title').attr('name','name');
 		jQuery('.wx-listingcomponent-reveal').show();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-submit').attr('disabled', 'disabled');
 	});
 
 });

@@ -191,11 +191,6 @@ jQuery(document).ready(function(){
 	
 	jQuery('input#wx-social-submit').click(function(e) {
 	  
-  		var query = jQuery('#wx-social-value').val();
-  	  	var tabName = jQuery('input#wx-social-title').val();
-  	  	var siteKey = jQuery("input#wx-site-key").val();
-  	  	var component = jQuery("select#wx-select-social").val();
-
   	  	// Validation
   	  	jQuery.validator.addMethod('twitteruserrequired', function(value, element, isactive) {
   	  		return !isactive || (value.trim() != '@' && value.substr(0, 1) == '@');
@@ -216,16 +211,20 @@ jQuery(document).ready(function(){
   	    	  	} }
   	  	  	},
   	  		ignore: ":hidden",
-  	  		debug: true,
   	  		// Prevent the error label from appearing at all
   	  		errorPlacement: function(error, element) { },
   	  		
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
+
+  	    		var query = jQuery('#wx-social-value').val();
+  	    	  	var tabName = jQuery('input#wx-social-title').val();
+  	    	  	var siteKey = jQuery("input#wx-site-key").val();
+  	    	  	var component = jQuery("select#wx-select-social").val();
   	  	
 		  	  	jQuery.ajax({
 		  	  	   type: "POST",
-		  	  	   url: "index.php",
+		  	  	   url: ajaxurl,
 		  	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=social&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(query)+"&site_key="+siteKey,
 		  	  	   success: function(msg){
 		  	  	     jQuery('#wx-modal-loading-text').html(msg);
@@ -248,36 +247,47 @@ jQuery(document).ready(function(){
 	});
 	
 	jQuery('input#wx-photo-submit').click(function(e) {
-	  
 
-	  	var tabUrl = jQuery('#wx-photo-url').val();
-	  	var tabName = jQuery('input#wx-photo-title').val();
-	  	var siteKey = jQuery("input#wx-site-key").val();
-	  	var component = jQuery("select#wx-select-photo").val();
-
-	  	
-	  	jQuery.ajax({
-	  	   type: "POST",
-	  	   url: "index.php",
-	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=photo&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(tabUrl)+"&site_key="+siteKey,
-	  	   success: function(msg){
-	  	     jQuery('#wx-modal-loading-text').html(msg);
-	  	     
-	  	     if(msg == "Item Added")
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-	  	     	document.location.href = "index.php?option=com_weever#photoTab";
-	  	     	document.location.reload(true);
-	  	     }
-	  	     else
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html('');
-	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-	  	     }
-	  	   }
-	  	 });
-	  	 
-	  	 e.preventDefault();
+  	  	jQuery('#photoAdminForm').validate({ 
+  	  		rules: {
+  	  	  		component: { required: true },
+  	  			name: { required: true },
+  	  			url: { required: true, url: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+				
+			  	var tabUrl = jQuery('#wx-photo-url').val();
+			  	var tabName = jQuery('input#wx-photo-title').val();
+			  	var siteKey = jQuery("input#wx-site-key").val();
+			  	var component = jQuery("select#wx-select-photo").val();
+		
+			  	jQuery.ajax({
+			  	   type: "POST",
+			  	   url: ajaxurl,
+			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=photo&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(tabUrl)+"&site_key="+siteKey,
+			  	   success: function(msg){
+			  	     jQuery('#wx-modal-loading-text').html(msg);
+			  	     
+			  	     if(msg == "Item Added")
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+			  	     	document.location.href = "index.php?option=com_weever#photoTab";
+			  	     	//document.location.reload(true);
+			  	     }
+			  	     else
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html('');
+			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+			  	     }
+			  	   }
+			  	 });
+  	  		}
+  	  	});
 	  	
 	});
 	
