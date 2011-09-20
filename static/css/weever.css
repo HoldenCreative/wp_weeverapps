@@ -303,13 +303,13 @@ div#wx-nav-icon-preview-wrapper img {
  
  }
 
-.wx-dummy select, .wx-dummy input { width:220px;  }
+.wx-dummy select, .wx-dummy input { width:220px; font-size: 12px; }
 
 .wx-add-item-value-help { width:220px; }
 
 .wx-reveal, .wx-reveal select, .wx-reveal input { width:220px; }
 
-.wx-reveal input { padding-left:4px; }
+.wx-reveal input { padding-left:4px; font-size: 12px; }
 
 .wx-reveal label { 
     padding-left:4px;

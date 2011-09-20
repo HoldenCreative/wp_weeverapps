@@ -205,27 +205,31 @@ jQuery(document).ready(function(){
 		jQuery('.wx-video-label').hide();
 		jQuery('.wx-dummy').hide();
 		
-		if(jQuery(this).val() == "youtube") 
-		{
-			jQuery('#wx-add-video-youtube-help').show();
-			jQuery('label#wx-youtube-url').show();
-			jQuery('input#wx-video-url').val('');
-			jQuery('input#wx-video-url').attr('placeholder', 'http://');
-			jQuery('input#wx-video-title').val('YouTube');
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-video-reveal').hide();
+			jQuery('.wx-dummy').show();
+		} else {
+			
+			if(jQuery(this).val() == "youtube") 
+			{
+				jQuery('#wx-add-video-youtube-help').show();
+				jQuery('label#wx-youtube-url').show();
+				jQuery('input#wx-video-url').val('');
+				jQuery('input#wx-video-url').attr('placeholder', 'http://');
+				jQuery('input#wx-video-title').val('YouTube');
+			}
+			
+			if(jQuery(this).val() == "vimeo") 
+			{
+				jQuery('#wx-add-video-vimeo-help').show();
+				jQuery('label#wx-vimeo-url').show();
+				jQuery('input#wx-video-url').val('');
+				jQuery('input#wx-video-url').attr('placeholder', 'http://');
+				jQuery('input#wx-video-title').val('Vimeo');
+			}
+			
+			jQuery('.wx-video-reveal').show();
 		}
-		
-		if(jQuery(this).val() == "vimeo") 
-		{
-			jQuery('#wx-add-video-vimeo-help').show();
-			jQuery('label#wx-vimeo-url').show();
-			jQuery('input#wx-video-url').val('');
-			jQuery('input#wx-video-url').attr('placeholder', 'http://');
-			jQuery('input#wx-video-title').val('Vimeo');
-		}
-		
-		
-		jQuery('.wx-video-reveal').show();
-		
 	});
 	
 	jQuery('#wx-select-page').change(function() {
