@@ -294,43 +294,57 @@ jQuery(document).ready(function(){
 	
 	jQuery('input#wx-calendar-submit').click(function(e) {
 	  
-	  	var tabEmail = jQuery('#wx-google-calendar-email').val();
-	  	var tabUrl = jQuery('#wx-facebook-calendar-url').val();
-	  	var tabName = jQuery('input#wx-calendar-title').val();
-	  	var siteKey = jQuery("input#wx-site-key").val();
-	  	var timezone = jQuery("#wx-select-facebook-timezone-time").val();
-	  	var component = jQuery("select#wx-select-calendar").val();
-	  	var componentBehaviour = null;
-	  	
-	  	if(component == "google.calendar") {
-	  		componentBehaviour = tabEmail;
-	  	} else {
-	  		componentBehaviour = tabUrl;
-	  	}
-	  	
-	  	jQuery.ajax({
-	  	   type: "POST",
-	  	   url: "index.php",
-	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=calendar&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(componentBehaviour)+"&site_key="+siteKey+"&var="+timezone,
-	  	   success: function(msg){
-	  	     jQuery('#wx-modal-loading-text').html(msg);
-	  	     
-	  	     if(msg == "Item Added")
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-	  	     	document.location.href = "index.php?option=com_weever#calendarTab";
-	  	     	document.location.reload(true);
-	  	     }
-	  	     else
-	  	     {
-	  	     	jQuery('#wx-modal-secondary-text').html('');
-	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-	  	     }
-	  	   }
-	  	 });
-	  	 
-	  	 e.preventDefault();
-	  	
+  	  	jQuery('#calendarAdminForm').validate({ 
+  	  		rules: {
+  	  	  		component: { required: true },
+  	  			name: { required: true },
+  	  			url: { required: true, url: true },
+  	  			email: { required: true, email: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+			  	e.preventDefault();
+			  	 
+			  	var tabEmail = jQuery('#wx-google-calendar-email').val();
+			  	var tabUrl = jQuery('#wx-facebook-calendar-url').val();
+			  	var tabName = jQuery('input#wx-calendar-title').val();
+			  	var siteKey = jQuery("input#wx-site-key").val();
+			  	var timezone = jQuery("#wx-select-facebook-timezone-time").val();
+			  	var component = jQuery("select#wx-select-calendar").val();
+			  	var componentBehaviour = null;
+			  	
+			  	if(component == "google.calendar") {
+			  		componentBehaviour = tabEmail;
+			  	} else {
+			  		componentBehaviour = tabUrl;
+			  	}
+			  	
+			  	jQuery.ajax({
+			  	   type: "POST",
+			  	   url: ajaxurl,
+			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=calendar&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(componentBehaviour)+"&site_key="+siteKey+"&var="+timezone,
+			  	   success: function(msg){
+			  	     jQuery('#wx-modal-loading-text').html(msg);
+			  	     
+			  	     if(msg == "Item Added")
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+			  	     	document.location.href = "index.php?option=com_weever#calendarTab";
+			  	     	document.location.reload(true);
+			  	     }
+			  	     else
+			  	     {
+			  	     	jQuery('#wx-modal-secondary-text').html('');
+			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+			  	     }
+			  	   }
+			  	 });
+  	  		}
+  	  	});
+
 	});
 	
 	

@@ -91,30 +91,35 @@ jQuery(document).ready(function(){
 		jQuery('.wx-calendar-help').hide();
 		jQuery('.wx-calendar-label').hide();
 		jQuery('.wx-dummy').hide();
-		jQuery('.wx-calendar-reveal').show();
-		
-		if(jQuery(this).val() == "google.calendar") 
-		{
-			jQuery('label#wx-google-calendar-email-label').show();
-			jQuery('label#wx-facebook-calendar-url-label').hide();
-			jQuery('div.wx-facebook-calendar-reveal').hide();
-			jQuery('div.wx-google-calendar-reveal').show();
-			jQuery('input#wx-google-calendar-email').val('');
-			jQuery('input#wx-google-calendar-email').attr('placeholder', 'yourname@email.com');
-			jQuery('input#wx-calendar-title').val('Google Calendar');
-		}
-		
-		if(jQuery(this).val() == "facebook.events") 
-		{
-			jQuery('label#wx-facebook-calendar-url-label').show();
-			jQuery('label#wx-google-calendar-email-label').hide();
-			jQuery('div.wx-google-calendar-reveal').hide();
-			jQuery('div.wx-facebook-calendar-reveal').show();
-			jQuery('input#wx-facebook-calendar-url').val('');
-			jQuery('input#wx-facebook-calendar-url').attr('placeholder', 'http://');
-			jQuery('input#wx-calendar-title').val('Facebook Events');
-		}
-		
+
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-reveal').hide();
+			jQuery('.wx-dummy').show();
+		} else {
+			jQuery('.wx-calendar-reveal').show();
+			
+			if(jQuery(this).val() == "google.calendar") 
+			{
+				jQuery('label#wx-google-calendar-email-label').show();
+				jQuery('label#wx-facebook-calendar-url-label').hide();
+				jQuery('div.wx-facebook-calendar-reveal').hide();
+				jQuery('div.wx-google-calendar-reveal').show();
+				jQuery('input#wx-google-calendar-email').val('');
+				jQuery('input#wx-google-calendar-email').attr('placeholder', 'yourname@email.com');
+				jQuery('input#wx-calendar-title').val('Google Calendar');
+			}
+			
+			if(jQuery(this).val() == "facebook.events") 
+			{
+				jQuery('label#wx-facebook-calendar-url-label').show();
+				jQuery('label#wx-google-calendar-email-label').hide();
+				jQuery('div.wx-google-calendar-reveal').hide();
+				jQuery('div.wx-facebook-calendar-reveal').show();
+				jQuery('input#wx-facebook-calendar-url').val('');
+				jQuery('input#wx-facebook-calendar-url').attr('placeholder', 'http://');
+				jQuery('input#wx-calendar-title').val('Facebook Events');
+			}
+		}		
 	});
 	
 	
