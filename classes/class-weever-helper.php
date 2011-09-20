@@ -88,5 +88,12 @@
 
     		return $link;
         }
-
+        
+        public static function get_user_link_relative( $user ) {
+            $link = "index.php?author_name=$user->user_nicename";
+            return $link;
+        }
+        
+        public static function get_user_feed_link_relative( $user, $feed = 'r3s' ) {
+        }
     }

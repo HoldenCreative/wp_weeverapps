@@ -20,48 +20,63 @@
 
 jQuery(document).ready(function(){ 
 
-	jQuery('input#wx-contact-h').click(function(e) {
+	jQuery('input#wx-contact-submit').click(function(e) {
 	  
-		var componentId = jQuery("select[name=component_id]").val();
-		var tabName = jQuery('input#wx-contact-title').val();
-		var siteKey = jQuery("input#wx-site-key").val();
-		
-		var emailForm;
-		
-		if(jQuery("input[name=emailform]").is(":checked"))
-			emailForm = jQuery("input[name=emailform]").val();
-		else
-			emailForm = 0;
-			
-		var googleMaps;
-		
-		if(jQuery("input[name=googlemaps]").is(":checked"))
-			googleMaps = jQuery("input[name=googlemaps]").val();
-		else
-			googleMaps = 0;
-		
-		jQuery.ajax({
-		 type: "POST",
-		 url: "index.php",
-		 data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=contact&emailform="+emailForm+"&googlemaps="+googleMaps+"&component=contact&component_id="+componentId+"&weever_action=add&published=1&site_key="+siteKey,
-		 success: function(msg){
-		   jQuery('#wx-modal-loading-text').html(msg);
-		   
-		   if(msg == "Item Added")
-		   {
-		   	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		   	document.location.href = "index.php?option=com_weever#contactTab";
-		   	document.location.reload(true);
-		   }
-		   else
-		   {
-		   	jQuery('#wx-modal-secondary-text').html('');
-		   	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-		   }
-		 }
-		});
-		
-		e.preventDefault();
+  	  	// Validation
+  	  	jQuery('#contactAdminForm').validate({ 
+  	  		rules: {
+  	  			name: { required: true },
+  	  			component_id: { required: true },
+  	  			"wx-select-contact": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+		  	  					
+				var componentId = jQuery("select[name=component_id]").val();
+				var tabName = jQuery('input#wx-contact-title').val();
+				var siteKey = jQuery("input#wx-site-key").val();
+				
+				var emailForm;
+				
+				if(jQuery("input[name=emailform]").is(":checked"))
+					emailForm = jQuery("input[name=emailform]").val();
+				else
+					emailForm = 0;
+					
+				var googleMaps;
+				
+				if(jQuery("input[name=googlemaps]").is(":checked"))
+					googleMaps = jQuery("input[name=googlemaps]").val();
+				else
+					googleMaps = 0;
+				
+				jQuery.ajax({
+				 type: "POST",
+				 url: ajaxurl,
+				 data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=contact&emailform="+emailForm+"&googlemaps="+googleMaps+"&component=contact&component_id="+componentId+"&weever_action=add&published=1&site_key="+siteKey,
+				 success: function(msg){
+				   jQuery('#wx-modal-loading-text').html(msg);
+				   
+				   if(msg == "Item Added")
+				   {
+				   	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+				   	document.location.href = "index.php?option=com_weever#contactTab";
+				   	document.location.reload(true);
+				   }
+				   else
+				   {
+				   	jQuery('#wx-modal-secondary-text').html('');
+				   	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+				   }
+				 }
+				});
+  	  		}
+  	  	});
 	});
 	
 	jQuery('input#wx-page-submit').click(function(e) {
@@ -97,13 +112,7 @@ jQuery(document).ready(function(){
 	});
 	
 	jQuery('input#wx-blog-submit').click(function(e) {
-	  
-		var optionVal = jQuery('#wx-select-blog').val();
-  		var cmsFeed = jQuery("select[name=cms_feed]").val();
-  	  	var tabName = jQuery('input#wx-blog-title').val();
-  	  	var tabSearchTerm = jQuery('input[name=s]').val();
-  	  	var siteKey = jQuery("input#wx-site-key").val();
-  	  	
+
   	  	// Validation
   	  	jQuery('#blogAdminForm').validate({ 
   	  		rules: {
@@ -120,8 +129,14 @@ jQuery(document).ready(function(){
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
   	  			
-  	  			if (jQuery('#wx-select-blog').val() == 's') {
-  	  				cmsFeed = 'index.php?s='+encodeURIComponent(jQuery('input[name=s]').val())+'&feed=r3s';
+  	  			var optionVal = jQuery('#wx-select-blog').val();
+  	    		var cmsFeed = jQuery("select[name=cms_feed]").val();
+  	    	  	var tabName = jQuery('input#wx-blog-title').val();
+  	    	  	var tabSearchTerm = jQuery('input[name=s]').val();
+  	    	  	var siteKey = jQuery("input#wx-site-key").val();
+  	    	  	
+  	  			if (optionVal == 's') {
+  	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
   	  			}
   	  			
   		  	  	jQuery.ajax({

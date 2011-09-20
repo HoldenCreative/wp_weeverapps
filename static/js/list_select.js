@@ -320,14 +320,26 @@ jQuery(document).ready(function(){
 		jQuery('.wx-contact-help').hide();
 		jQuery('.wx-dummy').hide();
 		
-		if(jQuery(this).val() == "jcontact") 
-		{
-			jQuery('#wx-add-contact-joomla').show();
-			jQuery('#wx-add-contact-joomla-help').show();
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-contact-reveal').hide();
+		} else {
+			if(jQuery(this).val() == "jcontact") 
+			{
+				jQuery('#wx-add-contact-joomla').show();
+				jQuery('#wx-add-contact-joomla-help').show();
+			}
+			
+			jQuery('.wx-contact-reveal').show();
 		}
-		
-		jQuery('.wx-contact-reveal').show();
 	});
+	
+	jQuery('.wx-component-id-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-contact-title').val(jQuery('option:selected', this).text());
+		}
+	});
+	
 	
 	jQuery('#wx-select-component').change(function() {
 		jQuery('.wx-title').attr('name','noname');

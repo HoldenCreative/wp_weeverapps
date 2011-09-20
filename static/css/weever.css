@@ -19,7 +19,8 @@
 */
 
 /* Content */
-.wrap { min-width: 900px; padding-right: 20px; }
+.wrap { min-width: 920px; padding-right: 20px; }
+ul#listTabsSortable { padding-right: 10%; }
 
 /* Adminlist grids */
 

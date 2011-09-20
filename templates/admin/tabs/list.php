@@ -32,7 +32,7 @@ $tabsUnpublished = 0;
 ?>
 
 <div id="listTabs">
-	<ul id="listTabsSortable" style="padding-right: 50%">
+	<ul id="listTabsSortable">
 
         <?php
 
