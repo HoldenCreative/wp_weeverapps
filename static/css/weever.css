@@ -18,6 +18,9 @@
 *
 */
 
+/* Content */
+.wrap { width: 940px; padding-right: 20px; }
+
 /* Adminlist grids */
 
 table.adminlist {
@@ -167,27 +170,31 @@ label.wx-check-label {
     color: #000000;
     cursor: pointer;
     display: block;
-    position: absolute;
+    /*position: absolute;*/
+    float: right;
     right: 198px;
     text-align: right;
     top: 110px;
     z-index: 50;
+    margin-right: 10px;
 }
 
 #wx-app-status-online {
-	position: absolute;
+	/*position: absolute;*/
+	float: right;
 	top: 20px;
 	left:  -50px;
-	text-align: right;
+	/*text-align: right;*/
     color: #669966;
 }
 
 #wx-app-status-offline {
-	position: absolute;
+	/*position: absolute;*/
+	float: right;
 	top: 20px;
 	left:  -50px;
     color: #996666;
-    text-align: right;
+    /*text-align: right;*/
     font-weight: bold;
 }
 
@@ -201,7 +208,7 @@ label.wx-check-label {
     padding: 0;
 }
 
-
+div#toptabs { clear: right; }
 
 .icon-48-weever_toolbar_title   { background-image: url(../icons/icon-48-weever_toolbar_title.png); }
 .icon-48-weever_toolbar_title_staging   { background-image: url(../icons/icon-48-weever_toolbar_title_staging.png); }
