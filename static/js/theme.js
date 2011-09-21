@@ -21,7 +21,6 @@
 
 jQuery(document).ready(function(){ 
 
-
 	jQuery('#wx-modal-loading')
 	    .hide()  
 	    .ajaxStart(function() {
@@ -36,8 +35,29 @@ jQuery(document).ready(function(){
 	    			jObj.fadeOut(750);
 	    		}, 600 );
 	    });
+	/*
+	jQuery('input#wx-theme-submit').click(function(e) {
+		// Validation uses classes set on the html elements themselves
+ 	  	jQuery('#themeAdminForm').validate({
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+	  	  	
+  	  		submitHandler: function(form) {
+  	  			console.debug('test');
+  	  		}, 
+  	  		invalidHandler: function(form) {
+  	  			
+  	  		}
+ 	  	});
+	});
 	
-
+	jQuery('#tabs').bind('tabsselect', function(event, ui) {
+		jQuery('#themeAdminForm').validate({
+			errorPlacement: function(error, element) { }
+		});
+		return jQuery('#themeAdminForm').valid();
+	});*/
+	
 	//
 	jQuery("#wx-app-status-button").click(function(e) {
 	

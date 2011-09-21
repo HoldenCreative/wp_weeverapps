@@ -1,7 +1,8 @@
 
-    <form action="" enctype="multipart/form-data" method="post">
+<div class="wx-add-ui">
+    <form action="" enctype="multipart/form-data" method="post" id="themeAdminForm">
 
-        <input name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
+        <input id="wx-theme-submit" name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
 
         <?php wp_nonce_field( 'weever_settings', 'weever_settings_nonce' ); ?>
 
@@ -20,7 +21,7 @@
                     	<tr>
                         	<td class="key hasTip" title="<?php echo __( 'Changes the design layout of your app. More themes coming soon!' ); ?>"><?php echo __( 'Choose a Template' ); ?></td>
                         	<td>
-                            	<select name="template" class="wx-220-select">
+                            	<select name="template" class="wx-220-select required">
                             	<option value="sencha" <?php echo ($weeverapp->theme->template == 'sencha' ? "selected='selected'":""); ?>><?php echo __( 'Weever Apps Light&trade;' ); ?></option>
                             	</select>
                         	</td>
@@ -28,7 +29,7 @@
                     	<tr>
                         	<td class="key hasTip" title="<?php echo __( 'Selects the method in which the titlebar is generated from.' ); ?>"><?php echo __( 'Logo Type' ); ?></td>
                         	<td>
-                            	<select name="titlebarSource" class="wx-220-select">
+                            	<select name="titlebarSource" class="wx-220-select required">
                                 	<option value="text" <?php echo ($weeverapp->theme->titlebarSource == 'text' ? "selected='selected'":""); ?>><?php echo __( 'Use Website Name as a Text Title:' ); ?> ("<?php echo strip_tags($weeverapp->titlebar_title); ?>")</option>
                                 	<option value="image" <?php echo ($weeverapp->theme->titlebarSource == 'image' ? "selected='selected'":""); ?>><?php echo __( 'Use Logo Image (upload below)' ); ?></option>
                                 	<option value="html" <?php echo ($weeverapp->theme->titlebarSource == 'html' ? "selected='selected'":""); ?>><?php echo __( 'Use Custom HTML (in advanced theme settings)' ); ?></option>
@@ -37,11 +38,11 @@
                     	</tr>
                     	<tr>
                         	<td class="key hasTip" title="<?php echo __( 'This name is used across the top of your app if you choose a text-based titlebar. Also, if you enabled <b>Weever Ecosystem</b>, this name will be used for your listing. ' ); ?>"><?php echo __( 'Website Name' ); ?></td>
-                        	<td><input type="text" name="titlebar_title" maxlength="35" style="width:250px;" value="<?php echo htmlentities($weeverapp->titlebar_title, ENT_QUOTES, "UTF-8"); ?>" /></td>
+                        	<td><input type="text" name="titlebar_title" maxlength="35" style="width:250px;" value="<?php echo htmlentities($weeverapp->titlebar_title, ENT_QUOTES, "UTF-8"); ?>" class="required" /></td>
                     	</tr>
                     	<tr>
                         	<td class="key hasTip" title="<?php echo __( "This name is used for visitors who <b>install</b> your app to their homescreen, and appears underneath the app's icon." ); ?>"><?php echo __( 'App Installation Name' ); ?></td>
-                        	<td><input type="text" name="title" maxlength="10" style="width:90px;" value="<?php echo htmlentities($weeverapp->title, ENT_QUOTES, "UTF-8"); ?>" /></td>
+                        	<td><input type="text" name="title" maxlength="10" style="width:90px;" value="<?php echo htmlentities($weeverapp->title, ENT_QUOTES, "UTF-8"); ?>" class="required" /></td>
                     	</tr>
                 	</table>
                 	</fieldset>
@@ -178,3 +179,4 @@
         </div>
 
     </form>
+</div>
