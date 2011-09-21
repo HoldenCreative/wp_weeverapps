@@ -9,8 +9,12 @@ class WeeverApp {
 
         // Initial settings
         $this->_data['theme'] = new WeeverAppThemeStyles();
-        $this->_data['appEnabled'] = get_option( 'weever_app_enabled' );
-        $this->_data['site_key'] = get_option( 'weever_api_key' );
+        $this->_data['appEnabled'] = get_option( 'weever_app_enabled', 0 );
+        $this->_data['site_key'] = get_option( 'weever_api_key', '' );
+        $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
+        $this->_data['primary_domain'] = '';
+        $this->_data['titlebar_title'] = '';
+        $this->_data['title'] = '';
 
         // Stub of rows
         $blogTabRow = new stdClass();
@@ -59,7 +63,7 @@ class WeeverApp {
         $this->_data['blogRows'] = $subrow;
         $this->_data['formRows'] = $this->_data['socialRows'] = $this->_data['photoRows'] = $this->_data['pageRows'] = $this->_data['videoRows'] = $this->_data['contactRows'] = $this->_data['calendarRows'] = array();
         $this->_data['socialRows'] = $subrow;
-        
+
         if ( $load_from_server ) {
             $this->reload_from_server();
         }
@@ -77,10 +81,82 @@ class WeeverApp {
 
     }
 
-    public function reload_from_server() {
-        if ( ! empty( $this->_data['site_key'] ) )
-        {
+    public function __set($var, $val) {
 
+        switch ( $var ) {
+            case 'staging_mode':
+                if ( $val )
+                    $this->_data['staging_mode'] = 1;
+                else
+                    $this->_data['staging_mode'] = 0;
+                break;
+
+            case 'site_key':
+                // TODO: Add any pre-validation here
+                $this->_data['site_key'] = $val;
+                break;
+
+            default:
+                throw new Exception( "Unable to set $var" );
         }
+
+    }
+
+    /**
+     * Attempt to reload the data from the Weever server using the API
+     */
+    private function reload_from_server() {
+        if ( ! empty( $this->_data['site_key'] ) ) {
+        	// Test getting the data using this api key
+        	// TODO: Give either the stage URL or blank if live
+        	$stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
+        	$server = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
+
+        	$postdata = http_build_query(
+        			array(
+        				'stage' => $stage_url,
+        				'app' => 'json',
+        				'site_key' => $this->_data['site_key'],
+        				'm' => "tab_sync",
+        				'version' => WeeverConst::VERSION,
+        				'generator' => WeeverConst::NAME
+        				)
+        			);
+
+        	$result = wp_remote_get( $server."?".$postdata );
+
+        	if ( is_array( $result ) and isset( $result['body'] ) ) {
+        	    $state = json_decode($result['body']);
+
+            	if ( "Site key missing or invalid." == $result['body'] ) {
+            	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
+                } else {
+                    // Get the settings
+                    // TODO: Finish this function
+                    $this->_data['primary_domain'] = $state->results->config->primary_domain;
+                }
+        	} else {
+        	    throw new Exception( __( 'Error trying to retrieve settings from Weever Apps server' ) );
+        	}
+        }
+    }
+
+    /**
+     * Save the currently stored configuration to the server
+     *
+     * @throws exception on error
+     */
+    public function save() {
+
+        update_option( 'weever_app_enabled', $this->_data['appEnabled'] );
+        update_option( 'weever_api_key', $this->_data['site_key'] );
+        update_option( 'weever_staging_mode', $this->_data['staging_mode'] );
+
+        // TODO: Push the configuration to the server
+
+
+        // Reload the data afterwards to ensure everything was saved
+        // TODO: Possibly change the API to return the data
+        $this->reload_from_server();
     }
 }

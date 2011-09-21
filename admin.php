@@ -36,15 +36,6 @@ function weever_admin_add_page() {
  * TODO: Wrap all tabs into one so they can flip between them sans refresh?
  */
 function weever_admin_page() {
-
-	if ( isset($_POST['submit']) ) {
-		if ( function_exists('current_user_can') && ! current_user_can('manage_options') )
-			die( __( 'Access denied', 'weever' ) );
-
-        // Most form control handled via AJAX calls rather than direct post
-        // TODO: Any additional post handling here
-	}
-
 	// Set the content
 	// Should never get here without the page get var being set
 	// TODO: Create a WeeverView class wrapper to pass arbitrary options to the view?
@@ -52,10 +43,44 @@ function weever_admin_page() {
 	$content = dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php';
 
 	// Load the weeverapp object, which fetches the admin page content
-    $weeverapp = new WeeverApp();
+	try {
+        $weeverapp = new WeeverApp();
+	} catch (Exception $e) {
+	    add_settings_error('weever_settings', 'weever_settings', __( 'Unable to communicate with the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	}
 
 	if ( ! file_exists( $content ) )
 	    die( __( 'Invalid page given', 'weever' ) );
+
+    // Handle form submission
+	if ( isset($_POST['submit']) ) {
+
+	    //die(var_dump($_REQUEST));
+
+		if ( ( function_exists('current_user_can') && ! current_user_can('manage_options') ) || ! check_admin_referer( 'weever_settings', 'weever_settings_nonce' ) )
+			die( __( 'Access denied', 'weever' ) );
+
+    	switch ( $_GET['page'] ) {
+    	    case 'weever-theme':
+
+    	        break;
+
+    	    case 'weever-account':
+    	        try {
+                    $weeverapp->site_key = $_POST['site_key'];
+                    $weeverapp->save();
+                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps account settings saved', 'weever' ), 'updated');
+    	        } catch (Exception $e) {
+        	        add_settings_error('weever_api_key', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+    	        }
+    	        break;
+
+    	    case 'weever-config':
+    	        break;
+    	}
+
+        // Most form control handled via AJAX calls rather than direct post
+	}
 
 	// Include the main content to fire things off
 	require( dirname( __FILE__) . '/templates/admin/layout.php' );
@@ -88,13 +113,14 @@ function weever_admin_init() {
 
         return;
     }
-
-    register_setting( 'weever_options', 'weever_api_key', 'weever_api_key_validate' );
-    add_settings_section( 'weever_main', __('Weever Apps Settings'), 'weever_section_text', 'weever' );
-    add_settings_field( 'weever_api_key', __('Weever Apps API Key'), 'weever_api_key_string', 'weever', 'weever_main' );
 }
 
 add_action( 'admin_init', 'weever_admin_init' );
+
+function weever_handle_theme_validation() {
+    var_dump($_FILES);
+    echo "<p>";
+}
 
 /**
  * Load styles needed for Weever Apps
@@ -134,37 +160,30 @@ function weever_page_scripts_init() {
     	    case 'weever-account':
                 wp_register_script( 'weever.account.js', plugins_url( 'static/js/account.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.account.js' );
-                wp_localize_script( 'weever.account.js', 'WPText', WeeverHelper::get_js_strings() );
                 break;
 
             case 'weever-list':
                 wp_register_script( 'weever.list_icons.js', plugins_url( 'static/js/list_icons.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list_icons.js' );
-                wp_localize_script( 'weever.list-icons.js', 'WPText', WeeverHelper::get_js_strings() );
 
                 wp_register_script( 'weever.list_select.js', plugins_url( 'static/js/list_select.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list_select.js' );
-//                wp_localize_script( 'weever.list_select.js', 'WPText', WeeverHelper::get_js_strings() );
 
                 wp_register_script( 'weever.list_submit.js', plugins_url( 'static/js/list_submit.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list_submit.js' );
-//                wp_localize_script( 'weever.list_submit.js', 'WPText', WeeverHelper::get_js_strings() );
 
                 wp_register_script( 'weever.list.js', plugins_url( 'static/js/list.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.list.js' );
-//                wp_localize_script( 'weever.list.js', 'WPText', WeeverHelper::get_js_strings() );
                 break;
 
     	    case 'weever-theme':
                 wp_register_script( 'weever.theme.js', plugins_url( 'static/js/theme.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.theme.js' );
-                wp_localize_script( 'weever.theme.js', 'WPText', WeeverHelper::get_js_strings() );
                 break;
 
             case 'weever-config':
                 wp_register_script( 'weever.config.js', plugins_url( 'static/js/config.js', __FILE__ ) );
                 wp_enqueue_script( 'weever.config.js' );
-                wp_localize_script( 'weever.config.js', 'WPText', WeeverHelper::get_js_strings() );
                 break;
 
             case 'weever-support':
@@ -174,10 +193,6 @@ function weever_page_scripts_init() {
                 wp_die();
     	}
 	}
-
-	// Needed for uploaders
-	wp_enqueue_script( 'media-upload' );
-    wp_enqueue_script( 'thickbox' );
 }
 
 function weever_app_toggle() {

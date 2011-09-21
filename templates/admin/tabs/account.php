@@ -1,32 +1,46 @@
 
-    <form action="options.php" method="post">
+    <form action="" method="post">
 
-        <input name="submit" type="submit" value="<?php _e('Save Changes', 'weever'); ?>" />
+        <input name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
+
+		<?php wp_nonce_field( 'weever_settings', 'weever_settings_nonce' ); ?>
 
         <div id="tabs">
         	<ul>
-        		<li><a href="#tabs-1"><?php _e('Account Information', 'weever'); ?></a></li>
-        		<li><a href="#tabs-2"><?php _e('Staging Mode (Advanced)', 'weever'); ?></a></li>
+        		<li><a href="#tabs-1"><?php _e( 'Account Information', 'weever' ); ?></a></li>
+        		<li><a href="#tabs-2"><?php _e( 'Staging Mode (Advanced)', 'weever' ); ?></a></li>
         	</ul>
         	<div id="tabs-1">
-                <table>
-                <tr valign="top">
-                <th scope="row">Upload Image</th>
-                <td><label for="upload_image">
-                <input id="upload_image" type="text" size="36" name="upload_image" value="" />
-                <input id="upload_image_button" type="button" value="Upload Image" />
-                <br />Enter an URL or upload an image for the banner.
-                </label></td>
-                </tr>
-                </table>
 
-                <?php settings_fields('weever_options'); ?>
-                <?php do_settings_sections('weever'); ?>
+            	<div>
+                	<fieldset class='adminForm'>
+                    	<legend><?php _e( 'Weever Apps Subscription Info', 'weever' ); ?></legend>
+
+                    	<table class="admintable">
+                        	<tr><td class="key"><?php _e( 'Subscription Key', 'weever' ); ?></td>
+                        	<td><input type="text" name="site_key" maxlength="42" style="width:250px;" value="<?php echo $weeverapp->site_key; ?>" /></td>
+                        	</tr>
+
+                        	<tr><td class="key"><?php _e( 'Subscription Domain' ); ?></td>
+                        	<td><?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever'), $weeverapp->primary_domain ); ?></td>
+                        	</tr>
+                    	</table>
+                	</fieldset>
+            	</div>
 
         	</div>
         	<div id="tabs-2">
-        		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-        		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        		<?php if ($weeverapp->staging_mode): ?>
+		        <input name="stagingmode" type="submit" value="<?php _e( 'Turn staging mode OFF', 'weever' ); ?>" />
+        		<?php else: ?>
+		        <input name="stagingmode" type="submit" value="<?php _e( 'Turn staging mode ON', 'weever' ); ?>" />
+				<?php endif; ?>
+
+        		<p><?php _e( 'Staging mode creates a separate copy of your Weever App in a test environment. Changes made in staging mode will not affect your public or live app.' ); ?></p>
+
+				<p><?php _e( 'Use staging mode when developing a new site on a test server, or to preview changes in a safely while your Weever App is already online.' ); ?></p>
+
+				<p><?php _e( 'Note: When in staging mode, your private QR Code and URL will update, below.' ); ?></p>
         	</div>
         </div>
 
