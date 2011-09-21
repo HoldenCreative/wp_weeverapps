@@ -5,7 +5,7 @@
     $onlineSpan = "";
     $offlineSpan = "";
 
-    if ($weeverapp->appEnabled) {
+    if ($weeverapp->app_enabled) {
     	$offlineSpan = 'class="wx-app-hide-status"';
     	$offlineStatusClass = "";
     } else {

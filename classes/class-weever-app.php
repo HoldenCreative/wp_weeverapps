@@ -3,18 +3,43 @@
 class WeeverApp {
 
     private $_data = array();
+    private $_device_options = array(
+            // Granular options
+            'DetectIphoneOrIpod' => 0,
+            'DetectAndroid' => 0,
+            'DetectBlackBerryTouch' => 0,
+            'DetectWebOSTablet' => 0,
+            'DetectIpad' => 0,
+            'DetectBlackBerryTablet' => 0,
+            'DetectAndroidTablet' => 0,
+            'DetectGoogleTV' => 0,
+            'DetectAppleTVTwo' => 0,
+            'DetectTouchPad' => 0,
+            // Options if granular is disabled
+            'DetectTierWeeverSmartphones' => 1,
+            'DetectTierWeeverTablets' => 0,
+        );
 
     // TODO: Grab most of this data from the API
     public function __construct( $load_from_server = true ) {
 
         // Initial settings
         $this->_data['theme'] = new WeeverAppThemeStyles();
-        $this->_data['appEnabled'] = get_option( 'weever_app_enabled', 0 );
+        $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
         $this->_data['site_key'] = get_option( 'weever_api_key', '' );
         $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
         $this->_data['primary_domain'] = '';
         $this->_data['titlebar_title'] = '';
         $this->_data['title'] = '';
+        $this->_data['google_analytics'] = '';
+        $this->_data['ecosystem'] = '';
+        $this->_data['domain'] = '';
+
+        // Device detection settings
+        $this->_data['granular'] = get_option( 'weever_granular', 0 );
+        foreach ( $this->_device_options as $key => $value ) {
+             $this->_data[$key] = get_option( 'weever_device_option_'.$key, $value );
+        }
 
         // Stub of rows
         $blogTabRow = new stdClass();
@@ -96,8 +121,16 @@ class WeeverApp {
                 $this->_data['site_key'] = $val;
                 break;
 
+            case 'primary_domain':
+                throw new Exception( "Cannot set $var directly" );
+                break;
+
             default:
-                throw new Exception( "Unable to set $var" );
+                if ( array_key_exists( $var, $this->_data ) ) {
+                    $this->_data[$var] = $val;
+                } else {
+                    throw new Exception( "Invalid parameter name $var" );
+                }
         }
 
     }
@@ -148,7 +181,7 @@ class WeeverApp {
      */
     public function save() {
 
-        update_option( 'weever_app_enabled', $this->_data['appEnabled'] );
+        update_option( 'weever_app_enabled', $this->_data['app_enabled'] );
         update_option( 'weever_api_key', $this->_data['site_key'] );
         update_option( 'weever_staging_mode', $this->_data['staging_mode'] );
 
