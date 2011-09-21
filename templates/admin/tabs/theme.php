@@ -57,8 +57,8 @@
                     		<div>
                         		<div class="wx-theme-caption"><?php echo __( 'Tablet Portrait<br />(1536 x 2008 pixel PNG)' ); ?></div>
                                         <input type="file" class="wx-theme-input" name="tablet_load_live" size="13" />
-                        		<a href='../media/com_weever/tablet_load_live.png?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 920}}'>
-                        		<img class="wx-theme-image" src="../media/com_weever/tablet_load_live.png?nocache=<?php echo microtime(); ?>" />
+                        		<a href='<?php echo $weeverapp->theme->tablet_load_live; ?>?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 920}}'>
+                        		<img class="wx-theme-image" src="<?php echo $weeverapp->theme->tablet_load_live; ?>?nocache=<?php echo microtime(); ?>" />
                         		</a>
                     		</div>
 
@@ -70,8 +70,8 @@
                     		<div>
                         		<div class="wx-theme-caption"><?php echo __( 'Tablet Landscape<br />(1496 x 2048 pixel PNG)' ); ?></div>
                                         <input type="file" class="wx-theme-input" name="tablet_landscape_load_live" size="13" />
-                        		<a href='../media/com_weever/tablet_landscape_load_live.png?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 920}}'>
-                        		<img class="wx-theme-image" src="../media/com_weever/tablet_landscape_load_live.png?nocache=<?php echo microtime(); ?>" />
+                        		<a href='<?php echo $weeverapp->theme->tablet_landscape_load_live; ?>?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 920}}'>
+                        		<img class="wx-theme-image" src="<?php echo $weeverapp->theme->tablet_landscape_load_live; ?>?nocache=<?php echo microtime(); ?>" />
                         		</a>
                     		</div>
 
@@ -82,8 +82,8 @@
                     		<div>
                         		<div class="wx-theme-caption"><?php echo __( 'Phone Launch Screen<br />(640 x 920 pixel PNG)' ); ?></div>
                                         <input type="file" class="wx-theme-input" name="phone_load_live" size="13" />
-                        		<a href='../media/com_weever/phone_load_live.png?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 640}}'>
-                        		<img class="wx-theme-image" src="../media/com_weever/phone_load_live.png?nocache=<?php echo microtime(); ?>" />
+                        		<a href='<?php echo $weeverapp->theme->phone_load_live; ?>?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 640}}'>
+                        		<img class="wx-theme-image" src="<?php echo $weeverapp->theme->phone_load_live; ?>?nocache=<?php echo microtime(); ?>" />
                         		</a>
                     		</div>
 
@@ -94,8 +94,8 @@
                     		<div>
                         		<div class="wx-theme-caption"><?php echo __( 'App Installation Icon<br/>(144 x 144 pixel PNG)' ); ?></div>
                                         <input type="file" class="wx-theme-input" name="icon_live" size="13" />
-                        		<a href='../media/com_weever/icon_live.png?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 144, y: 144}}'>
-                        		<img class="wx-theme-image" src="../media/com_weever/icon_live.png?nocache=<?php echo microtime(); ?>" />
+                        		<a href='<?php echo $weeverapp->theme->icon_live; ?>?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 144, y: 144}}'>
+                        		<img class="wx-theme-image" src="<?php echo $weeverapp->theme->icon_live; ?>?nocache=<?php echo microtime(); ?>" />
                         		</a>
                     		</div>
 
@@ -106,8 +106,8 @@
                     		<div>
                         		<div class="wx-theme-caption"><?php echo __( 'App Logo Image<br/>(600 x 64 pixel PNG)' ); ?></div>
                                         <input type="file" class="wx-theme-input" name="titlebar_logo_live" size="13" />
-                        		<a href='../media/com_weever/titlebar_logo_live.png?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 600, y: 64}}'>
-                        		<img class="wx-theme-image" src="../media/com_weever/titlebar_logo_live.png?nocache=<?php echo microtime(); ?>" />
+                        		<a href='<?php echo $weeverapp->theme->titlebar_logo_live; ?>?nocache=<?php echo microtime(); ?>' class='popup' rel='{handler: "iframe", size:  { x: 600, y: 64}}'>
+                        		<img class="wx-theme-image" src="<?php echo $weeverapp->theme->titlebar_logo_live; ?>?nocache=<?php echo microtime(); ?>" />
                         		</a>
                     		</div>
 

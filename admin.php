@@ -63,6 +63,32 @@ function weever_admin_page() {
     	switch ( $_GET['page'] ) {
     	    case 'weever-theme':
 
+                try {
+                    // Handle any image uploads
+                    $overrides = array( 'test_form' => false );
+                    $images = array( 'tablet_load_live', 'tablet_landscape_load_live', 'phone_load_live', 'icon_live', 'titlebar_logo_live' );
+
+                    foreach ( $images as $image ) {
+                        if ( array_key_exists( $image, $_FILES ) ) {
+                            $file = wp_handle_upload( $_FILES[$image], $overrides );
+                            if ( isset( $file['error'] ) && 'No file was uploaded.' != $file['error'] ) {
+                                add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
+                            } elseif ( isset( $file['url'] ) ) {
+                                $weeverapp->theme->$image = $file['url'];
+                                add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
+                            }
+                        }
+                    }
+
+                    // TODO: Handle other settings
+
+                    $weeverapp->theme->save();
+
+                } catch (Exception $e) {
+        	        add_settings_error('weever_theme', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+                }
+
+
     	        break;
 
     	    case 'weever-account':
