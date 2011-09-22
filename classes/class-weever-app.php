@@ -21,11 +21,16 @@ class WeeverApp {
         );
 
     // TODO: Grab most of this data from the API
+    /*
+     * Constructor
+     *
+     * @return WeeverApp
+     */
     public function __construct( $load_from_server = true ) {
 
         // Initial settings
         $this->_data['theme'] = new WeeverAppThemeStyles();
-        $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
+        $this->_data['app_enabled'] = 1; //get_option( 'weever_app_enabled', 0 );
         $this->_data['site_key'] = get_option( 'weever_api_key', '' );
         $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
         $this->_data['primary_domain'] = '';
@@ -36,7 +41,7 @@ class WeeverApp {
         $this->_data['domain'] = '';
 
         // Device detection settings
-        $this->_data['granular'] = get_option( 'weever_granular', 0 );
+        $this->_data['granular'] = get_option( 'weever_granular_devices', 0 );
         foreach ( $this->_device_options as $key => $value ) {
              $this->_data[$key] = get_option( 'weever_device_option_'.$key, $value );
         }
@@ -174,6 +179,11 @@ class WeeverApp {
         }
     }
 
+    public function & get_device_option_names() {
+        $option_names = array_keys( $this->_device_options );
+        return $option_names;
+    }
+
     /**
      * Save the currently stored configuration to the server
      *
@@ -184,6 +194,12 @@ class WeeverApp {
         update_option( 'weever_app_enabled', $this->_data['app_enabled'] );
         update_option( 'weever_api_key', $this->_data['site_key'] );
         update_option( 'weever_staging_mode', $this->_data['staging_mode'] );
+
+        // Mobile settings
+        foreach ( $this->get_device_option_names() as $option ) {
+            update_option( 'weever_device_option_'.$option, $this->_data[$option] );
+        }
+        update_option( 'weever_granular_devices', $this->_data['granular'] );
 
         // TODO: Push the configuration to the server
 

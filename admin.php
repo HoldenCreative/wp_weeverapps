@@ -102,6 +102,24 @@ function weever_admin_page() {
     	        break;
 
     	    case 'weever-config':
+    	        try {
+        	        // Save each of the mobile device options
+        	        foreach ( $weeverapp->get_device_option_names() as $option ) {
+                        // Sanitize input
+                        $weeverapp->$option = ( isset( $_POST[$option] ) && $_POST[$option] ) ? 1 : 0;
+        	        }
+
+        	        // Remaining options
+                    $weeverapp->google_analytics = ( isset( $_POST['google_analytics'] ) ? $_POST['google_analytics'] : '' );
+                    $weeverapp->ecosystem = ( isset( $_POST['ecosystem'] ) ? $_POST['ecosystem'] : '' );
+                    $weeverapp->domain = ( isset( $_POST['domain'] ) ? $_POST['domain'] : '' );
+                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
+                    $weeverapp->save();
+                    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps configuration settings saved', 'weever' ), 'updated');
+    	        } catch (Exception $e) {
+        	        add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+    	        }
+
     	        break;
     	}
 

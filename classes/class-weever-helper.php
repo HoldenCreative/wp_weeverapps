@@ -49,17 +49,19 @@
          */
         public static function get_js_strings() {
 		    return array(
-    			'WEEVER_JS_ENTER_NEW_APP_ICON_NAME' => __( 'Enter a New App Icon Name:' ),
-    			'WEEVER_JS_APP_UPDATED' => __( 'App Updated' ),
-    			'WEEVER_JS_PLEASE_WAIT' => __( 'Please wait, communicating with server' ),
-    			'WEEVER_JS_SAVING_CHANGES' => __( 'Saving Changes' ),
-    			'WEEVER_JS_SERVER_ERROR' => __( 'Server Error Occurred' ),
+    			'WEEVER_JS_ENTER_NEW_APP_ICON_NAME' => __( 'Enter a New App Icon Name:', 'weever' ),
+    			'WEEVER_JS_APP_UPDATED' => __( 'App Updated', 'weever' ),
+    			'WEEVER_JS_PLEASE_WAIT' => __( 'Please wait, communicating with server', 'weever' ),
+    			'WEEVER_JS_SAVING_CHANGES' => __( 'Saving Changes', 'weever' ),
+    			'WEEVER_JS_SERVER_ERROR' => __( 'Server Error Occurred', 'weever' ),
     			'WEEVER_JS_ENTER_NEW_APP_ITEM' => __( '' ),
-    			'WEEVER_JS_ARE_YOU_SURE_YOU_WANT_TO' => __( 'Are you sure you want to ' ),
-    			'WEEVER_JS_QUESTION_MARK' => __( '?' ),
-    			'WEEVER_JS_CHANGING_NAV_ICONS' => __( 'Changing Navigation Icons:' ),
-    			'WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS' => __( '<p>Weever App Icons are made with &quot;Base64&quot; -encoded CSS.</p>
-<p>To create a new icon, please upload your icon-image to a <a href="http://www.opinionatedgeek.com/dotnet/tools/base64encode/" target="_blank">Base64 Encoder</a> and paste in the results below. We strongly recommend using a black monochrome, transparent 64 x 64 pixel PNG image. [<a href="http://cartanova.ca/images/blog-icon.png" target="_blank">Example</a>]</p>' ),
+    			'WEEVER_JS_ARE_YOU_SURE_YOU_WANT_TO' => __( 'Are you sure you want to ', 'weever' ),
+    			'WEEVER_JS_QUESTION_MARK' => __( '?', 'weever' ),
+    			'WEEVER_JS_CHANGING_NAV_ICONS' => __( 'Changing Navigation Icons:', 'weever' ),
+    			'WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_A' => __( 'Weever Apps Icons are made with &quot;Base64&quot;-encoded CSS.', 'weever' ),
+                'WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_B' => __( 'To create a new icon, please upload your icon-image to a %1Base64 Encoder%2 and paste in the results below. We strongly recommend using a black monochrome, transparent 64 x 64 pixel PNG image.', 'weever' ),
+		        'WEEVER_JS_RESET_TO_DEFAULT' => __( 'Reset to Default', 'weever' ),
+		        'WEEVER_JS_NO_IMAGE_URL' => WEEVER_PLUGIN_URL . 'static/images/icons/no-image.png',
     			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here' ),
             );
         }
@@ -88,21 +90,21 @@
 
     		return $link;
         }
-        
+
         public static function get_page_link_relative( $page ) {
             return "index.php?page_id=$page->ID";
         }
-        
+
         /**
          * Get the url to the user page/feed without any permalink
-         * 
+         *
          * @param WPUser $user
          */
         public static function get_user_link_relative( $user ) {
             $link = "index.php?author_name=$user->user_nicename";
             return $link;
         }
-        
+
         public static function get_user_feed_link_relative( $user, $feed = 'r3s' ) {
         }
     }

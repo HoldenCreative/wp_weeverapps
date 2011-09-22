@@ -48,10 +48,9 @@ jQuery(function() {
 											var str = String(jQuery(this).sortable('toArray'));
 											var siteKey = jQuery("input#wx-site-key").val();
 											
-											
 											jQuery.ajax({
 											   type: "POST",
-											   url: "index.php",
+											   url: ajaxurl,
 											   data: "option=com_weever&task=ajaxSaveTabOrder&site_key="+siteKey+"&order="+str,
 											   success: function(msg){
 											     jQuery('#wx-modal-loading-text').html(msg);
@@ -85,7 +84,7 @@ jQuery(document).ready(function(){
 			
 			jQuery.ajax({
 			   type: "POST",
-			   url: "index.php",
+			   url: ajaxurl,
 				   data: "option=com_weever&task=ajaxToggleAppStatus&app_enabled=1&site_key="+siteKey,
 			   success: function(msg){
 			   
@@ -113,7 +112,7 @@ jQuery(document).ready(function(){
 	
 			jQuery.ajax({
 			   type: "POST",
-			   url: "index.php",
+			   url: ajaxurl,
 			   data: "option=com_weever&task=ajaxToggleAppStatus&app_enabled=0&site_key="+siteKey,
 			   success: function(msg){
 			   
@@ -188,14 +187,17 @@ jQuery(document).ready(function(){
 		var siteKey = jQuery("input#wx-site-key").val();
 		var txt = 	'<div class="jqimessage">'+
 			'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_CHANGING_NAV_ICONS+'</h3>'+
-			WPText.WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS+
+			WPText.WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_A+'<p>'+
+			WPText.WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_B+' <a href="http://cartanova.ca/images/blog-icon.png" target="_blank">Example</a>'+'</p>'+
 			'<div id="wx-nav-icon-preview-wrapper">'+
 			'<img id="wx-nav-icon-preview" src="">'+
-			'<img src="components/com_weever/assets/icons/no-image.png">'+
+			'<img src="'+WPText.WEEVER_JS_NO_IMAGE_URL+'">'+
 			'</div>'+
 			'<div id="wx-nav-icon-textarea-wrapper">'+
 			'<textarea name="nav_icon" id="wx-nav-icon-textarea" placeholder="'+WPText.WEEVER_JS_CHANGING_NAV_PASTE_CODE+'"></textarea>'+
 			'<br/><br/></div></div>';
+		
+		txt = txt.replace('%1', '<a href="http://www.opinionatedgeek.com/dotnet/tools/base64encode/" target="_blank">').replace('%2', '</a>');
 					
 		var clickedElem = jQuery(this);
 		
@@ -208,7 +210,7 @@ jQuery(document).ready(function(){
 				
 				jQuery.ajax({
 				   type: "POST",
-				   url: "index.php",
+				   url: ajaxurl,
 				   data: "option=com_weever&task=ajaxSaveTabIcon&icon="+encodeURIComponent(tabIcon)+"&type="+tabType+'&site_key='+siteKey,
 				   success: function(msg){
 				     jQuery('#wx-modal-loading-text').html(msg);
@@ -299,7 +301,7 @@ jQuery(document).ready(function(){
 				
 				jQuery.ajax({
 				   type: "POST",
-				   url: "index.php",
+				   url: ajaxurl,
 				   data: "option=com_weever&task=ajaxSaveTabName&name="+encodeURIComponent(tabName)+"&id="+tabId+'&site_key='+siteKey,
 				   success: function(msg){
 				     jQuery('#wx-modal-loading-text').html(msg);
@@ -319,7 +321,7 @@ jQuery(document).ready(function(){
 				 });
 			
 			}
-		}	
+		};	
 		
 		submitCheck = function(v,m,f){
 			
@@ -332,7 +334,7 @@ jQuery(document).ready(function(){
 			
 			return true;
 		
-		}		
+		};		
 		
 		var tabName = jQuery.prompt(txt, {
 				callback: myCallbackForm, 
@@ -376,7 +378,7 @@ jQuery(document).ready(function(){
 				
 				jQuery.ajax({
 				   type: "POST",
-				   url: "index.php",
+				   url: ajaxurl,
 				   data: "option=com_weever&task=ajaxSaveTabName&name="+encodeURIComponent(tabName)+"&id="+tabId+'&site_key='+siteKey,
 				   success: function(msg){
 				     jQuery('#wx-modal-loading-text').html(msg);
@@ -523,7 +525,7 @@ jQuery(document).ready(function(){
 	
 		jQuery.ajax({
 		   type: "POST",
-		   url: "index.php",
+		   url: ajaxurl,
 		   data: "option=com_weever&task=ajaxSaveSubtabOrder&site_key="+siteKey+"&type="+tabType+"&dir=up&id="+tabId,
 		   success: function(msg){
 		     jQuery('#wx-modal-loading-text').html(msg);
@@ -553,7 +555,7 @@ jQuery(document).ready(function(){
 	
 		jQuery.ajax({
 		   type: "POST",
-		   url: "index.php",
+		   url: ajaxurl,
 		   data: "option=com_weever&task=ajaxSaveSubtabOrder&site_key="+siteKey+"&dir=down&type="+tabType+"&id="+tabId,
 		   success: function(msg){
 		     jQuery('#wx-modal-loading-text').html(msg);

@@ -6,7 +6,7 @@
 </div>
 
 
-<form action='index.php' enctype='multipart/form-data' method='post' name='adminForm' id='adminForm'>
+<form action='' method='post' name='adminForm' id='adminForm'>
 
     <input name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
 
@@ -89,18 +89,18 @@
         		<fieldset>
         			<legend><?php echo __( 'Advanced Device Settings', 'weever' ); ?></legend>
 
-            		<div><input type="checkbox" value="1" class="wx-check" name="granular_devices" id="wx-granular-devices" <?php echo ($weeverapp->granular ? "CHECKED" : ""); ?> /><label class="wx-check-label" for="wx-granular-devices"><?php echo __( 'Use Advanced Device Settings (Replaces Basic Settings)', 'weever' ); ?></label></div>
+            		<div><input type="checkbox" value="1" class="wx-check" name="granular" id="wx-granular-devices" <?php echo ($weeverapp->granular ? "CHECKED" : ""); ?> /><label class="wx-check-label" for="wx-granular-devices"><?php echo __( 'Use Advanced Device Settings (Replaces Basic Settings)', 'weever' ); ?></label></div>
 
             		<table class="admintable">
 
                 		<tr><th>&nbsp;</th>
                 		<th><?php echo __( 'Status', 'weever' ); ?></th>
-                		<th><?php echo __( 'WEEVER_CONFIG_RECOMMENDED', 'weever' ); ?></th>
-                		<th><?php echo __( 'WEEVER_CONFIG_COMPATIBILITY_GRADE', 'weever' ); ?></th></tr>
+                		<th><?php echo __( 'Recommended', 'weever' ); ?></th>
+                		<th><?php echo __( 'Weever Apps Compatibility Grade', 'weever' ); ?></th></tr>
 
 
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_APPLE_IPOD_IPHONE', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'Apple iPhone + iPod', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectIphoneOrIpod">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -108,10 +108,10 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_APPLE_IPOD_IPHONE_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_GOOGLE_ANDROID', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'Android Smartphones', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectAndroid">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -119,10 +119,10 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_GOOGLE_ANDROID_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_BLACKBERRY_SIX_TOUCH', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'BlackBerry Touch Smartphones (OS 6+)', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectBlackBerryTouch">
                 		<option value="0"><?php echo __('Disabled'); ?></option>
@@ -130,10 +130,10 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_BLACKBERRY_SIX_TOUCH_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_HP_TOUCHPAD', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'HP TouchPad', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectWebOSTablet">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -141,11 +141,11 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Disabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_HP_TOUCHPAD_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'D (Scrolling not working)', 'weever' ); ?></td>
                 		</tr>
 
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_BLACKBERRY_PLAYBOOK', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'BlackBerry Playbook', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectBlackBerryTablet">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -153,11 +153,11 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_BLACKBERRY_PLAYBOOK_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_APPLE_IPAD', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'Apple iPad', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectIpad">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -165,11 +165,11 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_APPLE_IPAD_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_GOOGLE_ANDROID_TABLETS', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'Android Tablets', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectAndroidTablet">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -177,12 +177,12 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Enabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_GOOGLE_ANDROID_TABLETS_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'A', 'weever' ); ?></td>
                 		</tr>
 
 
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_GOOGLE_TV', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'Google TV', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectGoogleTV">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -190,10 +190,10 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Disabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_GOOGLE_TV_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'D? (Untested, in-app scrolling likely non-functional)', 'weever' ); ?></td>
                 		</tr>
 
-                		<tr><td class="key"><?php echo __( 'WEEVER_CONFIG_APPLETV_TWO_JAILBROKEN', 'weever' ); ?></td>
+                		<tr><td class="key"><?php echo __( 'AppleTV 2<br/>(Jailbroken + CSP)', 'weever' ); ?></td>
                 		<td>
                 		<select name="DetectAppleTVTwo">
                 		<option value="0"><?php echo __( 'Disabled', 'weever' ); ?></option>
@@ -201,7 +201,7 @@
                 		</select>
                 		</td>
                 		<td><?php echo __( 'Disabled', 'weever' ); ?></td>
-                		<td><?php echo __( 'WEEVER_CONFIG_APPLETV_TWO_JAILBROKEN_GRADE', 'weever' ); ?></td>
+                		<td><?php echo __( 'D (Buggy; In-app scrolling non-functional, small apps may work)', 'weever' ); ?></td>
                 		</tr>
 
             		</table>

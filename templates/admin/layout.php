@@ -14,7 +14,7 @@
     }
     ?>
 
-	<div id="wx-app-status-button" <?php echo $offlineStatusClass; ?>><img id="wx-app-status-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icon_.png?nocache=<?php echo microtime(); ?>" /><br /><span id="wx-app-status-online" <?php echo $onlineSpan; ?>><?php echo __('WEEVER_ONLINE'); ?></span><span id="wx-app-status-offline" <?php echo $offlineSpan; ?>><?php echo __('WEEVER_OFFLINE'); ?></span></div>
+	<div id="wx-app-status-button" <?php echo $offlineStatusClass; ?>><img id="wx-app-status-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icon_.png?nocache=<?php echo microtime(); ?>" /><br /><span id="wx-app-status-online" <?php echo $onlineSpan; ?>><?php echo __( 'App Online', 'weever' ); ?></span><span id="wx-app-status-offline" <?php echo $offlineSpan; ?>><?php echo __( 'App Offline', 'weever' ); ?></span></div>
 	<?php endif; ?>
 
     <h2><?php _e('Weever Apps Configuration', 'weever'); ?></h2>
