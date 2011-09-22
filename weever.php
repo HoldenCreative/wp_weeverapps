@@ -54,6 +54,8 @@ require_once dirname( __FILE__ ) . '/classes/class-weever-helper.php';
 
 // Weever App state object classes
 require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-app-tab.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-app-subtab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
 
 if ( is_admin() )

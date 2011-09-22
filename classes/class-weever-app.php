@@ -47,52 +47,22 @@ class WeeverApp {
         }
 
         // Stub of rows
-        $blogTabRow = new stdClass();
-        $blogTabRow->component = "blog";
-        $blogTabRow->name = "Blogs";
-        $socialTabRow = new stdClass();
-        $socialTabRow->component = "social";
-        $socialTabRow->name = "Social";
-        $photoRow = new stdClass();
-        $photoRow->component = 'photo';
-        $photoRow->name = 'Photos';
-        $pageRow = new stdClass();
-        $pageRow->component = 'page';
-        $pageRow->name = 'Pages';
-        $videoRow = new stdClass();
-        $videoRow->component = 'video';
-        $videoRow->name = 'Videos';
-        $contactRow = new stdClass();
-        $contactRow->component = 'contact';
-        $contactRow->name = 'Contact';
-        $calendarRow = new stdClass();
-        $calendarRow->component = 'calendar';
-        $calendarRow->name = 'Events';
-        $formRow = new stdClass();
-        $formRow->component = 'form';
-        $formRow->name = 'Forms';
-
-        $this->_data['tabRows'] = array($socialTabRow, $blogTabRow, $photoRow, $pageRow, $videoRow, $contactRow, $calendarRow, $formRow);
-
-        // Stub of subrows for each tab
-        $subrow = array();
-        $subrow[0] = new stdClass();
-        $subrow[0]->id = 5;
-        $subrow[0]->name = 'Parks Home';
-        $subrow[0]->type = 'blog';
-        $subrow[0]->ordering = rand(1, 10);
-        $subrow[0]->published = 1;
-
-        $subrow[1] = new stdClass();
-        $subrow[1]->id = 7;
-        $subrow[1]->name = 'Another Blog';
-        $subrow[1]->type = 'blog';
-        $subrow[1]->ordering = rand(1, 10);
-        $subrow[1]->published = 0;
-
-        $this->_data['blogRows'] = $subrow;
-        $this->_data['formRows'] = $this->_data['socialRows'] = $this->_data['photoRows'] = $this->_data['pageRows'] = $this->_data['videoRows'] = $this->_data['contactRows'] = $this->_data['calendarRows'] = array();
-        $this->_data['socialRows'] = $subrow;
+        $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
+        $blogtab->add_subtab(new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1));
+        $blogtab->add_subtab(new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1));
+        
+        $socialtab = new WeeverAppTab(3, 'social', 'Social');
+        $socialtab->add_subtab(new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1));
+        
+        $this->_data['tabRows'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
+                                        new WeeverAppTab(2, 'page', 'Pages', 1),
+                                        $socialtab,
+                                        $blogtab,
+                                        new WeeverAppTab(5, 'photo', 'Photos', 1),
+                                        new WeeverAppTab(6, 'video', 'Videos', 1),
+                                        new WeeverAppTab(12, 'calendar', 'Events', 1),
+                                        new WeeverAppTab(105, 'form', 'Forms', 1),
+                                        );
 
         if ( $load_from_server ) {
             $this->reload_from_server();
@@ -148,7 +118,6 @@ class WeeverApp {
         	// Test getting the data using this api key
         	// TODO: Give either the stage URL or blank if live
         	$stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
-        	$server = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
 
         	$postdata = http_build_query(
         			array(
@@ -161,21 +130,18 @@ class WeeverApp {
         				)
         			);
 
-        	$result = wp_remote_get( $server."?".$postdata );
+        	$result = $this->send_to_weever_server($postdata);
 
-        	if ( is_array( $result ) and isset( $result['body'] ) ) {
-        	    $state = json_decode($result['body']);
-
-            	if ( "Site key missing or invalid." == $result['body'] ) {
-            	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
-                } else {
-                    // Get the settings
-                    // TODO: Finish this function
-                    $this->_data['primary_domain'] = $state->results->config->primary_domain;
-                }
-        	} else {
-        	    throw new Exception( __( 'Error trying to retrieve settings from Weever Apps server' ) );
-        	}
+        	// Try to decode the result
+            $state = json_decode($result);
+        
+        	if ( "Site key missing or invalid." == $result ) {
+        	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
+            } else {
+                // Get the settings
+                // TODO: Finish this function
+                $this->_data['primary_domain'] = $state->results->config->primary_domain;
+            }
         }
     }
 
@@ -207,5 +173,48 @@ class WeeverApp {
         // Reload the data afterwards to ensure everything was saved
         // TODO: Possibly change the API to return the data
         $this->reload_from_server();
+    }
+    
+    /**
+     * Publish or Unpublish the given local tab ids
+     * 
+     * @param int[] $ids
+     * @param int publish flag
+     */
+    public function save_publish_status($ids, $publish) {
+    
+		$postdata = http_build_query(
+			array(
+				'published' => $publish,
+				'app' =>'ajax',
+				'm' => 'publish_tab',
+				'site_key' => $this->site_key,
+				'local_tab_id' => $ids,
+				'version' => WeeverConst::VERSION,
+				'generator' => WeeverConst::NAME
+				)
+			);
+			
+		return $this->send_to_weever_server($postdata);        
+    }
+
+    /**
+     * Retrieve and send data to the Weever Apps server 
+     * 
+     * @param unknown_type $postdata
+     * @return raw data from the weever server
+     */
+    private function send_to_weever_server($postdata) {
+        $retval = false;
+    	$server = ($this->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
+    	$result = wp_remote_get( $server."?".$postdata );
+
+        if ( is_array( $result ) and isset( $result['body'] ) ) {
+    	    $retval = $result['body'];
+    	} else {
+    	    throw new Exception( __( 'Error communicating with the Weever Apps server' ) );
+    	}
+
+    	return $retval;
     }
 }

@@ -41,20 +41,18 @@ $tabsUnpublished = 0;
             if ( ! file_exists( dirname( __FILE__ ) . "/../parts/list_add{$row->component}.php" ) )
                 continue;
 
-        	//$row = &$weeverapp->tabRows[$i];
-        	$componentRowsName = $row->component . 'Rows';
-        	$componentRows = $weeverapp->{$componentRowsName};
+        	$componentRows = $row->get_subtabs();
         	$tabActive = false;
 
         	// Tab is active if at least one row in the tab is published
-        	foreach ( $weeverapp->{$componentRowsName} as $subrow ) {
+        	foreach ( $componentRows as $subrow ) {
         		if ( $subrow->published ) {
         			$tabActive = true;
         			break;
         		}
         	}
 
-        	$componentRowsCount = count( $weeverapp->{$componentRowsName} );
+        	$componentRowsCount = count( $componentRows );
         	$tabIcon = $row->component . "Icon";
 
         	if ( ! $componentRowsCount || ! $tabActive )
@@ -85,41 +83,41 @@ $tabsUnpublished = 0;
         if ( ! file_exists( dirname( __FILE__ ) . "/../parts/list_add{$row->component}.php" ) )
             continue;
 
-    	$componentRowsName = $row->component . 'Rows';
-    	$componentRows = $weeverapp->{$componentRowsName};
+    	//$componentRowsName = $row->component . 'Rows';
+    	$componentRows = $row->get_subtabs();
 
     	switch ( $row->component ) {
     		case "blog":
-    			$componentName = __('WEEVER_TYPE_BLOG');
-    			$componentHelp = __('WEEVER_LIST_BLOG_HELP');
+    			$componentName = __('WEEVER_TYPE_BLOG', 'weever');
+    			$componentHelp = __('WEEVER_LIST_BLOG_HELP', 'weever');
     			break;
     		case "page":
-    			$componentName = __('WEEVER_TYPE_ARTICLE');
-    			$componentHelp = __('WEEVER_LIST_ARTICLE_HELP');
+    			$componentName = __('WEEVER_TYPE_ARTICLE', 'weever');
+    			$componentHelp = __('WEEVER_LIST_ARTICLE_HELP', 'weever');
     			break;
     		case "contact":
-    			$componentName = __('WEEVER_TYPE_CONTACT');
-    			$componentHelp = __('WEEVER_LIST_CONTACT_HELP');
+    			$componentName = __('WEEVER_TYPE_CONTACT', 'weever');
+    			$componentHelp = __('WEEVER_LIST_CONTACT_HELP', 'weever');
     			break;
     		case "component":
-    			$componentName = __('WEEVER_TYPE_COMPONENT');
-    			$componentHelp = __('WEEVER_LIST_COMPONENT_HELP');
+    			$componentName = __('WEEVER_TYPE_COMPONENT', 'weever');
+    			$componentHelp = __('WEEVER_LIST_COMPONENT_HELP', 'weever');
     			break;
     		case "listingcomponent":
-    			$componentName = __('WEEVER_TYPE_COMPONENT_LIST');
-    			$componentHelp = __('WEEVER_LIST_COMPONENT_LIST_HELP');
+    			$componentName = __('WEEVER_TYPE_COMPONENT_LIST', 'weever');
+    			$componentHelp = __('WEEVER_LIST_COMPONENT_LIST_HELP', 'weever');
     			break;
     		case "video":
-    			$componentName = __('WEEVER_TYPE_VIDEO_FEED');
-    			$componentHelp = __('WEEVER_LIST_VIDEO_HELP');
+    			$componentName = __('WEEVER_TYPE_VIDEO_FEED', 'weever');
+    			$componentHelp = __('WEEVER_LIST_VIDEO_HELP', 'weever');
     			break;
     		case "social":
-    			$componentName = __('WEEVER_TYPE_SOCIAL_NETWORK');
-    			$componentHelp = __('WEEVER_LIST_SOCIAL_NETWORK_HELP');
+    			$componentName = __('WEEVER_TYPE_SOCIAL_NETWORK', 'weever');
+    			$componentHelp = __('WEEVER_LIST_SOCIAL_NETWORK_HELP', 'weever');
     			break;
     		case "photo":
-    			$componentName = __('WEEVER_TYPE_PHOTO_FEED');
-    			$componentHelp = __('WEEVER_LIST_PHOTO_FEED_HELP');
+    			$componentName = __('WEEVER_TYPE_PHOTO_FEED', 'weever');
+    			$componentHelp = __('WEEVER_LIST_PHOTO_FEED_HELP', 'weever');
     			break;
     	}
 
@@ -130,7 +128,7 @@ $tabsUnpublished = 0;
     		if ( $row->published == 0 )
     			$tabsUnpublished++;
     	} else {
-    		$published = __('WEEVER_NOT_APPLICABLE');
+    		$published = __('WEEVER_NOT_APPLICABLE', 'weever');
     		$checked = null;
     		$tabsUnpublished++;
     	}
