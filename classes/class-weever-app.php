@@ -54,7 +54,7 @@ class WeeverApp {
         $socialtab = new WeeverAppTab(3, 'social', 'Social');
         $socialtab->add_subtab(new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1));
         
-        $this->_data['tabRows'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
+        $this->_data['tabs'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
                                         new WeeverAppTab(2, 'page', 'Pages', 1),
                                         $socialtab,
                                         $blogtab,
@@ -148,6 +148,17 @@ class WeeverApp {
     public function & get_device_option_names() {
         $option_names = array_keys( $this->_device_options );
         return $option_names;
+    }
+    
+    public function & get_tabs() {
+        return $this->_data['tabs'];
+    }
+    
+    public function & get_tab($id) {
+        foreach ( $this->_data['tabs'] as $tab ) {
+            if ( $tab->id == $id )
+                return $tab;
+        }
     }
 
     /**

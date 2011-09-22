@@ -36,7 +36,7 @@ $tabsUnpublished = 0;
 
         <?php
 
-        foreach ( $weeverapp->tabRows as $row ) {
+        foreach ( $weeverapp->get_tabs() as $row ) {
             // Skip tabs we don't know about in this version of the plugin
             if ( ! file_exists( dirname( __FILE__ ) . "/../parts/list_add{$row->component}.php" ) )
                 continue;
@@ -78,7 +78,7 @@ $tabsUnpublished = 0;
 
     <?php
 
-    foreach ( $weeverapp->tabRows as $row ) {
+    foreach ( $weeverapp->get_tabs() as $row ) {
         // Skip tabs we don't know about in this version of the plugin
         if ( ! file_exists( dirname( __FILE__ ) . "/../parts/list_add{$row->component}.php" ) )
             continue;
