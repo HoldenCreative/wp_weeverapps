@@ -42,15 +42,26 @@ function weever_admin_page() {
 	$page = basename( $_GET['page'] );
 	$content = dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php';
 
+    // Verify this is a valid page
+	if ( ! file_exists( $content ) )
+	    die( __( 'Invalid page given', 'weever' ) );
+
 	// Load the weeverapp object, which fetches the admin page content
 	try {
         $weeverapp = new WeeverApp();
+
+        if ( ! $weeverapp->loaded ) {
+	        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+        }
 	} catch (Exception $e) {
-	    add_settings_error('weever_settings', 'weever_settings', __( 'Unable to communicate with the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	    add_settings_error('weever_settings', 'weever_settings', __( 'Error loading necessary data' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	}
 
-	if ( ! file_exists( $content ) )
-	    die( __( 'Invalid page given', 'weever' ) );
+	// Check if the domain is different than the current site domain
+    if ( $weeverapp->loaded ) {
+        if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
+	        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+    }
 
     // Handle form submission
 	if ( isset($_POST['submit']) ) {
@@ -160,11 +171,6 @@ function weever_admin_init() {
 }
 
 add_action( 'admin_init', 'weever_admin_init' );
-
-function weever_handle_theme_validation() {
-    var_dump($_FILES);
-    echo "<p>";
-}
 
 /**
  * Load styles needed for Weever Apps

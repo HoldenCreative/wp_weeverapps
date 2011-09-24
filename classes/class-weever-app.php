@@ -27,47 +27,59 @@ class WeeverApp {
      * @return WeeverApp
      */
     public function __construct( $load_from_server = true ) {
-        // Register the app with the helper class
-        WeeverHelper::set_weeverapp($this);
-        
-        // Initial settings
-        $this->_data['theme'] = new WeeverAppThemeStyles();
-        $this->_data['app_enabled'] = 1; //get_option( 'weever_app_enabled', 0 );
-        $this->_data['site_key'] = get_option( 'weever_api_key', '' );
-        $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
-        $this->_data['primary_domain'] = '';
-        $this->_data['titlebar_title'] = '';
-        $this->_data['title'] = '';
-        $this->_data['google_analytics'] = '';
-        $this->_data['ecosystem'] = '';
-        $this->_data['domain'] = '';
+        try {
+            // Register the app with the helper class
+            WeeverHelper::set_weeverapp($this);
 
-        // Device detection settings
-        $this->_data['granular'] = get_option( 'weever_granular_devices', 0 );
-        foreach ( $this->_device_options as $key => $value ) {
-             $this->_data[$key] = get_option( 'weever_device_option_'.$key, $value );
-        }
+            // Initial settings
+            $this->_data['theme'] = new WeeverAppThemeStyles();
+            $this->_data['app_enabled'] = 1; //get_option( 'weever_app_enabled', 0 );
+            $this->_data['site_key'] = get_option( 'weever_api_key', '' );
+            $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
+            $this->_data['primary_domain'] = '';
+            $this->_data['titlebar_title'] = '';
+            $this->_data['title'] = '';
+            $this->_data['google_analytics'] = '';
+            $this->_data['ecosystem'] = '';
+            $this->_data['domain'] = '';
 
-        // Stub of rows
-        $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
-        $blogtab->add_subtab(new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1));
-        $blogtab->add_subtab(new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1));
-        
-        $socialtab = new WeeverAppTab(3, 'social', 'Social');
-        $socialtab->add_subtab(new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1));
-        
-        $this->_data['tabs'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
-                                        new WeeverAppTab(2, 'page', 'Pages', 1),
-                                        $socialtab,
-                                        $blogtab,
-                                        new WeeverAppTab(5, 'photo', 'Photos', 1),
-                                        new WeeverAppTab(6, 'video', 'Videos', 1),
-                                        new WeeverAppTab(12, 'calendar', 'Events', 1),
-                                        new WeeverAppTab(105, 'form', 'Forms', 1),
-                                        );
-                                                                                
-        if ( $load_from_server ) {
-            $this->reload_from_server();
+            $this->_data['tabs'] = array();
+
+            // QR code urls
+            $this->_data['qr_code_private'] = $this->_data['qr_code_public'] = '';
+
+            // Device detection settings
+            $this->_data['granular'] = get_option( 'weever_granular_devices', 0 );
+            foreach ( $this->_device_options as $key => $value ) {
+                 $this->_data[$key] = get_option( 'weever_device_option_'.$key, $value );
+            }
+
+            // Stub of rows
+            $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
+            $blogtab->add_subtab(new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1));
+            $blogtab->add_subtab(new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1));
+
+            $socialtab = new WeeverAppTab(3, 'social', 'Social', 1);
+            $socialtab->add_subtab(new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1));
+
+            $this->_data['tabs'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
+                                            new WeeverAppTab(2, 'page', 'Pages', 1),
+                                            $socialtab,
+                                            $blogtab,
+                                            new WeeverAppTab(5, 'photo', 'Photos', 1),
+                                            new WeeverAppTab(6, 'video', 'Videos', 1),
+                                            new WeeverAppTab(12, 'calendar', 'Events', 1),
+                                            new WeeverAppTab(105, 'form', 'Forms', 1),
+                                            );
+
+            if ( $load_from_server ) {
+                $this->reload_from_server();
+            }
+
+            // Finished, mark as loaded
+            $this->_data['loaded'] = true;
+        } catch ( Exception $e ) {
+            $this->_data['loaded'] = false;
         }
     }
 
@@ -134,32 +146,86 @@ class WeeverApp {
 
         	// Try to decode the result
             $state = json_decode($result);
-        
+
         	if ( "Site key missing or invalid." == $result ) {
         	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
             } else {
                 // Get the settings
                 // TODO: Finish this function
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
+
+                // Re-generate the qr code if needed
+                $this->generate_qr_code();
             }
         }
+    }
+
+    private function is_valid() {
+        return isset( $this->_data['site_key'] ) && ! empty( $this->_data['site_key'] ) && ! empty( $this->_data['primary_domain'] );
     }
 
     public function & get_device_option_names() {
         $option_names = array_keys( $this->_device_options );
         return $option_names;
     }
-    
+
     public function & get_tabs() {
         return $this->_data['tabs'];
     }
-    
+
     public function & get_tab($id) {
         foreach ( $this->_data['tabs'] as $tab ) {
             if ( $tab->id == $id )
                 return $tab;
         }
     }
+
+    /**
+     * Generate a QR code and cache it locally
+     */
+	public function generate_qr_code() {
+	    if ( $this->is_valid() ) {
+    		if ( $this->staging_mode ) {
+    			$type = 'stage';
+    			$queryExtra = '&staging=1';
+    		} else {
+    			$type = 'live';
+    			$queryExtra = '';
+    		}
+
+    		$qr_site_url = "http://qr.weever.ca/?site=" . $this->primary_domain;
+    		$qr_app_url = "http://qr.weever.ca/?site=" . $this->primary_domain . "&preview=1&beta=1" . $queryExtra;
+
+    		// Set the urls to the direct link by default
+		    $this->_data['qr_code_private'] = $qr_app_url;
+		    $this->_data['qr_code_public'] = $qr_site_url;
+
+    		// See if the uploads folder is accessible, and if so cache the image
+    		$uploads = wp_upload_dir();
+    		if ( isset( $uploads['basedir'] ) and isset( $uploads['baseurl'] ) ) {
+    		    // Try to make the weeverapps sub-folder
+    		    if ( wp_mkdir_p( trailingslashit( $uploads['basedir'] ) . 'weeverapps' ) ) {
+            		if ( get_option( 'weever_qr_site_code_time', 0 ) > time() || copy( $qr_site_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_site_'.$type.'.png' ) ) {
+                        $this->_data['qr_code_public'] = trailingslashit( $uploads['baseurl'] ) . 'weeverapps/qr_site_'.$type.'.png';
+
+                        if ( get_option( 'weever_qr_site_code_time', 0 ) <= time() )
+                            // Cache for 1 hour
+                            update_option( 'weever_qr_site_code_time', time() + 60*60 );
+            		}
+
+            		if ( get_option( 'weever_qr_app_code_time', 0 ) > time() || copy( $qr_app_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_app_'.$type.'.png' ) ) {
+                        $this->_data['qr_code_private'] = trailingslashit( $uploads['baseurl'] ) . 'weeverapps/qr_app_'.$type.'.png';
+
+                        if ( get_option( 'weever_qr_app_code_time', 0 ) <= time() )
+                            // Cache for 1 hour
+                            update_option( 'weever_qr_app_code_time', time() + 60*60 );
+            		}
+            	}
+    		}
+	    } else {
+	        $this->_data['qr_code_private'] = $this->_data['qr_code_public'] = '';
+	    }
+	}
 
     /**
      * Save the currently stored configuration to the server
@@ -185,15 +251,15 @@ class WeeverApp {
         // TODO: Possibly change the API to return the data
         $this->reload_from_server();
     }
-    
+
     /**
      * Publish or Unpublish the given local tab ids
-     * 
+     *
      * @param int[] $ids
      * @param int publish flag
      */
     public function save_publish_status($ids, $publish) {
-    
+
 		$postdata = array(
 				'published' => $publish,
 				'app' =>'ajax',
@@ -203,7 +269,7 @@ class WeeverApp {
 				'version' => WeeverConst::VERSION,
 				'generator' => WeeverConst::NAME
 				);
-			
-		return WeeverHelper::send_to_weever_server($postdata);        
+
+		return WeeverHelper::send_to_weever_server($postdata);
     }
 }

@@ -39,5 +39,54 @@
 		<?php require( $content ); ?>
 		</div>
 	</div>
+
+	<?php if ( $weeverapp->site_key ): ?>
+	<div>
+        <div class="wx-qr-app wx-qr-app-private">
+        	<?php
+        	$weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER;
+        	?>
+            <img src="<?php echo $weeverapp->qr_code_private; ?>"  class="wx-qr-imgprev" />
+
+            <div class="wx-qr-textbox">
+
+            <span class="wx-qr-app-text"><?php echo __( 'Test QR Code' ); ?></span>
+
+            <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.' ); ?><br />
+    		<?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
+
+    		<p><?php echo __( 'Additional but <em>imperfect</em> ways to test your app: Use a webkit browser like Google Chrome or Safari, or try the Apple iPhone&trade; simulator.' ); ?></p>
+
+
+    		</div>
+    	</div>
+
+    	<?php if ( ! $weeverapp->staging_mode ): ?>
+    	<div class="wx-qr-app wx-qr-app-public">
+
+    		<img src="<?php echo $weeverapp->qr_code_public; ?>"  class="wx-qr-imgprev" />
+
+            <div class="wx-qr-textbox">
+                <span class="wx-qr-app-text"><?php echo __( 'Public QR Code'); ?></span>
+
+                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weeverapp->primary_domain; ?>"><?php echo $weeverapp->primary_domain; ?></a></p>
+    			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
+    		</div>
+    	</div>
+    	<?php else: ?>
+    	<div class="wx-qr-app wx-qr-app-public">
+    		<?php echo __( 'You are currently in <strong>staging mode</strong>. Public QR Codes are not available for staging mode apps.' ); ?>
+    	</div>
+    	<?php endif; ?>
+    	<div style="clear:both;"></div>
+    </div>
+	<?php endif; ?>
+
+	<div style="text-align:center;clear:both; margin-top:24px;">
+		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?><br />
+		<?php echo WeeverConst::COPYRIGHT_YEAR; ?> <a target="_blank" href="<?php echo WeeverConst::COPYRIGHT_URL; ?>"><?php echo WeeverConst::COPYRIGHT; ?></a><br />
+		Released <?php echo WeeverConst::RELEASE_DATE; ?> under <a target="_blank" href="<?php echo WeeverConst::LICENSE_URL; ?>"><?php echo WeeverConst::LICENSE; ?></a>.
+		<a target="_blank" href="http://weeverapps.zendesk.com/home">Contact Support</a>
+	</div>
 </div>
 

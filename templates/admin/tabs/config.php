@@ -5,6 +5,7 @@
     <div id='wx-modal-error-text'></div>
 </div>
 
+<div class="wx-add-ui">
 
 <form action='' method='post' name='adminForm' id='adminForm'>
 
@@ -218,3 +219,5 @@
 	<input type="hidden" name="task" value="" />
 
 </form>
+
+</div>
