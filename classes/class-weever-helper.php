@@ -2,6 +2,8 @@
 
     class WeeverHelper {
 
+        private static $_weeverapp = false;
+        
         /**
          * Function to take a url and ensure it is an absolute url
          * http://www.geekality.net/2011/05/12/php-dealing-with-absolute-and-relative-urls/
@@ -107,4 +109,42 @@
 
         public static function get_user_feed_link_relative( $user, $feed = 'r3s' ) {
         }
+        
+        /**
+         * Set the weeverapp variable in preparation for server
+		 *
+         * @param unknown_type $weeverapp
+         */
+        public static function set_weeverapp(&$weeverapp) {
+            self::$_weeverapp = $weeverapp;                
+        }
+        
+        /**
+         * Retrieve and send data to the Weever Apps server 
+         * 
+         * @param unknown_type $postdata
+         * @return raw data from the weever server
+         */
+        public static function send_to_weever_server($postdata) {
+            $retval = false;
+
+            if ( is_array( $postdata ) && self::$_weeverapp !== false ) {                
+            	$server = (self::$_weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
+            	
+            	if ( ! isset( $postdata['site_key'] ) )
+            	    $postdata['site_key'] = self::$_weeverapp->site_key;
+            	    
+            	$result = wp_remote_get( $server."?".http_build_query( $postdata ) );
+
+                if ( is_array( $result ) and isset( $result['body'] ) ) {
+            	    $retval = $result['body'];
+            	} else {
+            	    throw new Exception( __( 'Error communicating with the Weever Apps server' ) );
+            	}
+            } else {
+                throw new Exception( __( 'Invalid postdata sent to function or weeverapp not set' ) );
+            }
+
+        	return $retval;
+        }        
     }

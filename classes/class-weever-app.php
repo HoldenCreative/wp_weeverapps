@@ -27,7 +27,9 @@ class WeeverApp {
      * @return WeeverApp
      */
     public function __construct( $load_from_server = true ) {
-
+        // Register the app with the helper class
+        WeeverHelper::set_weeverapp($this);
+        
         // Initial settings
         $this->_data['theme'] = new WeeverAppThemeStyles();
         $this->_data['app_enabled'] = 1; //get_option( 'weever_app_enabled', 0 );
@@ -63,7 +65,7 @@ class WeeverApp {
                                         new WeeverAppTab(12, 'calendar', 'Events', 1),
                                         new WeeverAppTab(105, 'form', 'Forms', 1),
                                         );
-
+                                                                                
         if ( $load_from_server ) {
             $this->reload_from_server();
         }
@@ -119,18 +121,16 @@ class WeeverApp {
         	// TODO: Give either the stage URL or blank if live
         	$stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
 
-        	$postdata = http_build_query(
-        			array(
+        	$postdata = array(
         				'stage' => $stage_url,
         				'app' => 'json',
         				'site_key' => $this->_data['site_key'],
         				'm' => "tab_sync",
         				'version' => WeeverConst::VERSION,
         				'generator' => WeeverConst::NAME
-        				)
-        			);
+        				);
 
-        	$result = $this->send_to_weever_server($postdata);
+        	$result = WeeverHelper::send_to_weever_server($postdata);
 
         	// Try to decode the result
             $state = json_decode($result);
@@ -194,8 +194,7 @@ class WeeverApp {
      */
     public function save_publish_status($ids, $publish) {
     
-		$postdata = http_build_query(
-			array(
+		$postdata = array(
 				'published' => $publish,
 				'app' =>'ajax',
 				'm' => 'publish_tab',
@@ -203,29 +202,8 @@ class WeeverApp {
 				'local_tab_id' => $ids,
 				'version' => WeeverConst::VERSION,
 				'generator' => WeeverConst::NAME
-				)
-			);
+				);
 			
-		return $this->send_to_weever_server($postdata);        
-    }
-
-    /**
-     * Retrieve and send data to the Weever Apps server 
-     * 
-     * @param unknown_type $postdata
-     * @return raw data from the weever server
-     */
-    private function send_to_weever_server($postdata) {
-        $retval = false;
-    	$server = ($this->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
-    	$result = wp_remote_get( $server."?".$postdata );
-
-        if ( is_array( $result ) and isset( $result['body'] ) ) {
-    	    $retval = $result['body'];
-    	} else {
-    	    throw new Exception( __( 'Error communicating with the Weever Apps server' ) );
-    	}
-
-    	return $retval;
+		return WeeverHelper::send_to_weever_server($postdata);        
     }
 }
