@@ -64,10 +64,7 @@ function weever_admin_page() {
     }
 
     // Handle form submission
-	if ( isset($_POST['submit']) ) {
-
-	    //die(var_dump($_REQUEST));
-
+	if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {
 		if ( ( function_exists('current_user_can') && ! current_user_can('manage_options') ) || ! check_admin_referer( 'weever_settings', 'weever_settings_nonce' ) )
 			die( __( 'Access denied', 'weever' ) );
 
@@ -105,6 +102,12 @@ function weever_admin_page() {
     	    case 'weever-account':
     	        try {
                     $weeverapp->site_key = $_POST['site_key'];
+
+                    if ( isset( $_POST['stagingmode'] ) ) {
+                        // Toggle staging mode
+                        $weeverapp->staging_mode = ! $weeverapp->staging_mode;
+                    }
+
                     $weeverapp->save();
                     add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps account settings saved', 'weever' ), 'updated');
     	        } catch (Exception $e) {
