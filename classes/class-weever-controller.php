@@ -24,7 +24,6 @@ class WeeverController {
 
 	public function phpinfo()
 	{
-
 		phpinfo();
 		jexit();
 	}
@@ -47,31 +46,28 @@ class WeeverController {
 
 	}
 
-	public function ajaxSaveTabName()
+	public static function ajaxSaveTabName()
 	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['id'] );
 
-
-		$result = comWeeverHelper::pushTabNameToCloud();
-
-		if($result == "Tab Changes Saved")
-		{
-
-			$row =& JTable::getInstance('weever','Table');
-
-			$row->load(JRequest::getVar("id"));
-			$row->name = JRequest::getVar("name");
-
-			if(!$row->store())
-			{
-				JError::raiseError(500, $row->getError());
-			}
-
+                if ( $tab !== false ) {
+                    try {
+                        $tab->name = $_POST['name'];
+                        $tab->save();
+                        status_header(200);
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                }
+            }
 		}
 
-		echo $result;
-		jexit();
-
+		die();
 	}
 
 

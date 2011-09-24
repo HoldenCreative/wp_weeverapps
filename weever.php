@@ -67,6 +67,7 @@ if ( is_admin() )
 
 // Register the ajax call
 add_action( 'wp_ajax_ajaxSubtabDelete', array( 'WeeverController', 'ajaxSubtabDelete' ) );
+add_action( 'wp_ajax_ajaxSaveTabName', array( 'WeeverController', 'ajaxSaveTabName' ) );
 
 function weever_init() {
 

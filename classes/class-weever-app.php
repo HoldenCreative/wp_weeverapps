@@ -56,11 +56,7 @@ class WeeverApp {
 
             // Stub of rows
             $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
-            $blogtab->add_subtab(new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1));
-            $blogtab->add_subtab(new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1));
-
             $socialtab = new WeeverAppTab(3, 'social', 'Social', 1);
-            $socialtab->add_subtab(new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1));
 
             $this->_data['tabs'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
                                             new WeeverAppTab(2, 'page', 'Pages', 1),
@@ -71,6 +67,18 @@ class WeeverApp {
                                             new WeeverAppTab(12, 'calendar', 'Events', 1),
                                             new WeeverAppTab(105, 'form', 'Forms', 1),
                                             );
+
+            $socialsubtab = new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1);
+            $socialtab->add_subtab($socialsubtab);
+            $this->_data['tabs'][] = $socialsubtab;
+
+            $blogsubtab = new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1);
+            $blogtab->add_subtab($blogsubtab);
+            $this->_data['tabs'][] = $blogsubtab;
+
+            $blogsubtab = new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1);
+            $blogtab->add_subtab($blogsubtab);
+            $this->_data['tabs'][] = $blogsubtab;
 
             if ( $load_from_server ) {
                 $this->reload_from_server();
@@ -169,8 +177,21 @@ class WeeverApp {
         return $option_names;
     }
 
-    public function & get_tabs() {
-        return $this->_data['tabs'];
+    public function & get_tabs($only_top_level = true) {
+        if ( ! $only_top_level ) {
+            // Return everything
+            return $this->_data['tabs'];
+        } else {
+            $retval = array();
+
+            foreach ( $this->_data['tabs'] as $tab ) {
+                if ( $tab->is_top_level_tab() ) {
+                    $retval[] = $tab;
+                }
+            }
+
+            return $retval;
+        }
     }
 
     public function & get_tab($id) {

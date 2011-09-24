@@ -288,6 +288,7 @@ jQuery(document).ready(function(){
 		tabId = tabId.substring(4);
 		var siteKey = jQuery("input#wx-site-key").val();
 		var htmlName = jQuery(this).html();
+		var nonce = jQuery("input#nonce").val();
 		var txt = 	'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_ENTER_NEW_APP_ICON_NAME+'</h3>'+
 					'<input type="text" id="alertName" name="alertName" value="'+htmlName+'" />';
 		var clickedElem = jQuery(this);
@@ -302,22 +303,24 @@ jQuery(document).ready(function(){
 				jQuery.ajax({
 				   type: "POST",
 				   url: ajaxurl,
-				   data: "option=com_weever&task=ajaxSaveTabName&name="+encodeURIComponent(tabName)+"&id="+tabId+'&site_key='+siteKey,
+				   data: {
+					   name: encodeURIComponent(tabName),
+					   id: tabId,
+					   nonce: nonce,
+					   action: 'ajaxSaveTabName'
+				   },
 				   success: function(msg){
-				     jQuery('#wx-modal-loading-text').html(msg);
-				     
-				     if(msg == "Tab Changes Saved")
-				     {
+
+					    jQuery('#wx-modal-loading-text').html(msg);
 				     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
 				     	clickedElem.html(tabName);
-				     }
-				     else
-				     {
+				     },
+				   error: function(v,msg){
+					     jQuery('#wx-modal-loading-text').html(msg);
+					   
 				     	jQuery('#wx-modal-secondary-text').html('');
 				     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
 				     }
-
-				   }
 				 });
 			
 			}
@@ -368,6 +371,7 @@ jQuery(document).ready(function(){
 		var txt = 	'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_ENTER_NEW_APP_ITEM+'</h3>'+
 					'<input type="text" id="alertName" name="alertName" value="'+htmlName+'" />';
 		var clickedElem = jQuery(this);
+		var nonce = jQuery("input#nonce").val();		
 					
 		myCallbackForm = function(v,m,f) {
 		
@@ -379,22 +383,23 @@ jQuery(document).ready(function(){
 				jQuery.ajax({
 				   type: "POST",
 				   url: ajaxurl,
-				   data: "option=com_weever&task=ajaxSaveTabName&name="+encodeURIComponent(tabName)+"&id="+tabId+'&site_key='+siteKey,
+				   data: {
+					   name: encodeURIComponent(tabName),
+					   id: tabId,
+					   nonce: nonce,
+					   action: 'ajaxSaveTabName'					   
+				   },
 				   success: function(msg){
-				     jQuery('#wx-modal-loading-text').html(msg);
-				     
-				     if(msg == "Tab Changes Saved")
-				     {
+
+					    jQuery('#wx-modal-loading-text').html(msg);
 				     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
 				     	clickedElem.html(tabName);
-				     }
-				     else
-				     {
+				     },
+				   error: function(v,msg){
+					    jQuery('#wx-modal-loading-text').html(msg);
 				     	jQuery('#wx-modal-secondary-text').html('');
 				     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
 				     }
-
-				   }
 				 });
 			
 			}

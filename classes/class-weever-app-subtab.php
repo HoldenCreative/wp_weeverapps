@@ -1,9 +1,7 @@
 <?php
 
-class WeeverAppSubtab {
-    
-    private $_data = array();
-    
+class WeeverAppSubtab extends WeeverAppTab {
+
     public function __construct($id, $name, $type, $ordering, $published) {
         $this->_data['id'] = $id;
         $this->_data['name'] = $name;
@@ -11,23 +9,13 @@ class WeeverAppSubtab {
         $this->_data['ordering'] = $ordering;
         $this->_data['published'] = $published;
     }
-    
-    public function & __get($var) {
-        switch ( $var ) {
-            default:
-                if ( array_key_exists( $var, $this->_data ) )
-                    return $this->_data[$var];
-                else    
-                    throw new Exception( __( 'Invalid parameter name' ) );
-        }
-    }
-    
-    
+
     /**
-     * Save the settings for this tab id
-     * Enter description here ...
+     * Function to show if this is a top level (toolbar) tab or not
+     *
+     * @return bool
      */
-    public function save() {
-        
+    public function is_top_level_tab() {
+        return false;
     }
 }
