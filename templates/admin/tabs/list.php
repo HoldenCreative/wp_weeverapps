@@ -161,7 +161,7 @@ $tabsUnpublished = 0;
 
         	foreach ( $componentRows as $row ) : $iii++; $sub++;
         	?>
-        		<tr class='<?php echo "row$k"; ?>'>
+        		<tr class='wx-ui-row <?php echo "row$k"; ?>'>
             		<td>
             			<input type="checkbox" id="cb<?php echo $iii; ?>" name="cid[]" value="<?php echo $row->id; ?>" title="Checkbox for row <?php echo $row->id; ?>">
             			<?php //echo JHTML::_('grid.id', $iii, $row->id); ?>

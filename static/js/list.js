@@ -596,42 +596,66 @@ jQuery(document).ready(function(){
 		});
 	
 	
-	jQuery("a.wx-subtab-up").click(function() {
+	jQuery("a.wx-subtab-up, a.wx-subtab-down").click(function() {
 	
 		var tabId = jQuery(this).attr('title');
 		tabId = tabId.substring(4);
 		var siteKey = jQuery("input#wx-site-key").val();
 		var tabType = jQuery(this).attr('rel');
-	
+		var nonce = jQuery("input#nonce").val();
+		var dir = (jQuery(this).hasClass('wx-subtab-up') ? 'up' : 'down');
+		var row = jQuery(this).parent("td:first").parent("tr:first");
+		
 		jQuery.ajax({
 		   type: "POST",
 		   url: ajaxurl,
-		   data: "option=com_weever&task=ajaxSaveSubtabOrder&site_key="+siteKey+"&type="+tabType+"&dir=up&id="+tabId,
+		   data: {
+			   action: 'ajaxSaveSubtabOrder',
+			   type: tabType,
+			   dir: dir,
+			   id: tabId,
+			   nonce: nonce
+		   },
 		   success: function(msg){
 		     jQuery('#wx-modal-loading-text').html(msg);
 		     
-		     if(msg == "Order Updated")
-		     {
 		     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		     	document.location.href = "index.php?option=com_weever#"+tabType+"Tab";
-		     	setTimeout("document.location.reload(true);",20);
-		     }
-		     else
-		     {
+		     	
+		     	// Swap them without refresh
+		     	if (dir == 'up') {
+		     		console.debug(row);
+		     		console.debug(row.prev("tr.wx-ui-row:visible"));
+		     		row.after(row.prev("tr.wx-ui-row:visible"));
+		     	} else {
+		     		row.next("tr.wx-ui-row:visible").after(row);
+		     	}
+
+		     	// Recolor the rows properly
+		     	rowClass = "row0";
+		     	row.parent().find("tr.wx-ui-row:visible").each(function(){
+		     		jQuery(this).removeClass("row0").removeClass("row1").addClass(rowClass);
+		     		rowClass = rowClass == "row0" ? "row1" : "row0";
+		     	});
+		     	
+		     	/*document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#"+tabType+"Tab";
+		     	setTimeout("document.location.reload(true);",20);*/
+		     },
+		   error: function(v,msg){
+  		     jQuery('#wx-modal-loading-text').html(msg);
 		     	jQuery('#wx-modal-secondary-text').html('');
 		     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-		     }
 		   }
 		 });
 	
 	});
-	
+	/*
 	jQuery("a.wx-subtab-down").click(function() {
 	
 		var tabId = jQuery(this).attr('title');
 		tabId = tabId.substring(4);
 		var siteKey = jQuery("input#wx-site-key").val();
 		var tabType = jQuery(this).attr('rel');
+		var nonce = jQuery("input#nonce").val();
 	
 		jQuery.ajax({
 		   type: "POST",
@@ -654,6 +678,6 @@ jQuery(document).ready(function(){
 		   }
 		 });
 	
-	});
+	});*/
 
 });
