@@ -163,7 +163,7 @@ $tabsUnpublished = 0;
         	?>
         		<tr class='<?php echo "row$k"; ?>'>
             		<td>
-            			<input type="checkbox" id="cb<?php echo $iii; ?>" name="cid[]" value="<?php echo $row->id; ?>" onclick="isChecked(this.checked);" title="Checkbox for row <?php echo $row->id; ?>">
+            			<input type="checkbox" id="cb<?php echo $iii; ?>" name="cid[]" value="<?php echo $row->id; ?>" title="Checkbox for row <?php echo $row->id; ?>">
             			<?php //echo JHTML::_('grid.id', $iii, $row->id); ?>
             		</td>
             		<td>
@@ -195,9 +195,9 @@ $tabsUnpublished = 0;
         				<div class="wx-list-actions">
             				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/arrow_leftup.png" />
             				<?php echo __( 'With selected:' ); ?> &nbsp;
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/tick.png" title="Publish" />
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/publish_x.png" title="Unpublish" />
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" title="Delete" />
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/tick.png" id="wx-publish-selected" title="Publish" />
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/publish_x.png" id="wx-unpublish-selected" title="Unpublish" />
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" id="wx-delete-selected" title="Delete" />
             			</div>
         			</td>
         		</tr>

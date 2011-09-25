@@ -95,7 +95,7 @@ class WeeverAppTab {
         $result = WeeverHelper::send_to_weever_server($postdata);
 
         if ( 'Item Deleted' != $result )
-            throw new Exception( __( 'Error deleting tab ' ) );
+            throw new Exception( __( 'Error deleting tab' ) );
     }
 
     public function save() {

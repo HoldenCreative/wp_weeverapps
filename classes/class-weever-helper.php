@@ -67,6 +67,8 @@
     			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here' ),
 		        'WEEVER_JS_STATIC_PATH' => WEEVER_PLUGIN_URL . 'static/',
 		        'WEEVER_JS_ADMIN_LIST_URL' => admin_url( 'admin.php?page=weever-list' ),
+		        'WEEVER_JS_SELECT_AN_ELEMENT' => __( 'Select at least one item from the list first' ),
+		        'WEEVER_JS_CONFIRM_LIST_ACTION' => __( 'Are you sure you want to %s the selected items?' ),
             );
         }
 

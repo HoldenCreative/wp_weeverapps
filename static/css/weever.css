@@ -449,6 +449,12 @@ div.wx-qr-app-private { background: #fffff0; }
 
 .wx-list-actions img { margin-right: 10px; }
 
+img#wx-delete-selected,
+img#wx-publish-selected,
+img#wx-unpublish-selected {
+	cursor: pointer;
+}
+
 .wx-qr-imgprev { 
     border: 1px solid #ddd;
     float: left;
@@ -475,6 +481,7 @@ div.wx-qr-app-private { background: #fffff0; }
 img.wx-nav-icon-img {
 	height: 32px;
 	width: 32px;
+	cursor: pointer;
 }
 
 div.star {

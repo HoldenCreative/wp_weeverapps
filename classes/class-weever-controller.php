@@ -22,32 +22,7 @@
 
 class WeeverController {
 
-	public function phpinfo()
-	{
-		phpinfo();
-		jexit();
-	}
-
-
-	public function add()
-	{
-
-		JRequest::setVar('view', 'tab');
-		$this->display();
-
-	}
-
-
-	public function edit()
-	{
-
-		JRequest::setVar('view', 'tab');
-		$this->display();
-
-	}
-
-	public static function ajaxSaveTabName()
-	{
+	public static function ajaxSaveTabName() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -67,14 +42,14 @@ class WeeverController {
                     echo __( 'Invalid tab id' );
                 }
             }
-		}
+        } else {
+            status_header(401);
+        }
 
-		die();
-	}
+        die();
+    }
 
-
-	public static function ajaxSubtabDelete()
-	{
+	public static function ajaxSubtabDelete() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -92,15 +67,82 @@ class WeeverController {
                     status_header(500);
                     echo __( 'Invalid tab id' );
                 }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
             }
 		}
 
 		die();
 	}
 
+	public function ajaxPublishSelected() {
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-	public function ajaxTabPublish()
-	{
+            if ( $weeverapp->loaded ) {
+                try {
+                    $weeverapp->publish_tabs( explode( ",", $_POST['ids'] ) );
+                } catch ( Exception $e ) {
+                    status_header(500);
+                    echo $e->getMessage();
+                }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
+            }
+        } else {
+            status_header(401);
+        }
+
+        die();
+    }
+
+	public function ajaxUnpublishSelected() {
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
+
+            if ( $weeverapp->loaded ) {
+                try {
+                    $weeverapp->unpublish_tabs( explode( ",", $_POST['ids'] ) );
+                } catch ( Exception $e ) {
+                    status_header(500);
+                    echo $e->getMessage();
+                }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
+            }
+        } else {
+            status_header(401);
+        }
+
+        die();
+    }
+
+	public function ajaxDeleteSelected() {
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
+
+            if ( $weeverapp->loaded ) {
+                try {
+                    $weeverapp->delete_tabs( explode( ",", $_POST['ids'] ) );
+                } catch ( Exception $e ) {
+                    status_header(500);
+                    echo $e->getMessage();
+                }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
+            }
+        } else {
+            status_header(401);
+        }
+
+        die();
+	}
+
+	public function ajaxTabPublish() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -120,14 +162,14 @@ class WeeverController {
                     echo __( 'Invalid tab id' );
                 }
             }
-		}
+        } else {
+            status_header(401);
+        }
 
-		die();
-	}
+        die();
+    }
 
-
-	public function ajaxSaveTabIcon()
-	{
+	public function ajaxSaveTabIcon() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -147,10 +189,12 @@ class WeeverController {
                     status_header(500);
                 }
             }
-		}
+        } else {
+            status_header(401);
+        }
 
-		die();
-	}
+        die();
+    }
 
 	public function ajaxSaveTabOrder()
 	{
@@ -252,70 +296,6 @@ class WeeverController {
 		echo JRequest::getVar('weever_server_response');
 
 		jexit();
-
-	}
-
-
-	public function remove()
-	{
-
-
-		JRequest::checkToken() or jexit('Invalid Token');
-		$option = JRequest::getCmd('option');
-
-		$cid = JRequest::getVar('cid', array(0));
-		$row =& JTable::getInstance('Weever', 'Table');
-
-		$result = comWeeverHelper::pushDeleteToCloud($cid);
-
-		if($result == "Site key missing or invalid.")
-		{
-			JError::raiseError(500, JText::_('WEEVER_SERVER_ERROR').$result);
-		}
-
-		foreach((array)$cid as $id)
-		{
-			$id = (int) $id;
-
-			if(!comWeeverHelper::checkIfTab($id))
-			{
-
-				if(!$row->delete($id))
-				{
-					JError::raiseError(500, $row->getError());
-				}
-
-			}
-			else
-			{
-				JError::raiseNotice(100, JText::_('WEEVER_NOTICE_TABS_DELETED'));
-			}
-		}
-
-
-		if($result)
-			$this->setRedirect('index.php?option='.$option.'&view=list', JText::_('WEEVER_SERVER_RESPONSE').$result);
-		else
-			$this->setRedirect('index.php?option='.$option.'&view=list',JText::_('WEEVER_ERROR_COULD_NOT_CONNECT_TO_SERVER'), 'error');
-
-
-	}
-
-	public function staging()
-	{
-
-		$row =& JTable::getInstance('WeeverConfig', 'Table');
-		$row->load(7);
-
-		$staging = $row->setting;
-
-		if($staging)
-			$msg = comWeeverHelper::disableStagingMode();
-		else
-			$msg = comWeeverHelper::enableStagingMode();
-
-		$this->setRedirect('index.php?option=com_weever&view=account&task=account',$msg);
-		return;
 
 	}
 
@@ -428,65 +408,5 @@ class WeeverController {
 		}
 
 	}
-
-
-	public function display()
-	{
-
-		$view = JRequest::getVar('view');
-
-		if(!$view)
-		{
-			JRequest::setVar('view','list');
-		}
-
-		parent::display();
-
-	}
-
-	public function publish()
-	{
-
-		$option = JRequest::getCmd('option');
-
-		$cid = JRequest::getVar('cid', array());
-		if(!$cid)
-		{
-			$cid[] = JRequest::getVar('id', array());
-		}
-
-		$row =& JTable::getInstance('Weever', 'Table');
-
-		$publish = 1;
-
-		if($this->getTask() == 'unpublish')
-			$publish = 0;
-
-		$result = comWeeverHelper::pushPublishToCloud($cid, $publish);
-
-		if($result == "Site key missing or invalid.")
-		{
-			JError::raiseError(500, JText::_('WEEVER_SERVER_ERROR').$result);
-		}
-
-		if(!$row->publish($cid, $publish))
-		{
-			JError::raiseError(500, $row->getError());
-		}
-
-
-		if($result)
-		{
-			$this->setRedirect('index.php?option='.$option, JText::_('WEEVER_SERVER_RESPONSE').$result);
-			return;
-		}
-		else
-		{
-			$this->setRedirect('index.php?option='.$option, JText::_('WEEVER_ERROR_COULD_NOT_CONNECT_TO_SERVER'), 'error');
-			return;
-		}
-
-	}
-
 
 }

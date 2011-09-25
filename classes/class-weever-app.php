@@ -317,6 +317,48 @@ class WeeverApp {
 	    }
 	}
 
+	public function publish_tabs( $ids ) {
+		$postdata = array(
+				'published' => 1,
+				'app' =>'ajax',
+				'm' => 'publish_tab',
+				'local_tab_id' => $ids,
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( 'Item Published' != $result )
+            throw new Exception( __( 'Error updating published status' ) );
+    }
+
+	public function unpublish_tabs( $ids ) {
+
+		$postdata = array(
+				'published' => 0,
+				'app' =>'ajax',
+				'm' => 'publish_tab',
+				'local_tab_id' => $ids,
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( 'Item Unpublished' != $result )
+            throw new Exception( __( 'Error updating published status' ) );
+    }
+
+	public function delete_tabs( $ids ) {
+		$postdata = array(
+				'local_tab_id' => $ids,
+				'app' => 'ajax',
+				'm' => 'delete_tab',
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( 'Item Deleted' != $result )
+            throw new Exception( __( 'Error deleting tab' ) );
+	}
+
     /**
      * Save the currently stored configuration to the server
      *

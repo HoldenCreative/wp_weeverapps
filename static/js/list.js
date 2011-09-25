@@ -45,23 +45,27 @@ jQuery(function() {
 										axis: "x",
 										update: function(event, info) {
 															
+											var nonce = jQuery("input#nonce").val();		
 											var str = String(jQuery(this).sortable('toArray'));
 											var siteKey = jQuery("input#wx-site-key").val();
 											
 											jQuery.ajax({
 											   type: "POST",
 											   url: ajaxurl,
-											   data: "option=com_weever&task=ajaxSaveTabOrder&site_key="+siteKey+"&order="+str,
+											   data: {
+												   action: 'ajaxSaveTabOrder',
+												   order: str,
+												   nonce: nonce
+											   },
 											   success: function(msg){
 											     jQuery('#wx-modal-loading-text').html(msg);
-											     
-											     if(msg == "Order Updated")
 											     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-											     else
-											     {
+											   },
+											   error: function(v,msg){
+											     jQuery('#wx-modal-loading-text').html(msg);
+
 											     	jQuery('#wx-modal-secondary-text').html('');
 											     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-											     }
 											   }
 											 });
 															
@@ -73,7 +77,66 @@ jQuery(function() {
 
 jQuery(document).ready(function(){ 
 
-	//
+	// Functions with selected list elements
+	jQuery("#wx-delete-selected, #wx-publish-selected, #wx-unpublish-selected").click(function(e) {
+		var nonce = jQuery("input#nonce").val();	
+		var clickedAction = jQuery(this).attr('title');
+		var action = 'ajax'+clickedAction+'Selected';
+		var unpublishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
+		var publishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
+		
+		// Verify at least one item is selected on the current form
+		var items = jQuery("input[name^='cid[]']:visible:checked");
+		
+		if (items.length == 0) {
+			alert(WPText.WEEVER_JS_SELECT_AN_ELEMENT);
+		} else {
+			if (confirm(WPText.WEEVER_JS_CONFIRM_LIST_ACTION.replace('%s', clickedAction))) {
+				var ids = [];
+				items.each(function() {
+					ids.push(jQuery(this).val());
+				});
+				
+				jQuery.ajax({
+				   type: "POST",
+				   url: ajaxurl,
+				   data: {
+					   action: action,
+					   nonce: nonce,
+					   ids: String(ids)
+				   },
+				   success: function(msg){
+				     jQuery('#wx-modal-loading-text').html(msg);
+				     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+				     	
+				     switch (clickedAction) {
+				     	case 'Publish':
+				     	case 'Unpublish':
+				     		// Step through each checkbox item and get the a.wx-subtab-publish element to display the right icon
+				     		items.each(function () {
+				     			var link = jQuery(this).parent("td:first").parent("tr:first").find("a.wx-subtab-publish:first");
+				     			link.html((clickedAction == 'Publish' ? publishedIcon : unpublishedIcon));
+				     			link.attr('rel', (clickedAction == 'Publish' ? 1 : 0));
+				     		});
+				     		break;
+				     	case 'Delete':
+				     		items.each(function () {
+				     			jQuery(this).parent("td:first").parent("tr:first").remove();
+				     		});
+				     		break;
+				     }
+				   },
+				   error: function(v,msg){
+				     jQuery('#wx-modal-loading-text').html(msg);
+		
+				     	jQuery('#wx-modal-secondary-text').html('');
+				     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+				   }
+				});
+			}
+		}
+		
+	});
 	
 	jQuery("#wx-app-status-button").click(function(e) {
 	
