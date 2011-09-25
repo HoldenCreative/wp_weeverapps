@@ -447,6 +447,8 @@ border: 1px solid #DDDDDD;
 div.wx-qr-app-public { background: #ECF4E6; }
 div.wx-qr-app-private { background: #fffff0; }
 
+.wx-list-actions img { margin-right: 10px; }
+
 .wx-qr-imgprev { 
     border: 1px solid #ddd;
     float: left;

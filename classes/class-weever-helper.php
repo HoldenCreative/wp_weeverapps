@@ -65,6 +65,8 @@
 		        'WEEVER_JS_RESET_TO_DEFAULT' => __( 'Reset to Default', 'weever' ),
 		        'WEEVER_JS_NO_IMAGE_URL' => WEEVER_PLUGIN_URL . 'static/images/icons/no-image.png',
     			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here' ),
+		        'WEEVER_JS_STATIC_PATH' => WEEVER_PLUGIN_URL . 'static/',
+		        'WEEVER_JS_ADMIN_LIST_URL' => admin_url( 'admin.php?page=weever-list' ),
             );
         }
 

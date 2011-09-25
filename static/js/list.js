@@ -446,42 +446,45 @@ jQuery(document).ready(function(){
 	
 	jQuery("a.wx-subtab-publish").click(function() {
 	
+		var nonce = jQuery("input#nonce").val();		
 		var tabId = jQuery(this).attr('title');
 		tabId = tabId.substring(4);
 		var siteKey = jQuery("input#wx-site-key").val();
 		var clickedElem = jQuery(this);
 		var pubStatus = jQuery(this).attr('rel');
-		var unpublishedIcon = '<img src="components/com_weever/assets/icons/publish_x.png" border="0" alt="Unpublished">';
-		var publishedIcon = '<img src="components/com_weever/assets/icons/tick.png" border="0" alt="Published">';
+		var unpublishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
+		var publishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
 		
 		jQuery.ajax({
 		   type: "POST",
-		   url: "index.php",
-		   data: "option=com_weever&task=ajaxTabPublish&status="+pubStatus+"&id="+tabId+'&site_key='+siteKey,
+		   url: ajaxurl,
+		   data: {
+			   action: 'ajaxTabPublish',
+			   status: pubStatus,
+			   id: tabId,
+			   nonce: nonce
+		   },
 		   success: function(msg){
 		     jQuery('#wx-modal-loading-text').html(msg);
 		     
-		     if(msg == "Item Published" || msg == "Item Unpublished")
-		     {
-		     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		     	
-		     	if(pubStatus == 1)
-		     	{
-		     		clickedElem.html(unpublishedIcon);
-		     		clickedElem.attr('rel', 0);
-		     	}
-		     	else
-		     	{
-		     		clickedElem.html(publishedIcon);
-		     		clickedElem.attr('rel', 1);
-		     	}
-		     }
-		     else
-		     {
+	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+	     	
+	     	if(pubStatus == 1)
+	     	{
+	     		clickedElem.html(unpublishedIcon);
+	     		clickedElem.attr('rel', 0);
+	     	}
+	     	else
+	     	{
+	     		clickedElem.html(publishedIcon);
+	     		clickedElem.attr('rel', 1);
+	     	}
+		   },
+		   error: function(v,msg){
+			     jQuery('#wx-modal-loading-text').html(msg);
+		   
 		     	jQuery('#wx-modal-secondary-text').html('');
 		     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-		     }
-
 		   }
 		 });
 	
@@ -495,7 +498,7 @@ jQuery(document).ready(function(){
 			var nonce = jQuery("input#nonce").val();
 			var tabType = jQuery(this).attr('rel');
 			var tabName = jQuery(this).attr('alt');
-			
+			var deleteButton = this;
 			var confDelete = confirm(WPText.WEEVER_JS_ARE_YOU_SURE_YOU_WANT_TO+tabName+WPText.WEEVER_JS_QUESTION_MARK);
 			
 			if(!confDelete)
@@ -504,22 +507,26 @@ jQuery(document).ready(function(){
 			jQuery.ajax({
 			   type: "POST",
 			   url: ajaxurl,
-			   data: { id: tabId, site_key: siteKey, nonce: nonce, action: 'ajaxSubtabDelete' },
+			   data: { 
+				   id: tabId, 
+				   nonce: nonce, 
+				   action: 'ajaxSubtabDelete' 
+			   },
 			   success: function(msg){
 			     jQuery('#wx-modal-loading-text').html(msg);
 			     
-			     if(msg == "Item Deleted")
-			     {
 			     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		     		document.location.href = "index.php?option=com_weever#"+tabType+"Tab";
-		     		setTimeout("document.location.reload(true);",20);
-			     }
-			     else
-			     {
+			     	// Delete the table row this delete image is in
+			     	console.debug(deleteButton);
+			     	jQuery(deleteButton).parent("td:first").parent("tr:first").remove();
+		     		//document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+'#'+tabType+'Tab';
+		     		//setTimeout("document.location.reload(true);",20);
+			   },
+			   error: function(v,msg){
+			     jQuery('#wx-modal-loading-text').html(msg);
+			     
 			     	jQuery('#wx-modal-secondary-text').html('');
 			     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-			     }
-	
 			   }
 			 });
 		

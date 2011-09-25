@@ -58,17 +58,17 @@ require_once dirname( __FILE__ ) . '/classes/class-weever-app-tab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-subtab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
 
-if ( is_admin() )
-{
+if ( is_admin() ) {
 	require_once dirname( __FILE__ ) . '/admin.php';
 	require_once dirname( __FILE__ ) . '/classes/class-weever-controller.php';
 
+    // Register the ajax call
+    add_action( 'wp_ajax_ajaxSubtabDelete', array( 'WeeverController', 'ajaxSubtabDelete' ) );
+    add_action( 'wp_ajax_ajaxSaveTabName', array( 'WeeverController', 'ajaxSaveTabName' ) );
+    add_action( 'wp_ajax_ajaxSaveTabIcon', array( 'WeeverController', 'ajaxSaveTabIcon' ) );
+    add_action( 'wp_ajax_ajaxTabPublish', array( 'WeeverController', 'ajaxTabPublish' ) );
 }
 
-// Register the ajax call
-add_action( 'wp_ajax_ajaxSubtabDelete', array( 'WeeverController', 'ajaxSubtabDelete' ) );
-add_action( 'wp_ajax_ajaxSaveTabName', array( 'WeeverController', 'ajaxSaveTabName' ) );
-add_action( 'wp_ajax_ajaxSaveTabIcon', array( 'WeeverController', 'ajaxSaveTabIcon' ) );
 
 function weever_init() {
 

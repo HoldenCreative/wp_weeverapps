@@ -62,6 +62,9 @@ class WeeverController {
                         status_header(500);
                         echo $e->getMessage();
                     }
+                } else {
+                    status_header(500);
+                    echo __( 'Invalid tab id' );
                 }
             }
 		}
@@ -72,54 +75,54 @@ class WeeverController {
 
 	public static function ajaxSubtabDelete()
 	{
-		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) )
-		{
-		    die(var_dump($_POST));
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
+
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['id'] );
+                if ( $tab !== false ) {
+                    try {
+                        // Delete this tab
+                        $tab->delete();
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                } else {
+                    status_header(500);
+                    echo __( 'Invalid tab id' );
+                }
+            }
 		}
-		/*
-		$result = comWeeverHelper::pushDeleteToCloud($id);
 
-		if($result == "Site key missing or invalid.")
-		{
-			JError::raiseError(500, JText::_('WEEVER_SERVER_ERROR').$result);
-		}
-
-		$row->delete($id);
-
-		echo $result;
-		jexit();
-		*/
-
+		die();
 	}
 
 
 	public function ajaxTabPublish()
 	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$row =& JTable::getInstance('Weever', 'Table');
-
-		$status = JRequest::getVar('status');
-
-		if($status == 1)
-			$publish = 0;
-		else
-			$publish = 1;
-
-		$id = JRequest::getVar('id');
-		$result = comWeeverHelper::pushPublishToCloud($id, $publish);
-
-		if($result == "Site key missing or invalid.")
-		{
-			JError::raiseError(500, JText::_('WEEVER_SERVER_ERROR').$result);
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['id'] );
+                if ( $tab !== false ) {
+                    try {
+                        // Toggle the publish flag based on the status given
+                        $tab->published = $_POST['status'] ? 0 : 1;
+                        $tab->save();
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                } else {
+                    status_header(500);
+                    echo __( 'Invalid tab id' );
+                }
+            }
 		}
 
-		$row->load($id);
-		$row->published = $publish;
-		$row->store();
-
-		echo $result;
-		jexit();
-
+		die();
 	}
 
 
@@ -139,6 +142,9 @@ class WeeverController {
                         status_header(500);
                         echo $e->getMessage();
                     }
+                } else {
+                    echo __( 'Invalid tab id' );
+                    status_header(500);
                 }
             }
 		}

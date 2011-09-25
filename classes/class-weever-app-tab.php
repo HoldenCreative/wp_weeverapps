@@ -85,6 +85,19 @@ class WeeverAppTab {
         return true;
     }
 
+    public function delete() {
+		$postdata = array(
+				'local_tab_id' => $this->id,
+				'app' => 'ajax',
+				'm' => 'delete_tab',
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( 'Item Deleted' != $result )
+            throw new Exception( __( 'Error deleting tab ' ) );
+    }
+
     public function save() {
 
         // Name change
@@ -114,6 +127,20 @@ class WeeverAppTab {
 
 			if ( 'Icon Saved' != $result )
 		        throw new Exception( __( 'Error saving tab icon' ) );
+        }
+
+        if ( isset( $this->_changed['published'] ) ) {
+			$postdata = array(
+				'published' => $this->published,
+				'app' =>'ajax',
+				'm' => 'publish_tab',
+				'local_tab_id' => $this->id
+				);
+
+            $result = WeeverHelper::send_to_weever_server($postdata);
+
+            if ( 'Item Published' != $result && 'Item Unpublished' != $result )
+                throw new Exception( __( 'Error updating published status' ) );
         }
 
         // TODO: Handle remaining changes

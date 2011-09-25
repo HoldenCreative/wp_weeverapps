@@ -184,13 +184,24 @@ $tabsUnpublished = 0;
 
         	<?php
         	$k = 1 - $k; endforeach;
+            ?>
 
-        	if ( ! count( $componentRows ) ) {
-        		echo "<tr><td colspan='6'>".__( 'There are no items in this tab.' )."</td></tr>";
-        	}
 
-        	?>
-
+        	<?php if ( ! count( $componentRows ) ): ?>
+        		<tr><td colspan='6'><?php echo __( 'There are no items in this tab.' ); ?></td></tr>
+        	<?php else: ?>
+        		<tr>
+        			<td colspan='6'>
+        				<div class="wx-list-actions">
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/arrow_leftup.png" />
+            				<?php echo __( 'With selected:' ); ?> &nbsp;
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/tick.png" title="Publish" />
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/publish_x.png" title="Unpublish" />
+            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" title="Delete" />
+            			</div>
+        			</td>
+        		</tr>
+			<?php endif; ?>
     	</table>
     	</div>
 
