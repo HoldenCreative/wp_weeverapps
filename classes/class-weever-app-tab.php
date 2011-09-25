@@ -23,6 +23,7 @@ class WeeverAppTab {
         $this->_data['name'] = $name;
         $this->_data['icon'] = ($icon ? $icon : '');
         $this->_data['published'] = $published;
+        $this->_data['ordering'] = $ordering;
 
         if ( ! $icon_image ) {
             // Load the default if found

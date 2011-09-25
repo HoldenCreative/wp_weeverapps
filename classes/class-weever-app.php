@@ -181,10 +181,10 @@ class WeeverApp {
 
                 // Order the tabs
                 function tab_order($a, $b) {
-                    return ($b->ordering - $a->ordering);
+                    return ceil($a->ordering - $b->ordering);
                 }
 
-                uksort( $this->_data['tabs'], "tab_order" );
+                usort( $this->_data['tabs'], "tab_order" );
 
                 // Put the subtabs in
                 foreach ( $this->_data['tabs'] as $tab ) {
