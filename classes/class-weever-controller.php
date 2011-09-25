@@ -58,7 +58,6 @@ class WeeverController {
                     try {
                         $tab->name = $_POST['name'];
                         $tab->save();
-                        status_header(200);
                     } catch ( Exception $e ) {
                         status_header(500);
                         echo $e->getMessage();
@@ -126,15 +125,25 @@ class WeeverController {
 
 	public function ajaxSaveTabIcon()
 	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$jsonResult = comWeeverHelper::pushTabIconToCloud();
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['type'] );
 
-		comWeeverHelper::saveThemeJson($jsonResult);
+                if ( $tab !== false ) {
+                    try {
+                        $tab->icon_image = $_POST['icon'];
+                        $tab->save();
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                }
+            }
+		}
 
-		echo "Icon Saved";
-
-		jexit();
-
+		die();
 	}
 
 	public function ajaxSaveTabOrder()

@@ -55,6 +55,7 @@ class WeeverApp {
             }
 
             // Stub of rows
+            /*
             $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
             $socialtab = new WeeverAppTab(3, 'social', 'Social', 1);
 
@@ -78,7 +79,7 @@ class WeeverApp {
 
             $blogsubtab = new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1);
             $blogtab->add_subtab($blogsubtab);
-            $this->_data['tabs'][] = $blogsubtab;
+            $this->_data['tabs'][] = $blogsubtab;*/
 
             if ( $load_from_server ) {
                 $this->reload_from_server();
@@ -162,6 +163,38 @@ class WeeverApp {
                 // TODO: Finish this function
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
 
+                // Tabs
+                // First load all the tabs then add the subtabs to the main tabs
+                $this->_data['tabs'] = array();
+                $theme_params = json_decode($state->results->config->theme_params);
+
+                foreach ( $state->results->tabs as $tab ) {
+                    if ( $tab->type == 'tab' ) {
+                        // Main level tab
+                        $icon_image = isset( $theme_params->{$tab->component.'Icon'} ) ? $theme_params->{$tab->component.'Icon'} : false;
+                        $this->_data['tabs'][] = new WeeverAppTab( $tab->cloud_tab_id, $tab->component, $tab->name, $tab->published, $tab->ordering, $tab->icon, $icon_image );
+                    } else {
+                        // Sub-level tab
+                        $this->_data['tabs'][] = new WeeverAppSubtab( $tab->cloud_tab_id, $tab->name, $tab->type, $tab->ordering, $tab->published );
+                    }
+                }
+
+                // Order the tabs
+                function tab_order($a, $b) {
+                    return ($b->ordering - $a->ordering);
+                }
+
+                uksort( $this->_data['tabs'], "tab_order" );
+
+                // Put the subtabs in
+                foreach ( $this->_data['tabs'] as $tab ) {
+                    if ( ! $tab->is_top_level_tab() ) {
+                        // Get the parent tab by the subtab type
+                        $parent_tab = $this->get_tab( $tab->type );
+                        $parent_tab->add_subtab( $tab );
+                    }
+                }
+
                 // Re-generate the qr code if needed
                 $this->generate_qr_code();
             }
@@ -194,9 +227,14 @@ class WeeverApp {
         }
     }
 
+    /*
+     * Get a tab
+     *
+     * @param mixed $id either the int id of the tab or the type/component of a top level tab
+     */
     public function & get_tab($id) {
         foreach ( $this->_data['tabs'] as $tab ) {
-            if ( $tab->id == $id )
+            if ( $tab->id == $id || ( $tab->is_top_level_tab() && $tab->component == $id ) )
                 return $tab;
         }
     }

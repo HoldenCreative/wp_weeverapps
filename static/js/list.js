@@ -185,6 +185,7 @@ jQuery(document).ready(function(){
 	
 		var tabType = jQuery(this).attr('title');
 		var siteKey = jQuery("input#wx-site-key").val();
+		var nonce = jQuery("input#nonce").val();		
 		var txt = 	'<div class="jqimessage">'+
 			'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_CHANGING_NAV_ICONS+'</h3>'+
 			WPText.WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_A+'<p>'+
@@ -197,8 +198,9 @@ jQuery(document).ready(function(){
 			'<textarea name="nav_icon" id="wx-nav-icon-textarea" placeholder="'+WPText.WEEVER_JS_CHANGING_NAV_PASTE_CODE+'"></textarea>'+
 			'<br/><br/></div></div>';
 		
+		// Replace the i18n placeholders.  For some reason html code is escaped instead of being left alone with the WPText function.
 		txt = txt.replace('%1', '<a href="http://www.opinionatedgeek.com/dotnet/tools/base64encode/" target="_blank">').replace('%2', '</a>');
-					
+
 		var clickedElem = jQuery(this);
 		
 		myCallbackForm = function(v,m,f) {
@@ -211,20 +213,23 @@ jQuery(document).ready(function(){
 				jQuery.ajax({
 				   type: "POST",
 				   url: ajaxurl,
-				   data: "option=com_weever&task=ajaxSaveTabIcon&icon="+encodeURIComponent(tabIcon)+"&type="+tabType+'&site_key='+siteKey,
+				   data: {
+					   action: 'ajaxSaveTabIcon',
+					   icon: tabIcon,
+					   type: tabType,
+					   nonce: nonce
+				   },
 				   success: function(msg){
-				     jQuery('#wx-modal-loading-text').html(msg);
-				     
-				     if(msg == "Icon Saved")
-				     {
-				     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-				     	clickedElem.html('<img class="wx-nav-icon-img" src="data:image/png;base64,'+tabIcon+'" />');
-				     }
-				     else
-				     {
+					   jQuery('#wx-modal-loading-text').html(msg);
+
+					   jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+  			     		clickedElem.html('<img class="wx-nav-icon-img" src="data:image/png;base64,'+tabIcon+'" />');
+				   },
+				   error: function(v,msg){
+					   jQuery('#wx-modal-loading-text').html(msg);
+				    
 				     	jQuery('#wx-modal-secondary-text').html('');
 				     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-				     }
 				   }
 				 });
 			
@@ -304,7 +309,7 @@ jQuery(document).ready(function(){
 				   type: "POST",
 				   url: ajaxurl,
 				   data: {
-					   name: encodeURIComponent(tabName),
+					   name: tabName,
 					   id: tabId,
 					   nonce: nonce,
 					   action: 'ajaxSaveTabName'
@@ -384,7 +389,7 @@ jQuery(document).ready(function(){
 				   type: "POST",
 				   url: ajaxurl,
 				   data: {
-					   name: encodeURIComponent(tabName),
+					   name: tabName,
 					   id: tabId,
 					   nonce: nonce,
 					   action: 'ajaxSaveTabName'					   
