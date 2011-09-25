@@ -20,6 +20,10 @@ class WeeverApp {
             'DetectTierWeeverTablets' => 0,
         );
 
+        // Options if granular is disabled
+        private $_device_options_standard = array( 'DetectTierWeeverSmartphones',
+            								   'DetectTierWeeverTablets' );
+
     // TODO: Grab most of this data from the API
     /*
      * Constructor
@@ -33,7 +37,7 @@ class WeeverApp {
 
             // Initial settings
             $this->_data['theme'] = new WeeverAppThemeStyles();
-            $this->_data['app_enabled'] = 1; //get_option( 'weever_app_enabled', 0 );
+            $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
             $this->_data['site_key'] = get_option( 'weever_api_key', '' );
             $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
             $this->_data['primary_domain'] = '';
@@ -42,6 +46,7 @@ class WeeverApp {
             $this->_data['google_analytics'] = '';
             $this->_data['ecosystem'] = '';
             $this->_data['domain'] = '';
+            $this->_data['tier'] = 0; // Payment tier 0-basic 1-pro
 
             $this->_data['tabs'] = array();
 
@@ -160,8 +165,13 @@ class WeeverApp {
         	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
             } else {
                 // Get the settings
-                // TODO: Finish this function
+                $this->_data['title'] = $state->results->config->title;
+                $this->_data['titlebar_title'] = $state->results->config->titlebar_title;
+                // TODO: Perhaps check this against the local variable and sync it up?
+                //$this->_data['app_enabled'] = $state->results->config->app_enabled;
+                $this->_data['ecosystem'] = $state->results->config->ecosystem;
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
+                $this->_data['tier'] = $state->results->config->tier;
 
                 // Tabs
                 // First load all the tabs then add the subtabs to the main tabs
@@ -179,12 +189,17 @@ class WeeverApp {
                     }
                 }
 
-                // Order the tabs
-                function tab_order($a, $b) {
-                    return ceil($a->ordering - $b->ordering);
+                // Theme params, just use the object
+                $this->theme->load_from_json($theme_params);
+
+                if ( ! function_exists( 'tab_order' ) ) {
+                    function tab_order($a, $b) {
+                        return ceil($a->ordering - $b->ordering);
+                    }
                 }
 
-                usort( $this->_data['tabs'], "tab_order" );
+                // Order the tabs
+                usort( $this->_data['tabs'], 'tab_order' );
 
                 // Put the subtabs in
                 foreach ( $this->_data['tabs'] as $tab ) {
@@ -208,6 +223,22 @@ class WeeverApp {
     public function & get_device_option_names() {
         $option_names = array_keys( $this->_device_options );
         return $option_names;
+    }
+
+    public function & get_granular_device_option_names() {
+        $option_names = $this->get_device_option_names();
+        foreach ( $this->get_standard_device_option_names() as $device ) {
+            foreach ( $option_names as $key => $option ) {
+                if ( $device == $option )
+                    unset( $option_names[$key] );
+            }
+        }
+
+        return $option_names;
+    }
+
+    public function & get_standard_device_option_names() {
+        return $this->_device_options_standard;
     }
 
     public function & get_tabs($only_top_level = true) {
@@ -303,13 +334,66 @@ class WeeverApp {
         }
         update_option( 'weever_granular_devices', $this->_data['granular'] );
 
-        // TODO: Push the configuration to the server
+        // Build the devices listing
+        $devices = array();
+        if ( $this->granular ) {
+            foreach ( $this->get_granular_device_option_names() as $option ) {
+                if ( $this->$option )
+                    $devices[] = $option;
+            }
+        } else {
+            foreach ( $this->get_standard_device_option_names() as $option ) {
+                if ( $this->$option )
+                    $devices[] = $option;
+            }
+        }
+        $devices = implode( ",", $devices );
 
+        // TODO: Push the configuration to the server
+	    $postdata = array(
+				'title' => $this->title,
+	            'titlebar_title' => $this->titlebar_title,
+				'devices' => $devices,
+				'ecosystem' => $this->ecosystem,
+				'app_enabled' => $this->app_enabled,
+				'domain' => $this->domain,
+				'google_analytics' => $this->google_analytics,
+				'app' => 'ajax',
+				'cms' => 'wordpress',
+				'm' => "edit_config",
+				);
+
+		$result = WeeverHelper::send_to_weever_server($postdata);
+
+		if ( "1" != $result )
+		    throw new Exception( __('Error saving config' ) );
 
         // Reload the data afterwards to ensure everything was saved
-        // TODO: Possibly change the API to return the data
         $this->reload_from_server();
     }
+
+	public function save_theme() {
+        // Theme settings
+        // TODO: Push these to server instead
+        update_option( 'weever_tablet_load_live', $this->theme->tablet_load_live );
+        update_option( 'weever_tablet_landscape_load_live', $this->theme->tablet_landscape_load_live );
+        update_option( 'weever_phone_load_live', $this->theme->phone_load_live );
+        update_option( 'weever_icon_live', $this->theme->icon_live );
+        update_option( 'weever_titlebar_logo_live', $this->theme->titlebar_logo_live );
+
+		$postdata = array(
+			'theme' => json_encode( $this->theme ),
+			'app' => 'ajax',
+//			'title' => $this->titlebar_title,
+			'm' => "edit_theme",
+			'cms' => 'wordpress',
+			);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( "" != $result )
+            throw new Exception( __( 'Error saving theme' ) );
+	}
 
     /**
      * Publish or Unpublish the given local tab ids

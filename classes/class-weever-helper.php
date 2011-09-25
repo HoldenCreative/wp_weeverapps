@@ -119,6 +119,10 @@
             self::$_weeverapp = $weeverapp;
         }
 
+        public static function & get_weeverapp() {
+            return self::$_weeverapp;
+        }
+
         /**
          * Retrieve and send data to the Weever Apps server
          *

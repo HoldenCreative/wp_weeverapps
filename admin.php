@@ -88,14 +88,23 @@ function weever_admin_page() {
                         }
                     }
 
-                    // TODO: Handle other settings
+                    $weeverapp->theme->aLink = $_POST['aLink'];
+                    $weeverapp->theme->spanLogo = $_POST['spanLogo'];
+                    $weeverapp->theme->contentButton = $_POST['contentButton'];
+                    $weeverapp->theme->border = $_POST['border'];
+                    $weeverapp->theme->useCssOverride = ( isset( $_POST['useCssOverride'] ) && $_POST['useCssOverride'] ) ? 1 : 0;
+                    $weeverapp->theme->titlebarSource = $_POST['titlebarSource'];
+                    $weeverapp->theme->titlebarHtml = $_POST['titlebarHtml'];
+                    $weeverapp->theme->template = $_POST['template'];
+                    $weeverapp->title = $_POST['title'];
+                    $weeverapp->titlebar_title = $_POST['titlebar_title'];
 
-                    $weeverapp->theme->save();
-
+                    $weeverapp->save_theme();
+                    $weeverapp->save();
+                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps theme settings saved', 'weever' ), 'updated');
                 } catch (Exception $e) {
         	        add_settings_error('weever_theme', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
                 }
-
 
     	        break;
 
