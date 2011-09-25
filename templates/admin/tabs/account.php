@@ -23,7 +23,13 @@
                         	</tr>
 
                         	<tr><td class="key"><?php _e( 'Subscription Domain' ); ?></td>
-                        	<td><?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever' ), $weeverapp->primary_domain ); ?></td>
+                        	<td>
+	                        	<?php if ( $weeverapp->primary_domain ): ?>
+                        	    <?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever' ), $weeverapp->primary_domain ); ?>
+                        	    <?php endif; ?>
+                        	    <br />
+                        	    <a target="_blank" href="http://weeverapps.com/component/weevertrial/"><?php echo __( 'Need a Weever Apps subscription key?' ); ?></a>
+                        	</td>
                         	</tr>
                     	</table>
                 	</fieldset>
