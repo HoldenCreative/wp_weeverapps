@@ -23,7 +23,10 @@ function weever_admin_add_page() {
         else
         {
 //    		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
-    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
+            if ( get_option( 'weever_api_key' ) )
+    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-list', 'weever_admin_page', '');
+            else
+    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
             add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
