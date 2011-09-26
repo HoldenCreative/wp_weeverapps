@@ -2,6 +2,9 @@
 
 class WeeverAppTab {
 
+    const MOVE_UP = 'up';
+    const MOVE_DOWN = 'down';
+
     protected $_data = array();
     protected $_changed = array();
     private $_subtabs = array();
@@ -96,6 +99,66 @@ class WeeverAppTab {
 
         if ( 'Item Deleted' != $result )
             throw new Exception( __( 'Error deleting tab' ) );
+    }
+
+    /**
+     * Move the given tab id in the given direction
+     *
+     * @param int $id
+     * @param string $dir MOVE_UP or MOVE_DOWN
+     */
+    public function move_subtab( $id, $dir ) {
+        // Algorithm from the Joomla! plugin
+        $reorder = array();
+
+		$kk = 0;
+        $nextReorder = null;
+        $lastId = null;
+
+		foreach ( $this->get_subtabs() as $v ) {
+			$kk++;
+
+			if ( $nextReorder ) {
+				$reorder[$kk - 1] = $v->id;
+				$reorder[$kk] = $nextReorder;
+
+				$nextReorder = null;
+			}
+
+			if ( $v->id == $id && self::MOVE_UP == $dir && $kk != 1 ) {
+				$reorder[$kk] = $reorder[$kk - 1];
+				$reorder[$kk - 1] = $v->id;
+			}
+
+			if ( $v->id == $id && self::MOVE_DOWN == $dir ) {
+				$nextReorder = $v->id;
+			}
+
+			if ( ! $reorder[$kk] && ! $nextReorder ) {
+				$reorder[$kk] = $v->id;
+			}
+
+			$lastId = $v->id;
+		}
+
+		if ( $nextReorder ) {
+			$reorder[$kk] = $v->id;
+		}
+
+        $kk = 0;
+
+		$reordering = json_encode($reorder);
+die(var_dump($reordering));
+		$postdata = array(
+				'reordering' => $reordering,
+				'app' => 'ajax',
+				'm' => "update_order",
+				);
+
+		$result = WeeverHelper::send_to_weever_server($postdata);
+
+		if ( 'Order Updated' != $result )
+		    throw new Exception( __( 'Error updating order' ) );
     }
 
     public function save() {

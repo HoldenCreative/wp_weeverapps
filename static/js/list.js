@@ -623,8 +623,6 @@ jQuery(document).ready(function(){
 		     	
 		     	// Swap them without refresh
 		     	if (dir == 'up') {
-		     		console.debug(row);
-		     		console.debug(row.prev("tr.wx-ui-row:visible"));
 		     		row.after(row.prev("tr.wx-ui-row:visible"));
 		     	} else {
 		     		row.next("tr.wx-ui-row:visible").after(row);

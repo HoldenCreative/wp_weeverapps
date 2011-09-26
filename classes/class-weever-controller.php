@@ -209,19 +209,30 @@ class WeeverController {
 
 	}
 
-	public function ajaxSaveSubtabOrder()
-	{
+	public function ajaxSaveSubtabOrder() {
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$id = JRequest::getVar("id");
-		$dir = JRequest::getVar("dir");
-		$type = JRequest::getVar("type");
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['type'] );
 
-		$response = comWeeverHelper::sortSubtabs($type, $id, $dir);
+                if ( $tab !== false ) {
+                    try {
+                		$tab->move_subtab( $_POST['id'], ( $_POST['dir'] == WeeverAppTab::MOVE_DOWN ? WeeverAppTab::MOVE_DOWN : WeeverAppTab::MOVE_UP ) );
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                } else {
+                    status_header(500);
+                    echo __( 'Invalid tab id' );
+                }
+            }
+        } else {
+            status_header(401);
+        }
 
-		echo $response;
-
-		jexit();
-
+        die();
 	}
 
 	public function ajaxToggleAppStatus()
