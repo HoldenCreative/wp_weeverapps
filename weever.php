@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WeeverApps
+Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/downloads
 Description: Weever Apps Administrator Component for Wordpress
 Version: 0.1
@@ -98,6 +98,21 @@ function weever_init() {
 }
 
 add_action( 'init', 'weever_init', 0 );
+
+/**
+ * Add a link to the settings page from the plugins listing page
+ * 
+ * @param array $links
+ */
+function weever_settings_link( $links ) {
+    if ( function_exists( "admin_url" ) ) {
+		$settings_link = '<a href="' . admin_url( 'admin.php?page=weever-account' ) . '">' . __( 'Settings' ) . '</a>';
+        array_push( $links, $settings_link );
+    }
+    return $links;
+}
+
+add_filter( 'plugin_action_links_weever/weever.php', 'weever_settings_link' );
 
 /*
  * Custom R3S feed for content distribution

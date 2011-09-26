@@ -24,6 +24,8 @@ ul#listTabsSortable { padding-right: 10%; }
 .ui-widget .ui-widget { font-size: 13px; }
 /* Adminlist grids */
 
+.ui-tabs .ui-tabs-panel { padding: 5px; }
+
 table.adminlist {
     width: 100%;
     border-spacing: 1px;
@@ -119,7 +121,7 @@ table.adminlist .pagination {
 fieldset{
 	border: 1px #ccc solid;
 	margin-top: 20px;
-	padding: 15px;
+	padding: 10px;
 }
 
 table.admintable td { 
@@ -405,7 +407,8 @@ margin-right:20px;
 
 .wx-theme-screen {
 float:left;
-margin-bottom:4em;
+margin-bottom:2em;
+min-height: 340px;
 }
 
 
