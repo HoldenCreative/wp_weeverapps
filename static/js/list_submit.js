@@ -36,10 +36,11 @@ jQuery(document).ready(function(){
   	  		
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
-		  	  					
+
 				var componentId = jQuery("select[name=component_id]").val();
 				var tabName = jQuery('input#wx-contact-title').val();
 				var siteKey = jQuery("input#wx-site-key").val();
+				var nonce = jQuery("input#nonce").val();
 				
 				var emailForm;
 				
@@ -58,22 +59,30 @@ jQuery(document).ready(function(){
 				jQuery.ajax({
 				 type: "POST",
 				 url: ajaxurl,
-				 data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=contact&emailform="+emailForm+"&googlemaps="+googleMaps+"&component=contact&component_id="+componentId+"&weever_action=add&published=1&site_key="+siteKey,
-				 success: function(msg){
-				   jQuery('#wx-modal-loading-text').html(msg);
-				   
-				   if(msg == "Item Added")
-				   {
-				   	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-				   	document.location.href = "index.php?option=com_weever#contactTab";
-				   	document.location.reload(true);
-				   }
-				   else
-				   {
-				   	jQuery('#wx-modal-secondary-text').html('');
-				   	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-				   }
-				 }
+				 data: {
+					 action: 'ajaxSaveNewTab',
+					 name: tabName,
+					 type: 'contact',
+					 emailform: emailForm,
+					 googlemaps: googleMaps,
+					 component: 'contact',
+					 component_id: componentId,
+					 published: 1,
+					 nonce: nonce
+				 },
+			  	   success: function(msg){
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  	     
+				  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+				  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#contactTab";
+				  	     	document.location.reload(true);
+				  	   },
+				  	   error: function(v,msg){
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  		   
+				  	     	jQuery('#wx-modal-secondary-text').html('');
+				  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+				  	   }
 				});
   	  		}
   	  	});
@@ -93,32 +102,37 @@ jQuery(document).ready(function(){
 	  	  	
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
-	  	  						
+
 			  	var cmsFeed = jQuery("select[name=cms_feed]").val();
 			  	var tabName = jQuery('input#wx-page-title').val();
 			  	var siteKey = jQuery("input#wx-site-key").val();
+				var nonce = jQuery("input#nonce").val();
 			  	
 			  	jQuery.ajax({
 			  	   type: "POST",
 			  	   url: ajaxurl,
-			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=page&component=page&component_behaviour=leaf&weever_action=add&published=1&cms_feed="+encodeURIComponent(cmsFeed)+"&site_key="+siteKey,
-			  	   success: function(msg){
-			  	     jQuery('#wx-modal-loading-text').html(msg);
-			  	     
-			  	     if(msg == "Item Added")
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-			  	     	document.location.href = "index.php?option=com_weever#pageTab";
-			  	     	document.location.reload(true);
-			  	     }
-			  	     else
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html('');
-			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-			  	     	//document.location.href = "index.php?option=com_weever#photoTab";
-			  	     	//document.location.reload(true);
-			  	     }
-			  	   }
+			  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+			  		   name: tabName,
+			  		   type: 'page',
+			  		   component: 'page',
+			  		   component_behaviour: 'leaf',
+			  		   published: '1',
+			  		   cms_feed: cmsFeed,
+			  		   nonce: nonce
+			  	   },
+  		  	  	   success: function(msg){
+    		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+    		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+    		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#pageTab";
+    		  	  	     	document.location.reload(true);
+    		  	  	   },
+    		  	  	   error: function(v,msg){
+     		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+    		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+    		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+    		  	  	   }
 			  	 });
   	  		}
   	  	});
@@ -203,26 +217,32 @@ jQuery(document).ready(function(){
 		  	  	var tabName = jQuery('input#wx-video-title').val();
 		  	  	var siteKey = jQuery("input#wx-site-key").val();
 		  	  	var component = jQuery("select#wx-select-video").val();
+		  	  	var nonce = jQuery("input#nonce").val();
 		  
 		  	  	jQuery.ajax({
 		  	  	   type: "POST",
 		  	  	   url: ajaxurl,
-		  	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=video&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(tabUrl)+"&site_key="+siteKey,
-		  	  	   success: function(msg){
-		  	  	     jQuery('#wx-modal-loading-text').html(msg);
-		  	  	     
-		  	  	     if(msg == "Item Added")
-		  	  	     {
-		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		  	  	     	document.location.href = "index.php?option=com_weever#videoTab";
-		  	  	     	document.location.reload(true);
-		  	  	     }
-		  	  	     else
-		  	  	     {
-		  	  	     	jQuery('#wx-modal-secondary-text').html('');
-		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-		  	  	     }
-		  	  	   }
+		  	  	   data: {
+		  	  		   action: 'ajaxSaveNewTab',
+		  	  		   name: tabName,
+		  	  		   type: 'video',
+		  	  		   published: '1',
+		  	  		   component: component,
+		  	  		   component_behaviour: tabUrl,
+		  	  		   nonce: nonce
+		  	  	   },
+  		  	  	   success: function(msg){
+    		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+    		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+    		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#videoTab";
+    		  	  	     	document.location.reload(true);
+    		  	  	   },
+    		  	  	   error: function(v,msg){
+     		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+    		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+    		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+    		  	  	   }
 		  	  	 });
   	  		}
   	  	});
@@ -260,25 +280,31 @@ jQuery(document).ready(function(){
   	    	  	var tabName = jQuery('input#wx-social-title').val();
   	    	  	var siteKey = jQuery("input#wx-site-key").val();
   	    	  	var component = jQuery("select#wx-select-social").val();
+  	    	  	var nonce = jQuery("input#nonce").val();
   	  	
 		  	  	jQuery.ajax({
 		  	  	   type: "POST",
 		  	  	   url: ajaxurl,
-		  	  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=social&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(query)+"&site_key="+siteKey,
+		  	  	   data: {
+		  	  		   action: 'ajaxSaveNewTab',
+		  	  		   name: tabName,
+		  	  		   type: 'social',
+		  	  		   published: 1,
+		  	  		   component: component,
+		  	  		   component_behaviour: query,
+		  	  		   nonce: nonce
+		  	  	   },
 		  	  	   success: function(msg){
 		  	  	     jQuery('#wx-modal-loading-text').html(msg);
 		  	  	     
-		  	  	     if(msg == "Item Added")
-		  	  	     {
 		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-		  	  	     	document.location.href = "index.php?option=com_weever#socialTab";
+		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#socialTab";
 		  	  	     	document.location.reload(true);
-		  	  	     }
-		  	  	     else
-		  	  	     {
+		  	  	     },
+		  	  	     error: function(v,msg){
+		  	  	    	 jQuery('#wx-modal-loading-text').html(msg);
 		  	  	     	jQuery('#wx-modal-secondary-text').html('');
 		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-		  	  	     }
 		  	  	   }
 		  	  	 });
   	  		}
@@ -304,26 +330,33 @@ jQuery(document).ready(function(){
 			  	var tabName = jQuery('input#wx-photo-title').val();
 			  	var siteKey = jQuery("input#wx-site-key").val();
 			  	var component = jQuery("select#wx-select-photo").val();
+  	    	  	var nonce = jQuery("input#nonce").val();
 		
 			  	jQuery.ajax({
 			  	   type: "POST",
 			  	   url: ajaxurl,
-			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=photo&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(tabUrl)+"&site_key="+siteKey,
+			  	   data: {
+			  		   action: 'ajaxSaveNewTab',
+			  		   name: tabName,
+			  		   type: 'photo',
+			  		   published: 1,
+			  		   component: component,
+			  		   component_behaviour: tabUrl,
+			  		   nonce: nonce
+			  	   },
 			  	   success: function(msg){
-			  	     jQuery('#wx-modal-loading-text').html(msg);
-			  	     
-			  	     if(msg == "Item Added")
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-			  	     	document.location.href = "index.php?option=com_weever#photoTab";
-			  	     	//document.location.reload(true);
-			  	     }
-			  	     else
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html('');
-			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-			  	     }
-			  	   }
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  	     
+				  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+				  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#photoTab";
+				  	     	document.location.reload(true);
+				  	   },
+				  	   error: function(v,msg){
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  		   
+				  	     	jQuery('#wx-modal-secondary-text').html('');
+				  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+				  	   }
 			  	 });
   	  		}
   	  	});
@@ -354,6 +387,7 @@ jQuery(document).ready(function(){
 			  	var timezone = jQuery("#wx-select-facebook-timezone-time").val();
 			  	var component = jQuery("select#wx-select-calendar").val();
 			  	var componentBehaviour = null;
+			  	var nonce = jQuery("input#nonce").val();
 			  	
 			  	if(component == "google.calendar") {
 			  		componentBehaviour = tabEmail;
@@ -364,21 +398,28 @@ jQuery(document).ready(function(){
 			  	jQuery.ajax({
 			  	   type: "POST",
 			  	   url: ajaxurl,
-			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=calendar&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(componentBehaviour)+"&site_key="+siteKey+"&var="+timezone,
+			  	   data: {
+			  		   action: 'ajaxSaveNewTab',
+			  		   name: tabName,
+			  		   type: 'calendar',
+			  		   published: 1,
+			  		   component: component,
+			  		   component_behaviour: componentBehaviour,
+			  		   'var': timezone,
+			  		   nonce: nonce
+			  	   },
 			  	   success: function(msg){
 			  	     jQuery('#wx-modal-loading-text').html(msg);
 			  	     
-			  	     if(msg == "Item Added")
-			  	     {
 			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-			  	     	document.location.href = "index.php?option=com_weever#calendarTab";
+			  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#calendarTab";
 			  	     	document.location.reload(true);
-			  	     }
-			  	     else
-			  	     {
+			  	   },
+			  	   error: function(v,msg){
+			  	     jQuery('#wx-modal-loading-text').html(msg);
+			  		   
 			  	     	jQuery('#wx-modal-secondary-text').html('');
 			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-			  	     }
 			  	   }
 			  	 });
   	  		}
@@ -409,26 +450,34 @@ jQuery(document).ready(function(){
 			  	var tabName = jQuery('input#wx-form-title').val();
 			  	var siteKey = jQuery("input#wx-site-key").val();
 			  	var component = jQuery("select#wx-select-form").val();
+			  	var nonce = jQuery("input#nonce").val();
 			  	
 			  	jQuery.ajax({
 			  	   type: "POST",
 			  	   url: ajaxurl,
-			  	   data: "option=com_weever&task=ajaxSaveNewTab&name="+encodeURIComponent(tabName)+"&type=form&weever_action=add&published=1&component="+component+"&component_behaviour="+encodeURIComponent(tabUrl)+"&site_key="+siteKey+"&var="+APIKey,
+			  	   data: {
+			  		   action: 'ajaxSaveNewTab',
+			  		   name: tabName,
+			  		   type: 'form',
+			  		   published: 1,
+			  		   component: component,
+			  		   component_behaviour: tabUrl,
+			  		   'var': APIKey,
+			  		   nonce: nonce
+			  	   },
 			  	   success: function(msg){
-			  	     jQuery('#wx-modal-loading-text').html(msg);
-			  	     
-			  	     if(msg == "Item Added")
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-			  	     	document.location.href = "index.php?option=com_weever#formTab";
-			  	     	document.location.reload(true);
-			  	     }
-			  	     else
-			  	     {
-			  	     	jQuery('#wx-modal-secondary-text').html('');
-			  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-			  	     }
-			  	   }
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  	     
+				  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+				  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#formTab";
+				  	     	document.location.reload(true);
+				  	   },
+				  	   error: function(v,msg){
+				  	     jQuery('#wx-modal-loading-text').html(msg);
+				  		   
+				  	     	jQuery('#wx-modal-secondary-text').html('');
+				  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+				  	   }
 			  	 });
   	  		}
   	  	});
