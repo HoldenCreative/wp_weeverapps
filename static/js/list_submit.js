@@ -147,8 +147,10 @@ jQuery(document).ready(function(){
   	    	  	var tabName = jQuery('input#wx-blog-title').val();
   	    	  	var tabSearchTerm = jQuery('input[name=s]').val();
   	    	  	var siteKey = jQuery("input#wx-site-key").val();
+  	    	  	var nonce = jQuery("input#nonce").val();
   	    	  	
   	  			if (optionVal == 's') {
+  	  				// Search feed
   	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
   	  			}
   	  			
@@ -163,22 +165,19 @@ jQuery(document).ready(function(){
   		  	  		   published: '1',
   		  	  		   cms_feed: cmsFeed,
   		  	  		   name: tabName,
-  		  	  		   site_key: siteKey
+  		  	  		   nonce: nonce
   		  	  	   },
   		  	  	   success: function(msg){
   		  	  	     jQuery('#wx-modal-loading-text').html(msg);
-  		  	  	     
-  		  	  	     if(msg == "Item Added")
-  		  	  	     {
+
   		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-  		  	  	     	document.location.href = "index.php?option=com_weever#blogTab";
+  		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#blogTab";
   		  	  	     	document.location.reload(true);
-  		  	  	     }
-  		  	  	     else
-  		  	  	     {
+  		  	  	   },
+  		  	  	   error: function(v,msg){
+   		  	  	     jQuery('#wx-modal-loading-text').html(msg);
   		  	  	     	jQuery('#wx-modal-secondary-text').html('');
   		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
-  		  	  	     }
   		  	  	   }
   		  	  	 });
   	  		}

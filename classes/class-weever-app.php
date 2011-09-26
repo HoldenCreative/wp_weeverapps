@@ -194,7 +194,11 @@ class WeeverApp {
 
                 if ( ! function_exists( 'tab_order' ) ) {
                     function tab_order($a, $b) {
-                        return ceil($a->ordering - $b->ordering);
+                        if ( $a->ordering == $b->ordering )
+                            // Take the tab's ID into account
+                            return $a->id - $b->id;
+                        else
+                            return ceil($a->ordering - $b->ordering);
                     }
                 }
 

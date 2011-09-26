@@ -72,6 +72,7 @@ if ( is_admin() ) {
     add_action( 'wp_ajax_ajaxDeleteSelected', array( 'WeeverController', 'ajaxDeleteSelected' ) );
     add_action( 'wp_ajax_ajaxSaveSubtabOrder', array( 'WeeverController', 'ajaxSaveSubtabOrder' ) );
     add_action( 'wp_ajax_ajaxSaveTabOrder', array( 'WeeverController', 'ajaxSaveTabOrder' ) );
+    add_action( 'wp_ajax_ajaxSaveNewTab', array( 'WeeverController', 'ajaxSaveNewTab' ) );
 }
 
 
@@ -93,7 +94,7 @@ function weever_init() {
 	{
 	    // Run the mobile checks
 	    // TODO: Add the MobileESP code here
-	    die('here');
+
 	}
 }
 
@@ -101,7 +102,7 @@ add_action( 'init', 'weever_init', 0 );
 
 /**
  * Add a link to the settings page from the plugins listing page
- * 
+ *
  * @param array $links
  */
 function weever_settings_link( $links ) {

@@ -25,6 +25,7 @@ ul#listTabsSortable { padding-right: 10%; }
 /* Adminlist grids */
 
 .ui-tabs .ui-tabs-panel { padding: 5px; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: pointer; }
 
 table.adminlist {
     width: 100%;

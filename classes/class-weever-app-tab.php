@@ -64,8 +64,58 @@ class WeeverAppTab {
         }
     }
 
+    /**
+     * Add an already created subtab to this tab's elements
+     *
+     * @param WeeverAppSubtab $subtab
+     */
     public function add_subtab(&$subtab) {
         $this->_subtabs[] = $subtab;
+    }
+
+    /**
+     * Creates a new subtab from the given parameters and pushes to the Weever Apps server
+     *
+     * @param array tab data
+     */
+    public function create_subtab($data) {
+
+        $hash = isset( $data['name'] ) ? md5( microtime() . $data['name'] ) : ( md5( microtime() ) );
+
+        $postdata = array(
+				'name' => isset( $data['name'] ) ? $data['name'] : null,
+				'hash' => $hash,
+				'component' => isset( $data['component'] ) ? $data['component'] : null,
+				'published' => isset( $data['published'] ) ? $data['published'] : null,
+				'component_id' => isset( $data['component_id'] ) ? $data['component_id'] : null,
+				'ordering' => isset( $data['ordering'] ) ? $data['ordering'] : null,
+				'id' => isset( $data['id'] ) ? $data['id'] : null,
+				'rss_update' => isset( $data['rss_update'] ) ? $data['rss_update'] : null,
+				'icon' => isset( $data['icon'] ) ? $data['icon'] : null,
+				'rss' => isset( $data['rss'] ) ? $data['rss'] : null,
+				'type' => isset( $data['type'] ) ? $data['type'] : null,
+				'component_behaviour' => isset( $data['component_behaviour'] ) ? $data['component_behaviour'] : null,
+				'var' => isset( $data['var'] ) ? $data['var'] : null,
+				'parent_tab_id' => isset( $data['parent_tab_id'] ) ? $data['parent_tab_id'] : null,
+				'cms_feed' => isset( $data['cms_feed'] ) ? $data['cms_feed'] : null,
+				'app' => 'ajax',
+				'm' => "add_tab",
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
+
+        if ( 'Item Added' != $result )
+            throw new Exception( sprintf( __( 'Error adding new tab: %s' ), $result ) );
+
+        // TODO: Remove this shortly as it is no longer be necessary
+		$postdata = array(
+				'local_tab_id' => rand(1000,5000),
+				'hash' => $hash,
+				'app' => 'ajax',
+				'm' => 'tab_local_id'
+				);
+
+        $result = WeeverHelper::send_to_weever_server($postdata);
     }
 
     public function & get_subtabs() {

@@ -262,68 +262,32 @@ class WeeverController {
 
 	}
 
-	public function ajaxSaveNewTab()
-	{
+	public function ajaxSaveNewTab() {
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$rss = null;
-		$tab_id = null;
-		$hash = md5(microtime() . JRequest::getVar('name'));
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['type'] );
 
-		$type = JRequest::getWord('type', 'tab');
+                if ( $tab !== false ) {
+                    try {
+                        // Create a new subtab with the given params
+                        $tab->create_subtab( $_POST );
+                    } catch ( Exception $e ) {
+                        status_header(500);
+                        echo $e->getMessage();
+                    }
+                } else {
+                    status_header(500);
+                    echo __( 'Invalid tab id' );
+                }
+            }
+        } else {
+            status_header(401);
+            echo __( 'Authentication error' );
+        }
 
-		if($type == "contact" || $type == "blog" || $type == "page")
-		{
-
-			$type_method = "_build".$type."FeedURL";
-
-			// ### check later
-			if(JRequest::getVar('view' == "contact"))
-			{
-				comWeeverHelper::getContactInfo();
-			}
-
-			$rss = comWeeverHelper::$type_method();
-
-			if($rss === false)
-			{
-				echo "Feed build failed!";
-				jexit();
-			}
-
-		}
-
-
-		JRequest::setVar('rss', $rss, 'post');
-		JRequest::setVar('hash', $hash, 'post');
-		JRequest::setVar('weever_server_response', comWeeverHelper::pushSettingsToCloud(), 'post');
-
-		if(JRequest::getVar('weever_server_response') == "Site key missing or invalid.")
-		{
-			echo JRequest::getVar('weever_server_response');
-			jexit();
-		}
-
-		$row =& JTable::getInstance('weever','Table');
-
-		if(!$row->bind(JRequest::get('post')))
-		{
-			JError::raiseError(500, $row->getError());
-		}
-
-		$row->ordering = $row->ordering + 0.1; // for later reorder to sort well if it is in collision with another.
-
-		if(!$row->store())
-		{
-			JError::raiseError(500, $row->getError());
-		}
-
-		//comWeeverHelper::reorderTabs($type);
-		comWeeverHelper::pushLocalIdToCloud($row->id, JRequest::getVar('hash'), JRequest::getVar('site_key'));
-
-		echo JRequest::getVar('weever_server_response');
-
-		jexit();
-
+        die();
 	}
 
 	public function save()
