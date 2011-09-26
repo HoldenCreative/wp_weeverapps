@@ -161,8 +161,11 @@ class WeeverController {
                     status_header(500);
                     echo __( 'Invalid tab id' );
                 }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
             }
-        } else {
+		} else {
             status_header(401);
         }
 
@@ -188,6 +191,9 @@ class WeeverController {
                     echo __( 'Invalid tab id' );
                     status_header(500);
                 }
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
             }
         } else {
             status_header(401);
@@ -198,16 +204,26 @@ class WeeverController {
 
 	public function ajaxSaveTabOrder()
 	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$order = JRequest::getVar("order");
+            if ( $weeverapp->loaded ) {
+                $order = explode( ",", $_POST['order'] );
+                foreach ( $order as $k => $o ) {
+                    $order[$k] = str_ireplace( 'tabid', '', $o );
+                }
+                $weeverapp->order_tabs( $order );
+            } else {
+                status_header(500);
+                echo __( 'Unable to communicate with Weever Apps server' );
+            }
+        } else {
+            status_header(401);
+        }
 
-		$response = comWeeverHelper::sortTabs($order);
-
-		echo $response;
-
-		jexit();
-
+        die();
 	}
+
 
 	public function ajaxSaveSubtabOrder() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {

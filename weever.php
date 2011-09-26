@@ -71,6 +71,7 @@ if ( is_admin() ) {
     add_action( 'wp_ajax_ajaxUnpublishSelected', array( 'WeeverController', 'ajaxUnpublishSelected' ) );
     add_action( 'wp_ajax_ajaxDeleteSelected', array( 'WeeverController', 'ajaxDeleteSelected' ) );
     add_action( 'wp_ajax_ajaxSaveSubtabOrder', array( 'WeeverController', 'ajaxSaveSubtabOrder' ) );
+    add_action( 'wp_ajax_ajaxSaveTabOrder', array( 'WeeverController', 'ajaxSaveTabOrder' ) );
 }
 
 

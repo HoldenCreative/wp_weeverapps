@@ -148,7 +148,7 @@ class WeeverAppTab {
         $kk = 0;
 
 		$reordering = json_encode($reorder);
-die(var_dump($reordering));
+
 		$postdata = array(
 				'reordering' => $reordering,
 				'app' => 'ajax',

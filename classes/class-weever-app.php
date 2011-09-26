@@ -359,6 +359,40 @@ class WeeverApp {
             throw new Exception( __( 'Error deleting tab' ) );
 	}
 
+	/**
+	 *
+	 *
+	 * @param array $order array of type, in order they should appear
+	 */
+	public function order_tabs( $order ) {
+
+		$reorderType = array();
+
+		foreach ($order as $k => $v) {
+			$reorderType[$v] = $k;
+		}
+
+		$kk = 0;
+		$reorder = array();
+
+		foreach ( $this->get_tabs() as $k => $v ) {
+			$reorder[ $reorderType[$v->component] ] = $v->id;
+		}
+
+		$reordering = json_encode($reorder);
+
+		$postdata = array(
+				'reordering' => $reordering,
+				'app' => 'ajax',
+				'm' => "update_order",
+				);
+
+		$result = WeeverHelper::send_to_weever_server($postdata);
+
+		if ( 'Order Updated' != $result )
+		    throw new Exception( __( 'Error updating order' ) );
+	}
+
     /**
      * Save the currently stored configuration to the server
      *
