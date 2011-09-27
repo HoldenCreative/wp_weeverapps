@@ -2,6 +2,9 @@
 
 class WeeverApp {
 
+    const TIER_BASIC = 0;
+    const TIER_PRO = 1;
+
     private $_data = array();
     private $_device_options = array(
             // Granular options
@@ -40,13 +43,13 @@ class WeeverApp {
             $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
             $this->_data['site_key'] = get_option( 'weever_api_key', '' );
             $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
-            $this->_data['primary_domain'] = '';
+            $this->_data['primary_domain'] = get_option( 'weever_primary_domain', '' );
             $this->_data['titlebar_title'] = '';
             $this->_data['title'] = '';
             $this->_data['google_analytics'] = '';
             $this->_data['ecosystem'] = '';
-            $this->_data['domain'] = '';
-            $this->_data['tier'] = 0; // Payment tier 0-basic 1-pro
+            $this->_data['domain'] = get_option( 'weever_domain', '' );
+            $this->_data['tier'] = get_option( 'weever_tier', 0 ); // Payment tier 0-basic 1-pro
 
             $this->_data['tabs'] = array();
 
@@ -58,33 +61,6 @@ class WeeverApp {
             foreach ( $this->_device_options as $key => $value ) {
                  $this->_data[$key] = get_option( 'weever_device_option_'.$key, $value );
             }
-
-            // Stub of rows
-            /*
-            $blogtab = new WeeverAppTab(4, 'blog', 'Blogs', 1);
-            $socialtab = new WeeverAppTab(3, 'social', 'Social', 1);
-
-            $this->_data['tabs'] = array(new WeeverAppTab(1, 'contact', 'Contact', 1),
-                                            new WeeverAppTab(2, 'page', 'Pages', 1),
-                                            $socialtab,
-                                            $blogtab,
-                                            new WeeverAppTab(5, 'photo', 'Photos', 1),
-                                            new WeeverAppTab(6, 'video', 'Videos', 1),
-                                            new WeeverAppTab(12, 'calendar', 'Events', 1),
-                                            new WeeverAppTab(105, 'form', 'Forms', 1),
-                                            );
-
-            $socialsubtab = new WeeverAppSubtab(8, 'Twitter tt', 'social', rand(1,10), 1);
-            $socialtab->add_subtab($socialsubtab);
-            $this->_data['tabs'][] = $socialsubtab;
-
-            $blogsubtab = new WeeverAppSubtab(7, 'Parks Home', 'blog', rand(1,10), 1);
-            $blogtab->add_subtab($blogsubtab);
-            $this->_data['tabs'][] = $blogsubtab;
-
-            $blogsubtab = new WeeverAppSubtab(15, 'Animals - Category', 'blog', rand(1,10), 1);
-            $blogtab->add_subtab($blogsubtab);
-            $this->_data['tabs'][] = $blogsubtab;*/
 
             if ( $load_from_server ) {
                 $this->reload_from_server();
@@ -172,6 +148,11 @@ class WeeverApp {
                 $this->_data['ecosystem'] = $state->results->config->ecosystem;
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
                 $this->_data['tier'] = $state->results->config->tier;
+
+                // Cache the primary_domain, domain and tier value for the redirection url creation
+                update_option( 'weever_primary_domain', $this->_data['primary_domain'] );
+                update_option( 'weever_tier', $this->_data['tier'] );
+                update_option( 'weever_domain', $this->_data['domain'] );
 
                 // Tabs
                 // First load all the tabs then add the subtabs to the main tabs

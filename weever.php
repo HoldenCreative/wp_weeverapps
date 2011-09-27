@@ -49,6 +49,9 @@ require_once dirname( __FILE__ ) . '/classes/class-r3s.php';
 // SimpleDOM HTML parser
 require_once dirname( __FILE__ ) . '/classes/class-simpledom.php';
 
+// Mobile detection class
+require_once dirname( __FILE__ ) . '/classes/class-weever-mdetect.php';
+
 // Weever plugin helper functions
 require_once dirname( __FILE__ ) . '/classes/class-weever-helper.php';
 
@@ -62,7 +65,7 @@ if ( is_admin() ) {
 	require_once dirname( __FILE__ ) . '/admin.php';
 	require_once dirname( __FILE__ ) . '/classes/class-weever-controller.php';
 
-    // Register the ajax call
+    // Register the ajax calls
     add_action( 'wp_ajax_ajaxSubtabDelete', array( 'WeeverController', 'ajaxSubtabDelete' ) );
     add_action( 'wp_ajax_ajaxSaveTabName', array( 'WeeverController', 'ajaxSaveTabName' ) );
     add_action( 'wp_ajax_ajaxSaveTabIcon', array( 'WeeverController', 'ajaxSaveTabIcon' ) );
@@ -77,7 +80,6 @@ if ( is_admin() ) {
 
 
 function weever_init() {
-
     // Initialize the session
     if ( ! session_id() )
 	    session_start();
@@ -85,16 +87,67 @@ function weever_init() {
 	// Load i18n
     load_plugin_textdomain( 'weever', false, 'weever/languages' );
 
-	// Check if a feed or the admin site is being accessed
-	if ( is_feed() || is_admin() )
+	// Check if a feed, R3S encoded template, or the admin site is being accessed
+	$template = get_query_var( 'template' );
+	$callback = get_query_var( 'callback' );
+
+	if ( is_feed() || is_admin() || ! empty( $template ) || ! empty( $callback ) ) {
 	    return;
+	}
 
 	// Verify the app is enabled
-	if ( get_option( 'weever_api_key' ) && get_option( 'weever_app_enabled' ) )
+	$weeverapp = new WeeverApp( false );
+	if ( $weeverapp->site_key && $weeverapp->app_enabled && $weeverapp->primary_domain )
 	{
 	    // Run the mobile checks
-	    // TODO: Add the MobileESP code here
+		$uagent_obj = new WeeverMdetect();
 
+		if ( ! $uagent_obj->DetectWebkit() ) {
+			$_SESSION['ignore_mobile'] = '1';
+			return;
+		}
+
+		$weever_app_redirect = false;
+
+		if ( $weeverapp->granular ) {
+		    $devices = $weeverapp->get_granular_device_option_names();
+		} else {
+		    $devices = $weeverapp->get_standard_device_option_names();
+		}
+
+		foreach ( $devices as $device ) {
+			if ( $weeverapp->$device ) {
+				if ( $uagent_obj->$device() ) {
+					$weever_app_redirect = true;
+					break;
+				}
+			}
+		}
+
+		if ( $weever_app_redirect === false ) {
+			$_SESSION['ignore_mobile'] = '1';
+			return;
+		}
+
+		$request_uri = $_SERVER['REQUEST_URI'];
+
+		$request_uri = str_replace( "?full=0", "", $request_uri );
+		$request_uri = str_replace( "&full=0", "", $request_uri );
+
+		if ( $request_uri && $request_uri != 'index.php' && $request_uri != '/' )
+			$exturl = '?exturl=' . $request_uri;
+		else
+			$exturl = "";
+
+        // Redirect either to the app page or their own domain
+        // TODO: Check the tier is 1 also?
+		if ( $weeverapp->domain ) {
+			header( 'Location: http://' . $weeverapp->domain . $exturl );
+		} else {
+			header('Location: http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl );
+		}
+
+		die();
 	}
 }
 
