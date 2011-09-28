@@ -161,6 +161,8 @@ jQuery(document).ready(function(){
 			     	jQuery("#wx-app-status-online").removeClass("wx-app-hide-status");
 			     	jQuery("#wx-app-status-offline").addClass("wx-app-hide-status");
 			     	jQuery("#wx-app-status-button").removeClass("wx-app-status-button-offline");
+			     	jQuery(".wx-app-admin-link-enabled").show();
+			     	jQuery(".wx-app-admin-link-disabled").hide();
 			   },
 			   error: function(v,msg){
 				     jQuery('#wx-modal-loading-text').html(msg);
@@ -187,6 +189,8 @@ jQuery(document).ready(function(){
 			     	jQuery("#wx-app-status-online").addClass("wx-app-hide-status");
 			     	jQuery("#wx-app-status-offline").removeClass("wx-app-hide-status");
 			     	jQuery("#wx-app-status-button").addClass("wx-app-status-button-offline");
+			     	jQuery(".wx-app-admin-link-enabled").hide();
+			     	jQuery(".wx-app-admin-link-disabled").show();
 			   },
 			   error: function(v,msg){
 				     jQuery('#wx-modal-loading-text').html(msg);
