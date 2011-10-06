@@ -134,6 +134,8 @@
          * @return raw data from the weever server
          */
         public static function send_to_weever_server($postdata) {
+            global $wp_version;
+            
             $retval = false;
 
             if ( is_array( $postdata ) && self::$_weeverapp !== false ) {
@@ -145,7 +147,9 @@
             	// Set the version
             	$postdata['version'] = WeeverConst::VERSION;
             	$postdata['generator'] = WeeverConst::NAME;
-
+                $postdata['cms'] = WeeverConst::CMS;
+                $postdata['cms_version'] = $wp_version;
+            	
             	$result = wp_remote_get( $server."?".http_build_query( $postdata ) );
 
                 if ( is_array( $result ) and isset( $result['body'] ) ) {

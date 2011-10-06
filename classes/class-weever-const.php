@@ -7,6 +7,7 @@ final class WeeverConst
 	const RELEASE_TYPE	= "";
 	const RELEASE_NAME	= "Allan Park";
 	const NAME			= "Weever Apps Administrator Component for Wordpress";
+	const CMS           = 'wordpress';
 	const COPYRIGHT_YEAR= "(c) 2011";
 	const COPYRIGHT		= "Weever Apps Inc.";
 	const COPYRIGHT_URL = "http://www.weeverapps.com/";
