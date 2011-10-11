@@ -158,6 +158,8 @@ class WeeverAppTab {
      * @param string $dir MOVE_UP or MOVE_DOWN
      */
     public function move_subtab( $id, $dir ) {
+		/*
+		 * // Moved to the server side
         // Algorithm from the Joomla! plugin
         $reorder = array();
 
@@ -198,9 +200,13 @@ class WeeverAppTab {
         $kk = 0;
 
 		$reordering = json_encode($reorder);
-
+		*/
+        
 		$postdata = array(
-				'reordering' => $reordering,
+		        'id' => $id,
+				'reordering' => 'subtab',
+		        'type' => $this->component,
+		        'dir' => $dir,
 				'app' => 'ajax',
 				'm' => "update_order",
 				);

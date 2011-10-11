@@ -13,6 +13,10 @@ function weever_admin_add_page() {
         // Ensure there are no directory references
         $page = basename( $_GET['page'] );
 
+        // Pseudo-page to enable/disable
+        $mypage = add_submenu_page( '', __( 'Weever Apps Configuration', 'weever' ), __( 'Weever Apps Configuration', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
+        
+        
         // If this is a weever page, add it as the admin menu item (so it is always highlighted properly between admin page tabs)
         if ( substr( $page, 0, strlen('weever-') ) == 'weever-' && file_exists( dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php' ) )
         {
@@ -61,7 +65,7 @@ function weever_admin_page() {
 	}
 
 	// Check if the domain is different than the current site domain
-    if ( $weeverapp->loaded ) {
+    if ( $weeverapp->loaded && $weeverapp->site_key ) {
         if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
 	        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
     }
@@ -73,7 +77,6 @@ function weever_admin_page() {
 
     	switch ( $_GET['page'] ) {
     	    case 'weever-theme':
-
                 try {
                     // Handle any image uploads
                     $overrides = array( 'test_form' => false );
@@ -261,13 +264,19 @@ function weever_page_scripts_init() {
 }
 
 function weever_app_toggle() {
-    echo '<div>';
-    if ( get_option( 'weever_app_enabled' ) ) {
-        echo '<b>' . __( 'Weever App Enabled', 'weever' ) . '</b> | <a href="#">' . __( 'Disable' ) . '</a>';
-    } else {
-        echo '<b>' . __( 'Weever App Disabled', 'weever' ) . '</b> | <a href="#">' . __( 'Enable' ) . '</a>';
+    $weeverapp = new WeeverApp( false );
+    if ( $weeverapp->site_key ) {
+?>
+    <div class="wx-app-admin-link-enabled" <?php echo ($weeverapp->app_enabled ? '' : ' style="display:none;" '); ?>>
+    	<b><?php echo __( 'Weever App Enabled', 'weever' ); ?></b> 
+    	| <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
+	</div>
+    <div class="wx-app-admin-link-disabled" <?php echo ($weeverapp->app_enabled ? ' style="display:none;" ' : ''); ?>>
+        <b><?php echo __( 'Weever App Disabled', 'weever' ); ?></b>
+        | <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
+    </div>
+<?php 
     }
-    echo '</div>';
 }
 
 add_action( 'admin_notices', 'weever_app_toggle' );

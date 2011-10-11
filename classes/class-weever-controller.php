@@ -253,13 +253,30 @@ class WeeverController {
 
 	public function ajaxToggleAppStatus()
 	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
 
-		$response = comWeeverHelper::toggleAppStatus();
+            if ( $weeverapp->loaded ) {
+                try {
+                    if ( isset( $_POST['app_enabled'] ) ) {
+                        // Use the given value
+                        $weeverapp->app_enabled = ( $_POST['app_enabled'] ? 1 : 0 );                        
+                    } else {
+                        // Toggle
+                        $weeverapp->app_enabled = ( $weeverapp->app_enabled ? 0 : 1 );
+                    }
+                    $weeverapp->save();
+                } catch ( Exception $e ) {
+                    status_header(500);
+                    echo $e->getMessage();
+                }
+            }
+        } else {
+            status_header(401);
+            echo __( 'Authentication error' );
+        }
 
-		echo $response;
-
-		jexit();
-
+        die();
 	}
 
 	public function ajaxSaveNewTab() {

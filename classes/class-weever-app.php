@@ -140,6 +140,9 @@ class WeeverApp {
         	if ( "Site key missing or invalid." == $result ) {
         	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
             } else {
+                if ( ! is_array( $state->results->tabs ) )
+                    throw new Exception( __( 'No tabs found') );
+                    
                 // Get the settings
                 $this->_data['title'] = $state->results->config->title;
                 $this->_data['titlebar_title'] = $state->results->config->titlebar_title;
@@ -158,7 +161,7 @@ class WeeverApp {
                 // First load all the tabs then add the subtabs to the main tabs
                 $this->_data['tabs'] = array();
                 $theme_params = json_decode($state->results->config->theme_params);
-
+                        
                 foreach ( $state->results->tabs as $tab ) {
                     if ( $tab->type == 'tab' ) {
                         // Main level tab
@@ -410,7 +413,6 @@ class WeeverApp {
         }
         $devices = implode( ",", $devices );
 
-        // TODO: Push the configuration to the server
 	    $postdata = array(
 				'title' => $this->title,
 	            'titlebar_title' => $this->titlebar_title,
@@ -427,7 +429,7 @@ class WeeverApp {
 		$result = WeeverHelper::send_to_weever_server($postdata);
 
 		if ( "1" != $result )
-		    throw new Exception( __('Error saving config' ) );
+		    throw new Exception( __( 'Error saving config' ) );
 
         // Reload the data afterwards to ensure everything was saved
         $this->reload_from_server();

@@ -39,8 +39,11 @@
     	}
 
     	public function load_from_json($json_obj) {
-    	    foreach ( $json_obj as $key => $val ) {
-    	        $this->$key = $json_obj->$key;
-    	    }
+			if ( is_array( $json_obj ) || is_object( $json_obj ) ) {
+	    	    foreach ( $json_obj as $key => $val ) {
+					if ( isset( $this->$key ) )
+	    	        	$this->$key = $json_obj->$key;
+	    	    }
+			}
     	}
     }
