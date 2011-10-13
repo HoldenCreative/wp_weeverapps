@@ -151,6 +151,7 @@ class WeeverApp {
                 $this->_data['ecosystem'] = $state->results->config->ecosystem;
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
                 $this->_data['tier'] = $state->results->config->tier;
+                $this->_data['google_analytics'] = $state->results->config->analytics->code;
 
                 // Cache the primary_domain, domain and tier value for the redirection url creation
                 update_option( 'weever_primary_domain', $this->_data['primary_domain'] );

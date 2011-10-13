@@ -143,16 +143,18 @@ function weever_init() {
         // Redirect either to the app page or their own domain
         // TODO: Check the tier is 1 also?
 		if ( $weeverapp->domain ) {
-			header( 'Location: http://' . $weeverapp->domain . $exturl );
+			$url = 'http://' . $weeverapp->domain . $exturl;
 		} else {
-			header('Location: http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl );
+			$url = 'http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl;
 		}
 
+		header( 'Location: ' . $url );
+		
 		die();
 	}
 }
 
-add_action( 'init', 'weever_init', 0 );
+add_action( 'posts_selection', 'weever_init', 0 );
 
 /**
  * Add a link to the settings page from the plugins listing page
