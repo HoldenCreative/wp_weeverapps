@@ -25,11 +25,8 @@ jQuery(document).ready(function(){
   	  	// Validation
   	  	jQuery('#contactAdminForm').validate({ 
   	  		rules: {
-  	  			name: { required: true },
-  	  			component_id: { required: true },
-  	  			"wx-select-contact": { required: true }
+  	  			contactname: { required: true }
   	  	  	},
-  	  		ignore: ":hidden",
   	  		
   	  		// Prevent the error label from appearing at all
   	  		errorPlacement: function(error, element) { },
@@ -37,9 +34,7 @@ jQuery(document).ready(function(){
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
 
-				var componentId = jQuery("select[name=component_id]").val();
 				var tabName = jQuery('input#wx-contact-title').val();
-				var siteKey = jQuery("input#wx-site-key").val();
 				var nonce = jQuery("input#nonce").val();
 				
 				var emailForm;
@@ -62,11 +57,16 @@ jQuery(document).ready(function(){
 				 data: {
 					 action: 'ajaxSaveNewTab',
 					 name: tabName,
+					 phone: jQuery('input#wx-contact-phone').val(),
+					 email: jQuery('input#wx-contact-email').val(),
+					 address: jQuery('input#wx-contact-address').val(),
+					 town: jQuery('input#wx-contact-town').val(),
+					 state: jQuery('input#wx-contact-state').val(),
+					 country: jQuery('input#wx-contact-country').val(),
 					 type: 'contact',
 					 emailform: emailForm,
 					 googlemaps: googleMaps,
 					 component: 'contact',
-					 component_id: componentId,
 					 published: 1,
 					 nonce: nonce
 				 },

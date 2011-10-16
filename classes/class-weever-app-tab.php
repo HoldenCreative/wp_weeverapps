@@ -82,6 +82,20 @@ class WeeverAppTab {
 
         $hash = isset( $data['name'] ) ? md5( microtime() . $data['name'] ) : ( md5( microtime() ) );
 
+        // Build the contact details if applicable
+        if ( $this->component == 'contact' ) {
+            $contact = new stdClass;
+			$contact->telephone = $data['phone'];
+			$contact->email_to = $data['email'];
+			$contact->address = $data['address'];
+			$contact->town = $data['town'];
+			$contact->state = $data['state'];
+			$contact->country = $data['country'];
+			$contact->googlemaps = ( $data['googlemaps'] ? 1 : 0 );
+			$contact->emailform = ( $data['emailform'] ? 1 : 0 );
+			$data['var'] = json_encode( $contact );
+        }
+
         $postdata = array(
 				'name' => isset( $data['name'] ) ? $data['name'] : null,
 				'hash' => $hash,
@@ -201,7 +215,7 @@ class WeeverAppTab {
 
 		$reordering = json_encode($reorder);
 		*/
-        
+
 		$postdata = array(
 		        'id' => $id,
 				'reordering' => 'subtab',
