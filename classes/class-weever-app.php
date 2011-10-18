@@ -284,7 +284,7 @@ class WeeverApp {
     		if ( isset( $uploads['basedir'] ) and isset( $uploads['baseurl'] ) ) {
     		    // Try to make the weeverapps sub-folder
     		    if ( wp_mkdir_p( trailingslashit( $uploads['basedir'] ) . 'weeverapps' ) ) {
-            		if ( get_option( 'weever_qr_site_'.$type.'_code_time', 0 ) > time() || copy( $qr_site_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_site_'.$type.'.png' ) ) {
+            		if ( get_option( 'weever_qr_site_'.$type.'_code_time', 0 ) > time() || @copy( $qr_site_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_site_'.$type.'.png' ) ) {
                         $this->_data['qr_code_public'] = trailingslashit( $uploads['baseurl'] ) . 'weeverapps/qr_site_'.$type.'.png';
 
                         if ( get_option( 'weever_qr_site_'.$type.'_code_time', 0 ) <= time() )
@@ -292,7 +292,7 @@ class WeeverApp {
                             update_option( 'weever_qr_site_'.$type.'_code_time', time() + 60*60 );
             		}
 
-            		if ( get_option( 'weever_qr_app_'.$type.'_code_time', 0 ) > time() || copy( $qr_app_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_app_'.$type.'.png' ) ) {
+            		if ( get_option( 'weever_qr_app_'.$type.'_code_time', 0 ) > time() || @copy( $qr_app_url, trailingslashit( $uploads['basedir'] ) . 'weeverapps/qr_app_'.$type.'.png' ) ) {
                         $this->_data['qr_code_private'] = trailingslashit( $uploads['baseurl'] ) . 'weeverapps/qr_app_'.$type.'.png';
 
                         if ( get_option( 'weever_qr_app_'.$type.'_code_time', 0 ) <= time() )
