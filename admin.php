@@ -179,7 +179,7 @@ function weever_admin_init() {
 
         function weever_version_warning() {
             echo "
-            <div id='weever-warning' class='updated fade'><p><strong>".sprintf(__('Weever Apps %s requires WordPress 3.0 or higher.', 'weever'), WEEVER_VERSION) ."</strong> ".sprintf(__('Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever'), 'http://codex.wordpress.org/Upgrading_WordPress'). "</p></div>
+            <div id='weever-warning' class='updated fade'><p><strong>".sprintf( __( 'Weever Apps %s requires WordPress 3.0 or higher.', 'weever' ), WeeverConst::VERSION ) ."</strong> ".sprintf( __( 'Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever' ), 'http://codex.wordpress.org/Upgrading_WordPress' ). "</p></div>
             ";
         }
         add_action( 'admin_notices', 'weever_version_warning' );

@@ -1,7 +1,7 @@
 <?php
 /*
 *
-*	Cartographer Content R3S Output Plugin for Joomla 1.5
+*	Cartographer Content R3S Output Plugin for Wordpress
 *	(c) 2010-2011 Weever Inc. <http://www.weever.ca/>
 *
 *	Author: 	Robert Gerald Porter (rob.porter@weever.ca)

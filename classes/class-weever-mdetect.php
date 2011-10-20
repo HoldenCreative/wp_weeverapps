@@ -52,7 +52,7 @@
 */
 
 
-// ### Edits for MobileESP for Joomla marked by "###". Written by Robert Gerald Porter <rob@weeverapps.com>
+// ### Edits for MobileESP for Joomla/Wordpress marked by "###". Written by Robert Gerald Porter <rob@weeverapps.com>
 // Released under GPL v3, fully compatible with original Apache 2.0 license <http://www.apache.org/licenses/GPL-compatibility.html>
 
 //**************************

@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Weever Apps
-Plugin URI: http://weeverapps.com/downloads
+Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 0.1
+Version: 1.0
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -25,7 +25,6 @@ License: GPL3
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define( 'WEEVER_VERSION', '0.1' );
 define( 'WEEVER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WEEVER_ADMIN_TEMPLATE_DIR', plugins_url( 'templates/admin/', __FILE__ ) );
 

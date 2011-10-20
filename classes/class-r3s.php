@@ -1,7 +1,7 @@
 <?php
 /*
 *
-*	Weever Cartographer R3S Output Template for Joomla
+*	Weever Cartographer R3S Output Template for Wordpress
 *	(c) 2010-2011 Weever Inc. <http://www.weever.ca/>
 *
 *	Author: 	Robert Gerald Porter (rob@weeverapps.com)
