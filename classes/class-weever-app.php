@@ -448,7 +448,7 @@ class WeeverApp {
 		$postdata = array(
 			'theme' => json_encode( $this->theme ),
 			'app' => 'ajax',
-//			'title' => $this->titlebar_title,
+			'titlebar_title' => $this->titlebar_title,
 			'm' => "edit_theme",
 			'cms' => 'wordpress',
 			);

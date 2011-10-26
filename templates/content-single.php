@@ -134,7 +134,7 @@ $jsonHtml->image = null;
 	}
 
 	if ( ! $jsonHtml->image )
-		$jsonHtml->image = WEEVER_PLUGIN_URL . "media/icon_.png";
+		$jsonHtml->image = "";
 
 // Mask external links so we leave only internal ones to play with.
 $jsonHtml->html = str_replace("href=\"http://", "hrefmask=\"weever://", $jsonHtml->html);
