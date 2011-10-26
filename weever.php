@@ -81,7 +81,7 @@ if ( is_admin() ) {
 
 function weever_init() {
     // Initialize the session
-    if ( ! session_id() )
+    if ( ! session_id() && !is_admin() )
 	    session_start();
 
 	// Load i18n
