@@ -39,7 +39,7 @@
 
 		// TODO: Get the url of the currently selected icon image
 		if(!$image)
-			$image = WEEVER_PLUGIN_URL."media/icon_.png";
+			$image = "";
 
 		$feedItem = new R3SItemMap;
 

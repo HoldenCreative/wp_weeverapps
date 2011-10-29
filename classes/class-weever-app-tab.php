@@ -154,7 +154,7 @@ class WeeverAppTab {
 
     public function delete() {
 		$postdata = array(
-				'local_tab_id' => $this->id,
+				'cloud_tab_id' => $this->id,
 				'app' => 'ajax',
 				'm' => 'delete_tab',
 				);
@@ -267,7 +267,7 @@ class WeeverAppTab {
 				'published' => $this->published,
 				'app' =>'ajax',
 				'm' => 'publish_tab',
-				'local_tab_id' => $this->id
+				'cloud_tab_id' => $this->id
 				);
 
             $result = WeeverHelper::send_to_weever_server($postdata);
