@@ -84,7 +84,8 @@
             <div class="wx-qr-textbox">
                 <span class="wx-qr-app-text"><?php echo __( 'Public QR Code'); ?></span>
 
-                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo (strpos($weeverapp->primary_domain, 'http://') === false ? 'http://' . $weeverapp->primary_domain : $weeverapp->primary_domain); ?>"><?php echo $weeverapp->primary_domain; ?></a></p>
+				<?php $weever_qr_link = (strpos($weeverapp->primary_domain, 'http://') === false ? 'http://' . $weeverapp->primary_domain : $weeverapp->primary_domain); ?>
+                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>"><?php echo $weever_qr_link; ?></a></p>
     			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
     		</div>
     	</div>
