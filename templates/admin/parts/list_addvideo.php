@@ -1,6 +1,6 @@
 <form action='' method='post' name='videoAdminForm' id='videoAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 
 	<div class='wx-add-item-video wx-add-item-dropdown'>
 		<select id='wx-select-video' class='wx-component-select' name='noname'>

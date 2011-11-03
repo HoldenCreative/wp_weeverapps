@@ -1,6 +1,6 @@
 <form action='' method='post' name='calendarAdminForm' id='calendarAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-calendar wx-add-item-dropdown'>
 		<select id='wx-select-calendar' class='wx-component-select' name='noname'>
 			<option value=''><?php echo __( '(Add new events calendar)' ); ?></option>

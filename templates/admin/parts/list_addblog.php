@@ -1,6 +1,6 @@
 <form action='' method='post' name='blogAdminForm' id='blogAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-blog wx-add-item-dropdown'>
 		<select id='wx-select-blog' name="wx-select-blog">
 			<option value=""><?php echo __( '+ Add Blog Content' ); ?></option>

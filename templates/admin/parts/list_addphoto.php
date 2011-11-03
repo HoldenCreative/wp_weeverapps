@@ -1,6 +1,6 @@
 <form action='' method='post' name='photoAdminForm' id='photoAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-photo wx-add-item-dropdown'>
 		<select id='wx-select-photo' class='wx-component-select' name='noname'>
 			<option value=''><?php echo __( '+ Add a Photo Stream' ); ?></option>

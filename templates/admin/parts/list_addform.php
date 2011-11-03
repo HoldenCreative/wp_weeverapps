@@ -1,6 +1,6 @@
 <form action='' method='post' name='formAdminForm' id='formAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-form wx-add-item-dropdown'>
 		<select id='wx-select-form' class='wx-component-select'>
 			<option value=''><?php echo __( '+ Add Form Content' ); ?></option>

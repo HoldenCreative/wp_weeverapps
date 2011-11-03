@@ -18,14 +18,169 @@
 *
 */
 
-/* Content */
-.wrap { min-width: 920px; padding-right: 20px; }
-ul#listTabsSortable { padding-right: 10%; }
-.ui-widget .ui-widget { font-size: 13px; }
-/* Adminlist grids */
+/* DONT FORGET - STATUS BUTTON NEEDS TO BE CHANGED BACK TO DISPLAY BLOCK */
 
-.ui-tabs .ui-tabs-panel { padding: 5px; }
+/* App Manager Layout Basics */
+
+legend {
+    background: none repeat scroll 0 0 #FFFFF9;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 1px 3px #DDDDDD;
+    -webkit-box-shadow:0 1px 3px #dddddd;
+    color: #000000;
+    font-size: 1em;
+    padding: 0.5em 1.5em;
+}
+
+#appmanager-header {
+    border: 1px solid #DFDFDF;
+    clear: both;
+    display: block;
+    margin: 0;
+    padding: 2em 1em;
+}
+
+
+/* JQuery CSS Typography Overrides */
+
+.ui-widget {
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { 
+    font-family: sans-serif; font-size: 1em; 
+}
+
+.ui-helper-reset {
+    border: 0 none;
+    font-size:1em;
+    line-height: 1.5em;
+    list-style: none outside none;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    text-decoration: none;
+}
+
+/* JQuery CSS Layout Overrides */
+
+.ui-widget-content {
+    background: none;
+    border: none;
+    color: #333333;
+}
+
+
+/* App Manager Tabs */
+
+.wrap { min-width: 920px;  }
+
+ul#listTabsSortable {
+    border: 1px solid #CCCCCC;
+    border-radius: 0 0 0.25em 0.25em;
+    box-shadow: 1px 0.25em 0.25em #BFBFBF inset;
+    -webkit-box-shadow:inset 1px 0.25em 0.25em #BFBFBF;
+    margin-top: -1px;
+    padding: 1.5em 10% 0 .75em;
+}
+
+
+.ui-tabs {
+    padding: 0;
+    position: relative;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav {
+    margin: 0;
+    padding: 0;
+}
+
+
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: pointer; }
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#listTabsSortable li.ui-tabs-selected {
+    border-radius: 0.5em 0.5em 0 0;
+    margin-bottom: 0;
+    margin-top: -1px;
+    padding-bottom: 1px;
+    top: 1px;
+}
+
+
+
+.ui-tabs .ui-tabs-nav li {
+    float: left;
+    list-style: none outside none;
+    margin: 0 .25em 0 0;
+    padding: 0;
+    position: relative;
+    top: 0;
+    white-space: nowrap;
+}
+
+.tabline li {
+    padding:.5em !important;
+    margin:0 !important;
+    border-right:1px solid #dfdfdf !important;
+
+
+ }
+
+ul#listTabsSortable .ui-state-default a, ul#listTabsSortable .ui-state-default a:link, ul#listTabsSortable .ui-state-default a:visited {
+    color: #444;
+    text-decoration: none;
+}
+
+
+
+.ui-widget-header {
+     font-weight:normal;
+
+}
+
+ul.tabline .ui-state-active, ul.tabline .ui-widget-content .ui-state-active, ul.tabline .ui-widget-header .ui-state-active{ 
+border:none;
+box-shadow: 0 1px 3px #DDDDDD inset;
+-webkit-box-shadow: inset 0 1px 3px #DDDDDD;
+}
+
+.tabline .ui-state-default { border:none; }
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    font-weight: normal;
+}
+
+
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background: url("images/ui-bg_glass_65_ffffff_1x400.png") repeat-x scroll 50% 50% #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #EB8F00;
+    font-weight: normal;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color:inherit; }
+
+.tabline {
+    border-bottom: 1px solid #DFDFDF;
+    border-left: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
+    background:url("images/ui-bg_glass_100_f6f6f6_1x400.png") repeat-x scroll 50% 50% #F6F6F6;
+}
+
+
+
+/* Adminlist grids */
 
 table.adminlist {
     width: 100%;
@@ -119,24 +274,20 @@ table.adminlist .pagination {
 
 /* 1.6 hacks */
 
-fieldset{
-	border: 1px #ccc solid;
-	margin-top: 20px;
-	padding: 10px;
+fieldset {
+    background: none repeat scroll 0 0 #FCFCFC;
+    border: 1px solid #DFDFDF;
+    margin: 1.5em 0;
+    padding: 1em 0.5em;
 }
 
 table.admintable td { 
 padding: 3px; 
 }
-table.admintable td.key,
-table.admintable td.paramlist_key {
-    background-color: #e9e9e9;
-    text-align: right;
-    width: 140px;
-    color: #666;
-    font-weight: bold;
-    border-bottom: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
+
+
+table.admintable td.key, table.admintable td.paramlist_key {
+    padding: 0.5em 0.5em 0.5em 1em;
 }
 
 table.paramlist td.paramlist_description {
@@ -308,13 +459,13 @@ div#wx-nav-icon-preview-wrapper img {
  
  }
 
-.wx-dummy select, .wx-dummy input { width:220px; font-size: 12px; }
+.wx-dummy select, .wx-dummy input { width:220px; font-size: 1em; }
 
 .wx-add-item-value-help { width:220px; }
 
 .wx-reveal, .wx-reveal select, .wx-reveal input { width:220px; }
 
-.wx-reveal input { padding-left:4px; font-size: 12px; }
+.wx-reveal input { padding-left:4px; font-size: 1em; }
 
 .wx-reveal label { 
     padding-left:4px;
@@ -335,6 +486,7 @@ div#wx-nav-icon-preview-wrapper img {
 
 .wx-add-submit {  }
 
+
 .wx-add-item-dropdown, .wx-dummy, .wx-add-item-value-help, .wx-reveal, .wx-add-submit { 
 float:left; 
 margin-right:20px;
@@ -344,11 +496,13 @@ margin-right:20px;
 
 .wx-add-ui {
     display: inline-block;
-    font-size: 1.25em;
-    margin: 16px 0;
+    font-size: 1em;
+    margin: 0;
     min-height: 36px;
     width: 100%;
 }
+
+.formspacer { margin: 2em 0 1em; }
 
 .wx-add-ui .error { border: 2px solid #ff0000 }
 
@@ -444,16 +598,53 @@ border: 1px solid #DDDDDD;
 
 }
 
+#wx-theme-submit, #wx-button-submit {
+    float: left;
+    margin: 0 0 0.5em .25em;
+    background: #0C98C4 url(/wp-content/plugins/weever/static/images/alert-overlay.png) repeat-x;
+    border: 0 none;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica Neue,"Arial",Helvetica,Verdana,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    padding: 5px 10px 6px;
+    position: relative;
+    text-decoration: none !important;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.376);
+
+}
+
+#wx-theme-submit:hover { background: #94CF42 url(/wp-content/plugins/weever/static/images/alert-overlay.png) repeat-x; }
+
+#wx-submitcontainer {
+    clear: both;
+    display: block;
+    margin: 1.5em 0 2.5em;
+    padding: 0 0 0 0.5em;
+    width: 100%;
+
+}
+
+p.wx-theme-submithelp {
+   float: left;
+    font-style: italic;
+    margin: 0 0 0 1.5em;
+    padding: 0;
+}
+
 .wx-qr-app {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    -webkit-border-radius:4px;
+    border: 1px solid #DDDDDD;
+    border-radius: 0.25em 0.25em 0.25em 0.25em;
     display: block;
     float: left;
-    margin: 12px 12px 12px 0;
-    padding: 12px;
-    width: 480px;
-    min-height:145px;
+    margin: 1em 1em 1em 0;
+    padding: 1em;
+    width: 46%;
 }
 
 div.wx-qr-app-public { background: #ECF4E6; }
@@ -478,14 +669,16 @@ img#wx-unpublish-selected {
 
 .wx-qr-app-text {
     color: #BBBBAA;
-    font-size: 3em;
+    display: block;
+    font-size: 2em;
     font-weight: bold;
+    margin: 0.125em 0 0;
+    padding: 0;
     text-transform: uppercase;
-    margin:0;
-    padding:0;
 }
 
-.wx-qr-textbox {
+.wx-qr-textbox p {
+    font-size: 0.875em;
 }
 
 .wx-qr-text-small { }
@@ -509,8 +702,8 @@ div.plus {background-repeat: no-repeat;background-size:contain;background-positi
 }
 .wx-nav-label {
 	text-align: center;
-	font-weight: bold;
-	padding-top: 5px;
+	font-weight: normal;
+	padding-top: .25em;
 	font-size: 1em;
 }
 .wx-grayed-out {

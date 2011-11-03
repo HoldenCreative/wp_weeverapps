@@ -1,6 +1,6 @@
 <form action='' method='post' name='socialAdminForm' id='socialAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-social wx-add-item-dropdown'>
 		<select id='wx-select-social' name='noname' class='wx-component-select'>
 			<option value=''><?php echo __( '+ Add a Social Network' ); ?></option>

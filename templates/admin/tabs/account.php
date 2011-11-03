@@ -1,16 +1,20 @@
-
 <div class="wx-add-ui">
     <form action="" method="post">
 
-        <input name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
 
 		<?php wp_nonce_field( 'weever_settings', 'weever_settings_nonce' ); ?>
 
         <div id="tabs">
-        	<ul>
+        	<ul id="listTabsSortable">
         		<li><a href="#tabs-1"><?php _e( 'Account Information', 'weever' ); ?></a></li>
         		<li><a href="#tabs-2"><?php _e( 'Staging Mode (Advanced)', 'weever' ); ?></a></li>
         	</ul>
+
+<div id="wx-submitcontainer">
+        <input id="wx-button-submit" name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
+             <p class="wx-theme-submithelp">Click here to save your changes and update your app!</p>&nbsp;
+</div>
+
         	<div id="tabs-1">
 
             	<div>

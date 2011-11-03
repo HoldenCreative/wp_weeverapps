@@ -1,6 +1,17 @@
-
 <div class="wrap">
-    <?php if ( $page == 'weever-list' ) : ?>
+    
+<?php $errors = get_settings_errors(); ?>
+
+	<?php if (is_array($errors)): ?>
+    	<?php foreach($errors as $error): ?>
+		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
+    	<?php endforeach; ?>
+    <?php endif; ?>
+
+
+    <div id="appmanager-header"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" />
+
+<?php if ( $page == 'weever-list' ) : ?>
     <?php
     $onlineSpan = "";
     $offlineSpan = "";
@@ -17,25 +28,29 @@
 	<div id="wx-app-status-button" <?php echo $offlineStatusClass; ?>><img id="wx-app-status-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icon_.png?nocache=<?php echo microtime(); ?>" /><br /><span id="wx-app-status-online" <?php echo $onlineSpan; ?>><?php echo __( 'App Online', 'weever' ); ?></span><span id="wx-app-status-offline" <?php echo $offlineSpan; ?>><?php echo __( 'App Offline', 'weever' ); ?></span></div>
 	<?php endif; ?>
 
-    <h2><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" /></h2>
 
-  	<?php $errors = get_settings_errors(); ?>
 
-	<?php if (is_array($errors)): ?>
-    	<?php foreach($errors as $error): ?>
-		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
-    	<?php endforeach; ?>
-    <?php endif; ?>
 
-	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-		<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
-			<li class="ui-state-default ui-corner-top<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>
+
+</div>
+
+  	
+
+	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content">
+		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
+			<li class="ui-state-default<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>
 		</ul>
-		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+
+
+
+
+
+
+		<div class="ui-tabs-panel ui-widget-content">
 		<?php require( $content ); ?>
 		</div>
 	</div>

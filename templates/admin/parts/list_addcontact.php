@@ -1,6 +1,6 @@
 <form action='' method='post' name='contactAdminForm' id='contactAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<!--
 	<div class='wx-add-item-contact wx-add-item-dropdown'>
 		<select id='wx-select-contact' name='wx-select-contact'>

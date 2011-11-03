@@ -1,6 +1,6 @@
 <form action='' method='post' name='pageAdminForm' id='pageAdminForm'>
 
-<div class="wx-add-ui">
+<div class="wx-add-ui formspacer">
 	<div class='wx-add-item-page wx-add-item-dropdown'>
 		<select id='wx-select-page' name='wx-select-page'>
 			<option value=''><?php echo __( '+ Add Site Page(s)' ); ?></option>

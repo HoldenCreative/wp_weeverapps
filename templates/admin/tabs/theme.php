@@ -1,16 +1,23 @@
-
 <div class="wx-add-ui">
     <form action="" enctype="multipart/form-data" method="post" id="themeAdminForm">
 
-        <input id="wx-theme-submit" name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
+
+
 
         <?php wp_nonce_field( 'weever_settings', 'weever_settings_nonce' ); ?>
 
         <div id="tabs">
-        	<ul>
+        	<ul id="listTabsSortable">
         		<li><a href="#tabs-1"><?php _e( 'Basic Settings', 'weever' ); ?></a></li>
         		<li><a href="#tabs-2"><?php _e( 'Advanced Theme Settings', 'weever' ); ?></a></li>
         	</ul>
+
+
+<div id="wx-submitcontainer">
+        <input id="wx-button-submit" name="submit" type="submit" value="<?php _e( 'Save Changes', 'weever' ); ?>" />
+             <p class="wx-theme-submithelp">Click here to save your changes and update your app!</p>&nbsp;
+</div>
+
         	<div id="tabs-1">
 
             	<div>
