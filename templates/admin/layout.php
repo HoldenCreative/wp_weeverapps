@@ -1,5 +1,5 @@
 <div class="wrap">
-    
+
 <?php $errors = get_settings_errors(); ?>
 
 	<?php if (is_array($errors)): ?>
@@ -34,7 +34,7 @@
 
 </div>
 
-  	
+
 
 	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content">
 		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
@@ -84,7 +84,7 @@
             <div class="wx-qr-textbox">
                 <span class="wx-qr-app-text"><?php echo __( 'Public QR Code'); ?></span>
 
-                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weeverapp->primary_domain; ?>"><?php echo $weeverapp->primary_domain; ?></a></p>
+                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo (strpos($weeverapp->primary_domain, 'http://') === false ? 'http://' . $weeverapp->primary_domain : $weeverapp->primary_domain); ?>"><?php echo $weeverapp->primary_domain; ?></a></p>
     			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
     		</div>
     	</div>
