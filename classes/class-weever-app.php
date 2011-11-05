@@ -173,19 +173,24 @@ class WeeverApp {
                         $this->_data['tabs'][] = new WeeverAppSubtab( $tab->cloud_tab_id, $tab->name, $tab->type, $tab->ordering, $tab->published );
                     }
                 }
-
+                
                 // Theme params, just use the object
                 $this->theme->load_from_json($theme_params);
 
-				// Load additional theme settings from newest version
-				$this->theme->titlebarSource = $state->results->config->titlebar_source;
-				$this->theme->template = $state->results->config->template;
-				$this->theme->tablet_load_live = $state->results->config->launchscreen->tablet_load;
-				$this->theme->tablet_landscape_load_live = $state->results->config->launchscreen->tablet_landscape_load;
-				$this->theme->phone_load_live = $state->results->config->launchscreen->phone_load;
-				$this->theme->icon_live = $state->results->config->launchscreen->icon;
-				$this->theme->titlebar_logo_live = $state->results->config->launchscreen->titlebar_logo;
-
+                if ( $state->results->config->launchscreen === false ) {
+                	// Push defaults to server
+                	$this->save_theme();
+                } else {
+					// Load additional theme settings from newest version
+					$this->theme->titlebarSource = $state->results->config->titlebar_source;
+					$this->theme->template = $state->results->config->template;
+					$this->theme->tablet_load_live = $state->results->config->launchscreen->tablet_load;
+					$this->theme->tablet_landscape_load_live = $state->results->config->launchscreen->tablet_landscape_load;
+					$this->theme->phone_load_live = $state->results->config->launchscreen->phone_load;
+					$this->theme->icon_live = $state->results->config->launchscreen->icon;
+					$this->theme->titlebar_logo_live = $state->results->config->launchscreen->titlebar_logo;
+                }
+                
                 if ( ! function_exists( 'tab_order' ) ) {
                     function tab_order($a, $b) {
                         if ( $a->ordering == $b->ordering )
