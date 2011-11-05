@@ -264,19 +264,22 @@ function weever_page_scripts_init() {
 }
 
 function weever_app_toggle() {
-    $weeverapp = new WeeverApp( false );
-    if ( $weeverapp->site_key ) {
+	if ( function_exists('current_user_can') && current_user_can('manage_options') )
+	{		
+	    $weeverapp = new WeeverApp( false );
+	    if ( $weeverapp->site_key ) {
 ?>
-    <div class="wx-app-admin-link-enabled" <?php echo ($weeverapp->app_enabled ? '' : ' style="display:none;" '); ?>>
-    	<b><?php echo __( 'Weever App Enabled', 'weever' ); ?></b> 
-    	| <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
-	</div>
-    <div class="wx-app-admin-link-disabled" <?php echo ($weeverapp->app_enabled ? ' style="display:none;" ' : ''); ?>>
-        <b><?php echo __( 'Weever App Disabled', 'weever' ); ?></b>
-        | <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
-    </div>
+	    <div class="wx-app-admin-link-enabled" <?php echo ($weeverapp->app_enabled ? '' : ' style="display:none;" '); ?>>
+	    	<b><?php echo __( 'Weever App Enabled', 'weever' ); ?></b> 
+	    	| <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
+		</div>
+	    <div class="wx-app-admin-link-disabled" <?php echo ($weeverapp->app_enabled ? ' style="display:none;" ' : ''); ?>>
+	        <b><?php echo __( 'Weever App Disabled', 'weever' ); ?></b>
+	        | <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
+	    </div>
 <?php 
-    }
+	    }
+	}
 }
 
 add_action( 'admin_notices', 'weever_app_toggle' );
