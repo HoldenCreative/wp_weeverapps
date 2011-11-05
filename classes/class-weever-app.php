@@ -162,7 +162,7 @@ class WeeverApp {
                 // First load all the tabs then add the subtabs to the main tabs
                 $this->_data['tabs'] = array();
                 $theme_params = json_decode($state->results->config->theme_params);
-                        
+
                 foreach ( $state->results->tabs as $tab ) {
                     if ( $tab->type == 'tab' ) {
                         // Main level tab
@@ -176,6 +176,15 @@ class WeeverApp {
 
                 // Theme params, just use the object
                 $this->theme->load_from_json($theme_params);
+
+				// Load additional theme settings from newest version
+				$this->theme->titlebarSource = $state->results->config->titlebar_source;
+				$this->theme->template = $state->results->config->template;
+				$this->theme->tablet_load_live = $state->results->config->launchscreen->tablet_load;
+				$this->theme->tablet_landscape_load_live = $state->results->config->launchscreen->tablet_landscape_load;
+				$this->theme->phone_load_live = $state->results->config->launchscreen->phone_load;
+				$this->theme->icon_live = $state->results->config->launchscreen->icon;
+				$this->theme->titlebar_logo_live = $state->results->config->launchscreen->titlebar_logo;
 
                 if ( ! function_exists( 'tab_order' ) ) {
                     function tab_order($a, $b) {
@@ -438,7 +447,6 @@ class WeeverApp {
 
 	public function save_theme() {
         // Theme settings
-        // TODO: Push these to server instead
         update_option( 'weever_tablet_load_live', $this->theme->tablet_load_live );
         update_option( 'weever_tablet_landscape_load_live', $this->theme->tablet_landscape_load_live );
         update_option( 'weever_phone_load_live', $this->theme->phone_load_live );
