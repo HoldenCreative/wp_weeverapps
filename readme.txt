@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -45,7 +45,7 @@ Additional Features:
 
 == Installation ==
 
-1. Upload the entire contents of the zip to the `/wp-content/plugins/` directory
+1. Install directly from the Wordpress admin (search for 'Weever Apps' from the Plugins / Add New page), or upload the entire contents of the zip to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Configure the plugin by entering your subscription key and the options you wish to use
 
@@ -55,7 +55,7 @@ You can obtain a subscription key at http://weeverapps.com/
 
 = How do I start creating my mobile app? =
 
-1. Download and install the plugin
+1. Install the plugin
 1. Sign up for a subscription key at http://weeverapps.com/
 1. Add the content you wish to appear in your mobile app from the 'Weever Apps Configuration' screen
 1. Turn your app online by clicking the icon in the top-right corner in the 'Weever Apps Configuration' screen
@@ -70,16 +70,22 @@ The template for the individual content screens can currently be found in templa
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
-2. This is the second screen shot
+Coming soon
 
 == Changelog ==
+
+= 1.1 =
+* Changes to interface
+* Updated theme configuration loading
+* Several minor fixes
 
 = 1.0 =
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.1 =
+Minor fixes and better support of theme configuration features
 
 = 1.0 =
 Initial version
