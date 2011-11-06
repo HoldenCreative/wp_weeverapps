@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 1.0
+Version: 1.1
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -85,7 +85,7 @@ function weever_init() {
 	    session_start();
 
 	// Load i18n
-    load_plugin_textdomain( 'weever', false, 'weever/languages' );
+    load_plugin_textdomain( 'weever', false, basename(dirname(__FILE__)) . '/languages/' );
 
 	// Check if a feed, R3S encoded template, or the admin site is being accessed
 	$template = get_query_var( 'template' );
