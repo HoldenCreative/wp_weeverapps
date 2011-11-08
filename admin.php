@@ -89,6 +89,23 @@ function weever_admin_page() {
                                 add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
                             } elseif ( isset( $file['url'] ) ) {
                                 $weeverapp->theme->$image = $file['url'];
+                                
+                                // Check if the image size is correct
+                                if ( function_exists( 'getimagesize' ) ) {
+                                	$size = getimagesize( $file['url'] );
+                                	if ( false !== $size ) {
+                                		$imagewidth = $size[0];
+                                		$imageheight = $size[1];
+                                		$width = $weeverapp->theme->get_theme_image_width( $image );
+                                		$height = $weeverapp->theme->get_theme_image_height( $image );
+                                		
+                                		if ( $imagewidth != $width or $imageheight != $height ) {
+                                			add_settings_error('weever_api_key', 'weever_settings', sprintf( __( 'WARNING: Size of uploaded image (%, %) does not match the required size (%, %), image may not display correctly', 'weever' ), $imagewidth, $imageheight, $width, $height ) );
+                                			
+                                		}
+                                	}
+                                }
+                                
                                 add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
                             }
                         }
