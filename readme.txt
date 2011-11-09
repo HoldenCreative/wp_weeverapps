@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.1
+Stable tag: 1.1.2
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -74,6 +74,10 @@ Coming soon
 
 == Changelog ==
 
+= 1.1.2 =
+* Slight changes to interface
+* Correct issue with feed filter
+
 = 1.1 =
 * Changes to interface
 * Updated theme configuration loading
@@ -83,6 +87,9 @@ Coming soon
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Corrects issue with feed filter, update recommended
 
 = 1.1 =
 Minor fixes and better support of theme configuration features
