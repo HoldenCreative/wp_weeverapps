@@ -57,10 +57,6 @@
     			return 0;
     	}
     	
-    	public function get_theme_image_height($image_type) {
-    		
-    	}
-    	
     	public function load_from_json($json_obj) {
 			if ( is_array( $json_obj ) || is_object( $json_obj ) ) {
 	    	    foreach ( $json_obj as $key => $val ) {

@@ -98,10 +98,12 @@ function weever_admin_page() {
                                 		$imageheight = $size[1];
                                 		$width = $weeverapp->theme->get_theme_image_width( $image );
                                 		$height = $weeverapp->theme->get_theme_image_height( $image );
+                                		$type = $size['mime'];
+                                		
+                                		// TODO: Verify if it needs to be a PNG?  If so, display warning.
                                 		
                                 		if ( $imagewidth != $width or $imageheight != $height ) {
-                                			add_settings_error('weever_api_key', 'weever_settings', sprintf( __( 'WARNING: Size of uploaded image (%, %) does not match the required size (%, %), image may not display correctly', 'weever' ), $imagewidth, $imageheight, $width, $height ) );
-                                			
+                                			add_settings_error('weever_api_key', 'weever_settings', sprintf( __( 'WARNING: Size of uploaded image (%d, %d) does not match the required size (%d, %d), image may not display correctly', 'weever' ), $imagewidth, $imageheight, $width, $height ) );
                                 		}
                                 	}
                                 }

@@ -23,16 +23,16 @@
             	<div>
                 	<fieldset class='adminForm'>
                 	<legend><?php echo __( 'Basic Settings', 'weever' ); ?></legend>
-
+					<input type="hidden" name="template" value="sencha" />
                 	<table class="admintable">
-                    	<tr>
+                    	<!-- <tr>
                         	<td class="key hasTip" title="<?php echo __( 'Changes the design layout of your app. More themes coming soon!', 'weever' ); ?>"><?php echo __( 'Choose a Template', 'weever' ); ?></td>
                         	<td>
                             	<select name="template" class="wx-220-select required">
                             	<option value="sencha" <?php echo ($weeverapp->theme->template == 'sencha' ? "selected='selected'":""); ?>><?php echo __( 'Weever Apps Light&trade;', 'weever' ); ?></option>
                             	</select>
                         	</td>
-                    	</tr>
+                    	</tr> -->
                     	<tr>
                         	<td class="key hasTip" title="<?php echo __( 'Selects the method in which the titlebar is generated from.', 'weever' ); ?>"><?php echo __( 'Logo Type', 'weever' ); ?></td>
                         	<td>
