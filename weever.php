@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 1.1
+Version: 1.1.2
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -180,11 +180,13 @@ function weever_create_r3sfeed() {
 
 add_action( 'do_feed_r3s', 'weever_create_r3sfeed', 10, 1 );
 
-function weever_no_limits_for_feed( $limits ) {
+function weever_no_limits_for_feed( $limit ) {
     global $wp_query;
 
     if ( isset( $wp_query->query_vars['feed'] ) and ( $wp_query->query_vars['feed'] == 'r3s' ) )
 	    return '';
+	else
+		return $limit;
 }
 
 add_filter( 'post_limits', 'weever_no_limits_for_feed' );

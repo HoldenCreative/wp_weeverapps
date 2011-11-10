@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: brianhogg
 Donate link: http://weeverapps.com/
-Tags: mobile, web app
+Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.1
+Stable tag: 1.1.2
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -70,9 +70,21 @@ The template for the individual content screens can currently be found in templa
 
 == Screenshots ==
 
-Coming soon
+1. Select blog content by category, tag, search terms, and custom taxonomy
+2. Sample page content
+3. Include social media feeds from Twitter, Identi.ca and Facebook
+4. Event listing from Facebook or Google Calendar
+5. Photos from Flickr, Facebook, Foursquare
+6. Video streams from Youtube, Vimeo
+7. Contact information
+8. Forms generated using Wufoo
+9. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.1.2 =
+* Slight changes to interface
+* Correct issue with feed filter
 
 = 1.1 =
 * Changes to interface
@@ -83,6 +95,9 @@ Coming soon
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Corrects issue with feed filter, update recommended
 
 = 1.1 =
 Minor fixes and better support of theme configuration features
