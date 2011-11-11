@@ -18,7 +18,17 @@
 *
 */
 
-/* DONT FORGET - STATUS BUTTON NEEDS TO BE CHANGED BACK TO DISPLAY BLOCK */
+/*This class can be set not to display for testing purposes */
+
+.wrap div.updated, .wrap div.error {
+   
+}
+
+/* Start of App Manager CSS */
+
+.wrap { margin-top:1em; }
+
+.wx-app-admin-link-disabled, .wx-app-admin-link-enabled { color:#333; }
 
 /* App Manager Layout Basics */
 
@@ -37,7 +47,20 @@ legend {
     clear: both;
     display: block;
     margin: 0;
-    padding: 2em 1em;
+    padding: 2em 1em 1.5em 1em;
+	overflow:auto;
+}
+
+#headerbutton {
+	background: none repeat scroll 0 0 #FAAB1A;
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF;
+    float: right;
+    font-size: 1em;
+    margin: 0.5em 0 0;
+    padding: 0.5em 1em;
+	text-decoration:none;
+	font-weight:bold;
 }
 
 
@@ -83,6 +106,7 @@ ul#listTabsSortable {
     -webkit-box-shadow:inset 1px 0.25em 0.25em #BFBFBF;
     margin-top: -1px;
     padding: 1.5em 10% 0 .75em;
+
 }
 
 
@@ -178,15 +202,25 @@ box-shadow: 0 1px 3px #DDDDDD inset;
     background:url("images/ui-bg_glass_100_f6f6f6_1x400.png") repeat-x scroll 50% 50% #F6F6F6;
 }
 
+table.adminlist tbody tr:first-child td {
+	
+}
+
+table.adminlist tbody tr td:first-child, table.adminlist thead th:first-child {
+	border-left:none;
+	
+}
+
 
 
 /* Adminlist grids */
 
 table.adminlist {
     width: 100%;
-    border-spacing: 1px;
-    background-color: #f3f3f3;
+    background:none;
     color: #666;
+	border-spacing:0;
+	border:1px solid #dfdfdf;
 }
 
 table.adminlist td,
@@ -196,12 +230,26 @@ table.adminlist th {
 
 table.adminlist td {padding-left: 8px;}
 
-table.adminlist thead th {
+table.adminlist thead {
     text-align: center;
-    background: #f7f7f7;
     color: #666;
-    border-bottom: 1px solid #CCC;
-    border-left: 1px solid #fff;
+	font-size:11px;
+}
+
+table.adminlist thead {
+	
+	background:none repeat scroll 0 0 #f0f0f0;
+	
+}
+
+table.adminlist thead tr th {
+	
+	border-left:1px solid #dfdfdf;
+}
+
+table.adminlist thead tr {
+
+	
 }
 
 table.adminlist thead th.left {
@@ -221,6 +269,8 @@ table.adminlist tbody th {
     font-weight: bold;
 }
 
+table.adminlist tbody { border-left: 1px solid #dfdfdf; border-right:1px solid #dfdfdf; }
+
 table.adminlist tbody tr {
     background-color: #fff;
     text-align: left;
@@ -232,13 +282,12 @@ table.adminlist tbody tr.row1:hover td  {
 }
 
 table.adminlist tbody tr td {
-    background: #fff;
-    border: 1px solid #fff;
+	border-top:1px solid #dfdfdf;
+	border-left:1px solid #dfdfdf;
 }
 
-table.adminlist tbody tr.row1 td {
-    background: #f0f0f0;
-    border-top: 1px solid #FFF;
+table.adminlist tbody tr.row1 {
+    background: #f9f9f9;
 }
 
 table.adminlist tfoot tr {
@@ -281,6 +330,8 @@ fieldset {
     padding: 1em 0.5em;
 }
 
+fieldset.adminForm p { margin:.75em 1em 1em 1.25em; }
+
 table.admintable td { 
 padding: 3px; 
 }
@@ -314,45 +365,38 @@ label.wx-check-label {
 }
 
 /* end of hacks */
+
+#wx-status-turnonline, #wx-status-takeoffline { color:#21759B; }
+#wx-status-boldonline  { color:green; }
+#wx-status-boldoffline { color:#AF1E2D; }
+#wx-status-current { color:#333; }
+#wx-status-text { color:#333; }
+
+#wx-status-takeoffline, #wx-status-turnonline { color:#21759B; }
+
 .wx-app-hide-status {
 	display: none;
 }
 
 
 .wx-app-status-button-offline {
-	opacity: 0.4;
+
 }
 
 #wx-app-status-button {
-    color: #000000;
-    cursor: pointer;
-    display: block;
-    /*position: absolute;*/
-    float: right;
-    right: 198px;
-    text-align: right;
-    top: 110px;
-    z-index: 50;
-    margin-right: 10px;
+    cursor:pointer;
+
 }
 
 #wx-app-status-online {
-	/*position: absolute;*/
-	float: right;
-	top: 20px;
-	left:  -50px;
-	/*text-align: right;*/
-    color: #669966;
+	
+    color: #21759B;
+	float:left;
 }
 
 #wx-app-status-offline {
-	/*position: absolute;*/
-	float: right;
-	top: 20px;
-	left:  -50px;
-    color: #996666;
-    /*text-align: right;*/
-    font-weight: bold;
+	
+	float:left;
 }
 
 #wx-app-status-img {
@@ -412,24 +456,23 @@ div#wx-nav-icon-preview-wrapper img {
 #wx-modal-loading-text {
 	font-size: 4em;
 	padding-top: 275px;
+	line-height:1.5em;
 }
 
 #wx-modal-secondary-text {
 	font-size: 2em;
 	font-variant: small-caps;
+	line-height:1.5em;
 }
 
 #wx-modal-error-text {
 	font-size: 2em;
 	color: #FF8888;
 	font-variant: small-caps;
+	line-height:1.5em;
 }
 
-/* Temporary Tests on CSS UI Stuff */
 
-/*a.wx-tab-sortable {
-    cursor: move !important;
-}*/
 
 .wx-220-select { width:220px; }
 
@@ -485,6 +528,8 @@ div#wx-nav-icon-preview-wrapper img {
 .wx-add-title {  }
 
 .wx-add-submit {  }
+
+table.adminlist thead th.title { text-align:left; padding-left: .5em;}
 
 
 .wx-add-item-dropdown, .wx-dummy, .wx-add-item-value-help, .wx-reveal, .wx-add-submit { 
@@ -638,13 +683,12 @@ p.wx-theme-submithelp {
 }
 
 .wx-qr-app {
-    border: 1px solid #DDDDDD;
-    border-radius: 0.25em 0.25em 0.25em 0.25em;
+    border: 1px solid #DFDFDF;
     display: block;
     float: left;
     margin: 1em 1em 1em 0;
     padding: 1em;
-    width: 46%;
+    width: 420px;
 }
 
 div.wx-qr-app-public { background: #ECF4E6; }
@@ -659,20 +703,20 @@ img#wx-unpublish-selected {
 }
 
 .wx-qr-imgprev { 
-    border: 1px solid #ddd;
+     border: 1px solid #DFDFDF;
     float: left;
+	width:120px;
     height: auto;
-    margin-right: 12px;
-    width: 120px;
-    border-radius:4px;
+    margin: 0.75em 1em 1em;
 }
 
 .wx-qr-app-text {
     color: #BBBBAA;
     display: block;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
-    margin: 0.125em 0 0;
+    line-height: 1em;
+    margin: 0;
     padding: 0;
     text-transform: uppercase;
 }
@@ -719,3 +763,43 @@ div.plus {background-repeat: no-repeat;background-size:contain;background-positi
 	margin-top: 1.5em;
 	padding-bottom: 5px;
 }
+
+.supportlist {
+	
+		list-style: none outside none;
+
+	
+}
+
+.segmentedlist {
+    float: left;
+    margin-right: 20px !important;
+}
+
+ul.supportlistarrow li, ul.supportliststar li {
+	line-height: 26px;
+    margin: 3px 0 !important;
+    padding-left: 3em !important;
+	
+}
+	
+ul.supportlistarrow li {
+        background: url("images/list_arrow.png") no-repeat scroll 0 0 transparent !important;
+	
+}
+
+ul.supportliststar li {
+	background: url("images/list_star.png") no-repeat scroll 0 0 transparent !important;
+	
+}
+
+ul.supportlistarrow li.ui-state-hover, ul.supportliststar li.ui-state-hover {
+	background:none;
+	font-weight:normal;
+	color:#333;
+	border:none;
+	
+}
+
+ul.supportlistarrow li.ui-state-hover a, ul.supportlistarrow li.ui-state-hover a:hover, ul.supportliststar li.ui-state-hover a, ul.supportliststar li.ui-state-hover a:hover { color:#333; text-decoration: underline; }
+

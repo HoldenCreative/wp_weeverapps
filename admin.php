@@ -11,7 +11,7 @@ function weever_admin_add_page() {
     if ( function_exists('add_menu_page') )
     {
         // Ensure there are no directory references
-        $page = isset( $_GET['page'] ) ? basename( $_GET['page'] ) : '';
+        $page = basename( $_GET['page'] );
 
         // Pseudo-page to enable/disable
         $mypage = add_submenu_page( '', __( 'Weever Apps Configuration', 'weever' ), __( 'Weever Apps Configuration', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
@@ -67,7 +67,7 @@ function weever_admin_page() {
 	// Check if the domain is different than the current site domain
     if ( $weeverapp->loaded && $weeverapp->site_key ) {
         if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
-	        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'WARNING: Your Weever App may not load because your Weever App url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.', 'weever' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ), 'updated' );
+	        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
     }
 
     // Handle form submission
@@ -89,25 +89,6 @@ function weever_admin_page() {
                                 add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
                             } elseif ( isset( $file['url'] ) ) {
                                 $weeverapp->theme->$image = $file['url'];
-                                
-                                // Check if the image size is correct
-                                if ( function_exists( 'getimagesize' ) ) {
-                                	$size = getimagesize( $file['url'] );
-                                	if ( false !== $size ) {
-                                		$imagewidth = $size[0];
-                                		$imageheight = $size[1];
-                                		$width = $weeverapp->theme->get_theme_image_width( $image );
-                                		$height = $weeverapp->theme->get_theme_image_height( $image );
-                                		$type = $size['mime'];
-                                		
-                                		// TODO: Verify if it needs to be a PNG?  If so, display warning.
-                                		
-                                		if ( $imagewidth != $width or $imageheight != $height ) {
-                                			add_settings_error('weever_api_key', 'weever_settings', sprintf( __( 'WARNING: Size of uploaded image (%d, %d) does not match the required size (%d, %d), image may not display correctly', 'weever' ), $imagewidth, $imageheight, $width, $height ) );
-                                		}
-                                	}
-                                }
-                                
                                 add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
                             }
                         }
@@ -289,11 +270,11 @@ function weever_app_toggle() {
 	    if ( $weeverapp->site_key ) {
 ?>
 	    <div class="wx-app-admin-link-enabled" <?php echo ($weeverapp->app_enabled ? '' : ' style="display:none;" '); ?>>
-	    	<b><?php echo __( 'Weever App Enabled', 'weever' ); ?></b> 
+	    	<?php echo __( 'Weever App Enabled for Mobile Visitors', 'weever' ); ?>
 	    	| <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
 		</div>
 	    <div class="wx-app-admin-link-disabled" <?php echo ($weeverapp->app_enabled ? ' style="display:none;" ' : ''); ?>>
-	        <b><?php echo __( 'Weever App Disabled', 'weever' ); ?></b>
+	        <?php echo __( 'Weever App Disabled for Mobile Visitors', 'weever' ); ?>
 	        | <a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php echo __( 'Settings', 'weever' ); ?></a>
 	    </div>
 <?php 

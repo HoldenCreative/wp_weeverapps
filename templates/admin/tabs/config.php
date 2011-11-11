@@ -75,7 +75,7 @@
                 <fieldset class='adminForm'>
                 	<legend><?php echo __( 'Weever Apps Pro Features', 'weever' ); ?></legend>
 
-                	<p><?php echo sprintf( __("<a href='%s' target='_blank'>Weever Apps Pro (white-label)</a> allows you to use your own custom address for your app, such as http://app.yoursitename.com/. Please see our <a href='%s' target='_blank'>notes on how to map a domain or sub-domain to your app</a>.", 'weever' ), 'http://weeverapps.com/joomla', 'http://weeverapps.zendesk.com/entries/20394158-how-do-i-use-my-own-domain-name-web-site-address-url-with-weever-apps' ); ?></p>
+                	<p><?php echo sprintf( __("<a href='http://weeverapps.com/pricing' target='_blank'>Weever Apps Pro (white-label)</a> allows you to use your own custom address for your app, such as http://app.yoursitename.com/. Please see our <a href='%s' target='_blank'>notes on how to map a domain or sub-domain to your app</a>.", 'weever' ), 'http://weeverapps.com/pricing', 'http://weeverapps.zendesk.com/entries/20394158-how-do-i-use-my-own-domain-name-web-site-address-url-with-weever-apps' ); ?></p>
 
                 	<table class="admintable">
 

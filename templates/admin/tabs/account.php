@@ -32,7 +32,7 @@
                         	    <?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever' ), $weeverapp->primary_domain ); ?>
                         	    <?php endif; ?>
                         	    <br />
-                        	    <a target="_blank" href="http://weeverapps.com/component/weevertrial/"><?php echo __( 'Need a Weever Apps subscription key?' ); ?></a>
+                        	    <a target="_blank" href="http://weeverapps.com"><?php echo __( 'Need a Weever Apps subscription key?' ); ?></a>
                         	</td>
                         	</tr>
                     	</table>

@@ -7,11 +7,19 @@
 		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
     	<?php endforeach; ?>
     <?php endif; ?>
+    
+    
+    
+    
 
 
-    <div id="appmanager-header"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" />
 
-<?php if ( $page == 'weever-list' ) : ?>
+<div style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
+			<a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp; | &nbsp; <a href="http://eepurl.com/fP-oD">Newsletter</a>
+
+
+			<?php if ( $page == 'weever-list' ) : ?>
+
     <?php
     $onlineSpan = "";
     $offlineSpan = "";
@@ -25,10 +33,40 @@
     }
     ?>
 
-	<div id="wx-app-status-button" <?php echo $offlineStatusClass; ?>><img id="wx-app-status-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icon_.png?nocache=<?php echo microtime(); ?>" /><br /><span id="wx-app-status-online" <?php echo $onlineSpan; ?>><?php echo __( 'App Online', 'weever' ); ?></span><span id="wx-app-status-offline" <?php echo $offlineSpan; ?>><?php echo __( 'App Offline', 'weever' ); ?></span></div>
+<span id="wx-app-status-button" <?php echo $offlineStatusClass; ?>>
+    
+  <span id="wx-app-status-online" <?php echo $onlineSpan; ?>>
+	<span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
+    <span id="wx-status-boldonline"><strong><?php echo __( 'online', 'weever' ); ?></strong></span>
+    <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
+	<span id="wx-status-takeoffline"><?php echo __( 'Take App Offline', 'weever' ); ?></span>
+  </span>
+    
+  <span id="wx-app-status-offline" <?php echo $offlineSpan; ?>>
+    <span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
+    <span id="wx-status-boldoffline"><strong><?php echo __( 'offline', 'weever' ); ?></strong></span>
+    <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
+	<span id="wx-status-turnonline"><?php echo __( 'Turn App Online', 'weever' ); ?></span>
+  </span>
+
+</span>
+
 	<?php endif; ?>
+</div>
 
 
+
+    <div id="appmanager-header"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" />
+
+
+<span style="float: right; font-size: 10px;">• Mobile GPS Maps!<br>• Rebrand & Resell<br>• Custom Domains</span>
+
+
+<span style="float:right; line-height: 1.25em; font-size: 1em; text-align: right; margin:1px 1.5em 0 0;">Weever Apps Pro & Premium<br><a href="http://weeverapps.com/pricing" id="headerbutton">Learn more</a></span>
+
+
+
+<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" href="http://weeverapps.com/pricing">Sign Up</a>Enjoying Your Free Trial?<br><span style="font-size:.5em; float:left;">We add powerful new features each month.</span></span>
 
 
 
@@ -57,49 +95,64 @@
 
 	<?php if ( $weeverapp->site_key ): ?>
 	<div>
-        <div class="wx-qr-app wx-qr-app-private">
-        	<?php
+    
+    
+    <fieldset class='adminForm'>
+                	<legend><?php echo __('Private QR Code for Testing Your App'); ?></legend>
+
+     	<?php
         	$weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER;
         	?>
             <img src="<?php echo $weeverapp->qr_code_private; ?>"  class="wx-qr-imgprev" />
 
-            <div class="wx-qr-textbox">
 
-            <span class="wx-qr-app-text"><?php echo __( 'Test QR Code' ); ?></span>
 
             <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.' ); ?><br />
     		<?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
 
     		<p><?php echo __( 'Additional but <em>imperfect</em> ways to test your app: Use a webkit browser like Google Chrome or Safari, or try the Apple iPhone&trade; simulator.' ); ?></p>
+                </fieldset>
+    
+    
+    
+    <fieldset class='adminForm'>
+        			<legend style="background:#ECF4E6;"><?php echo __( 'Public QR Code for Marketing Use', 'weever' ); ?></legend>
 
-
-    		</div>
-    	</div>
-
-    	<?php if ( ! $weeverapp->staging_mode ): ?>
-    	<div class="wx-qr-app wx-qr-app-public">
+            		<?php if ( ! $weeverapp->staging_mode ): ?>
+ 
 
     		<img src="<?php echo $weeverapp->qr_code_public; ?>"  class="wx-qr-imgprev" />
 
-            <div class="wx-qr-textbox">
-                <span class="wx-qr-app-text"><?php echo __( 'Public QR Code'); ?></span>
 
 				<?php $weever_qr_link = (strpos($weeverapp->primary_domain, 'http://') === false ? 'http://' . $weeverapp->primary_domain : $weeverapp->primary_domain); ?>
-                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>"><?php echo $weever_qr_link; ?></a></p>
+                
+                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>">
+				<?php echo $weever_qr_link; ?></a></p>
+                
     			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
-    		</div>
-    	</div>
+
+    
     	<?php else: ?>
-    	<div class="wx-qr-app wx-qr-app-public">
-    		<?php echo __( 'You are currently in <strong>staging mode</strong>. Public QR Codes are not available for staging mode apps.' ); ?>
-    	</div>
+    	
+    		<p style="margin:1em 0 1em 1.75em;"><?php echo __( 'You are currently in <strong>staging mode</strong>. Public QR Codes are not available for staging mode apps.' ); ?></p>
+    
     	<?php endif; ?>
+
+
     	<div style="clear:both;"></div>
-    </div>
+  
 	<?php endif; ?>
 
+   </fieldset>
+    
+   </div>
+
+
+
+
+    	
 	<div style="text-align:center;clear:both; margin-top:24px;">
-		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?><br />
+		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?>
 		<?php echo WeeverConst::COPYRIGHT_YEAR; ?> <a target="_blank" href="<?php echo WeeverConst::COPYRIGHT_URL; ?>"><?php echo WeeverConst::COPYRIGHT; ?></a><br />
 		Released <?php echo WeeverConst::RELEASE_DATE; ?> under <a target="_blank" href="<?php echo WeeverConst::LICENSE_URL; ?>"><?php echo WeeverConst::LICENSE; ?></a>.
 		<a target="_blank" href="http://weeverapps.zendesk.com/home">Contact Support</a>
