@@ -7,7 +7,7 @@
 
 
 
-<p>If you are new to Weever Appps — <a href="http://weeverapps.zendesk.com/" title="Weever Apps Support" target="_blank">http://weeverapps.zendesk.com</a> is <em>the</em> place to start. Ask questions, find answers and request new features!</p>
+<p>If you are new to Weever Apps — <a href="http://weeverapps.zendesk.com/" title="Weever Apps Support" target="_blank">http://weeverapps.zendesk.com</a> is <em>the</em> place to start. Ask questions, find answers and request new features!</p>
 
 
 
@@ -82,7 +82,7 @@
 <ul class="supportlistarrow"><a href="http://weeverapps.com/pricing">Premium & Pro</a> Features
 <li>How do I make a <strong><a href="http://weeverapps.zendesk.com/entries/20611136-how-do-i-make-a-weever-map">Weever GPS Map?</a></strong></li>
 <li>How do I setup a <a href="http://weeverapps.zendesk.com/entries/20394158-how-do-i-use-my-own-domain-name-web-site-address-url-with-weever-apps">app.yoursitename.com address</a> for my app?</li>
-<li>Can I change the 'Powered by' message on launch?<br/>Yes, just go to 'Mobile Publishing' in the app-manager.</li>
+<li>Can I change the 'Powered by' message on launch?<br/>Yes, just go to 'Mobile Publishing' in the plugin settings.</li>
 </ul>	
 <br/>
 
@@ -90,7 +90,7 @@
 <ul class="supportlistarrow">Marketing & Sales
 <li>Do Weever Apps Install?<br/>Yes! - See the end of <a href="http://weeverapps.com">this video</a> for an example.  'Prompt to install' is coming soon!</li>
 <li>Can I setup a 'landing page' in my app?<br/>Yes! The latest Weever Apps releases include the options to use a single landing page, or to select content from your site for a 'landing page app slideshow'</li>
-<li>How much data do you store on your servers?<br/><a href="http://weeverapps.zendesk.com/entries/20315147-where-does-the-code-stays">Almost none.</a>. Your privacy and security is important to us.</li>
+<li>How much data do you store on your servers?<br/><a href="http://weeverapps.zendesk.com/entries/20315147-where-does-the-code-stays">Almost none</a>. Your privacy and security is important to us.</li>
 </ul>
 <br/>
 <ul class="supportlistarrow">Technical / Advanced

@@ -84,6 +84,10 @@
                 	<td><input type="textbox" name="domain"  value="<?php echo $weeverapp->domain; ?>" id="wx-domain-map-input" placeholder="app.yourdomain.com" /> </td>
                 	</tr>
 
+					<tr>
+					<td class="key hasTip" title="<?php echo __( 'Place custom HTML that will appear when your app is loading.  If blank, the load spinner will not appear.', 'weever' ); ?>"><?php echo __( 'Loading Spinner Text', 'weever' ); ?></td>
+					<td><textarea type="textbox" name="loadspinner" id="wx-load-spinner" placeholder="<?php echo __( 'Powered By...', 'weever' ); ?>"><?php echo htmlspecialchars($weeverapp->loadspinner); ?></textarea> </td>	
+					</tr>	
 
                 	</table>
             	</fieldset>

@@ -50,6 +50,7 @@ class WeeverApp {
             $this->_data['ecosystem'] = '';
             $this->_data['domain'] = get_option( 'weever_domain', '' );
             $this->_data['tier'] = get_option( 'weever_tier', 0 ); // Payment tier 0-basic 1-pro
+            $this->_data['loadspinner'] = '';
 
             $this->_data['tabs'] = array();
 
@@ -150,7 +151,7 @@ class WeeverApp {
                 $this->_data['ecosystem'] = $state->results->config->ecosystem;
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
                 $this->_data['tier'] = $state->results->config->tier;
-                
+                //$this->_data['loadspinner'] = $state->results->config->loadspinner;
                 $this->_data['google_analytics'] = ( $state->results->config->analytics ? $state->results->config->analytics->code : '' );
 
                 // Cache the primary_domain, domain and tier value for the redirection url creation
@@ -435,6 +436,7 @@ class WeeverApp {
 				'ecosystem' => $this->ecosystem,
 				'app_enabled' => $this->app_enabled,
 				'domain' => $this->domain,
+	    		'loadspinner' => $this->loadspinner,
 				'google_analytics' => $this->google_analytics,
 				'app' => 'ajax',
 				'cms' => 'wordpress',
