@@ -49,6 +49,51 @@ class WeeverController {
         die();
     }
 
+    
+	public static function ajaxUpdateTabSettings()
+	{
+		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
+            $weeverapp = new WeeverApp();
+
+            if ( $weeverapp->loaded ) {
+                $tab = $weeverapp->get_tab( $_POST['id'] );
+				$type = $_POST['type'];
+				
+				switch ( $_POST['type'] ) {
+					case "map":
+						$submitted_vars = explode( ',', $_POST['var'] );
+						
+						$tab->var->start->latitude = $submitted_vars[0];
+						$tab->var->start->longitude = $submitted_vars[1];
+						$tab->var->start->zoom = $submitted_vars[2];
+						$tab->var->marker = $submitted_vars[3];
+						$tab->save();
+						break;
+						
+					case "panel": 
+					case "aboutapp":
+						$submitted_vars = explode( ',' , $_POST['var'] );
+						
+						$tab->var->animation->type = $submitted_vars[0];
+						$tab->var->animation->duration = $submitted_vars[1];
+						$tab->var->animation->timeout = $submitted_vars[2];
+						$tab->var->content_header = $submitted_vars[3];
+						
+						// TODO: Figure out how to detect changes to the object itself if possible
+						$tab->var = $tab->var;
+						
+						$tab->save();
+						break;
+				}
+            }
+		} else {
+            status_header(401);
+        }
+
+        die();
+	}
+    
+    
 	public static function ajaxSubtabDelete() {
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();

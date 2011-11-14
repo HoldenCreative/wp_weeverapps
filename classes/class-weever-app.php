@@ -168,7 +168,7 @@ class WeeverApp {
                     if ( $tab->type == 'tab' ) {
                         // Main level tab
                         $icon_image = isset( $theme_params->{$tab->component.'Icon'} ) ? $theme_params->{$tab->component.'Icon'} : false;
-                        $this->_data['tabs'][] = new WeeverAppTab( $tab->cloud_tab_id, $tab->component, $tab->name, $tab->published, $tab->ordering, $tab->icon, $icon_image );
+                        $this->_data['tabs'][] = new WeeverAppTab( $tab->cloud_tab_id, $tab->component, $tab->name, $tab->published, $tab->ordering, $tab->icon, $icon_image, $tab->var );
                     } else {
                         // Sub-level tab
                         $this->_data['tabs'][] = new WeeverAppSubtab( $tab->cloud_tab_id, $tab->name, $tab->type, $tab->ordering, $tab->published );
@@ -268,10 +268,14 @@ class WeeverApp {
      * @param mixed $id either the int id of the tab or the type/component of a top level tab
      */
     public function & get_tab($id) {
+    	$tab = false;
+    	
         foreach ( $this->_data['tabs'] as $tab ) {
             if ( $tab->id == $id || ( $tab->is_top_level_tab() && $tab->component == $id ) )
                 return $tab;
         }
+        
+        return $tab;
     }
 
     /**

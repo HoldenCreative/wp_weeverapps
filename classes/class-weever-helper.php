@@ -64,12 +64,29 @@
                 'WEEVER_JS_CHANGING_NAV_ICONS_INSTRUCTIONS_B' => __( 'To create a new icon, please upload your icon-image to a %1Base64 Encoder%2 and paste in the results below. We strongly recommend using a black monochrome, transparent 64 x 64 pixel PNG image.', 'weever' ),
 		        'WEEVER_JS_RESET_TO_DEFAULT' => __( 'Reset to Default', 'weever' ),
 		        'WEEVER_JS_NO_IMAGE_URL' => WEEVER_PLUGIN_URL . 'static/images/icons/no-image.png',
-    			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here' ),
+    			'WEEVER_JS_CHANGING_NAV_PASTE_CODE' => __( 'Click and paste your code here', 'weever' ),
 		        'WEEVER_JS_STATIC_PATH' => WEEVER_PLUGIN_URL . 'static/',
 		        'WEEVER_JS_ADMIN_LIST_URL' => admin_url( 'admin.php?page=weever-list' ),
-		        'WEEVER_JS_SELECT_AN_ELEMENT' => __( 'Select at least one item from the list first' ),
-		        'WEEVER_JS_CONFIRM_LIST_ACTION' => __( 'Are you sure you want to %s the selected items?' ),
-            );
+		        'WEEVER_JS_SELECT_AN_ELEMENT' => __( 'Select at least one item from the list first', 'weever' ),
+		        'WEEVER_JS_CONFIRM_LIST_ACTION' => __( 'Are you sure you want to %s the selected items?', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_ANIMATIONS' => __( 'Panel Transition Animations', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_TOOLTIP' => __( 'When enabled, each items will transition one to the next, like a slideshow', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_TOGGLE' => __( 'Transitions', 'weever' ),
+		    	'WEEVER_CONFIG_DISABLED' => __( 'Disabled', 'weever' ),
+		    	'WEEVER_CONFIG_ENABLED' => __( 'Enabled', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_DURATION_TOOLTIP' => __( 'Controls the duration of the animated transition', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_DURATION' => __( 'Animation Duration', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_DURATION_SHORT' => __( 'Shorter', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_DURATION_DEFAULT' => __( 'Default', 'weever' ),
+		    	'WEEVER_JS_PANEL_TRANSITION_DURATION_LONG' => __( 'Longer', 'weever' ),
+		    	'WEEVER_JS_PANEL_TIMEOUT_TOOLTIP' => __( 'Sets how long until a transition occurs', 'weever' ),
+		    	'WEEVER_JS_PANEL_TIMEOUT' => __( 'Time Until Transition', 'weever' ),
+		    	'WEEVER_JS_PANEL_TIMEOUT_SHORT' => __( 'Shorter', 'weever' ),
+		    	'WEEVER_JS_PANEL_TIMEOUT_DEFAULT' => __( 'Default', 'weever' ),
+		    	'WEEVER_JS_PANEL_TIMEOUT_LONG' => __( 'Longer', 'weever' ),
+		    	'WEEVER_JS_PANEL_HEADERS_TOOLTIP' => __( 'When disabled, article/content items\' titles, authors, and other meta-data is not displayed.', 'weever' ),
+		    	'WEEVER_JS_PANEL_HEADERS' => __( 'Content Headers', 'weever' ),
+		    );
         }
 
         /**

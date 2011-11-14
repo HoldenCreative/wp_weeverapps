@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 1.1.2
+Version: 1.2
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -76,6 +76,7 @@ if ( is_admin() ) {
     add_action( 'wp_ajax_ajaxSaveTabOrder', array( 'WeeverController', 'ajaxSaveTabOrder' ) );
     add_action( 'wp_ajax_ajaxSaveNewTab', array( 'WeeverController', 'ajaxSaveNewTab' ) );
     add_action( 'wp_ajax_ajaxToggleAppStatus', array( 'WeeverController', 'ajaxToggleAppStatus' ) );
+    add_action( 'wp_ajax_ajaxUpdateTabSettings', array( 'WeeverController', 'ajaxUpdateTabSettings' ) );
 }
 
 

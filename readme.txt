@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.1.2
+Stable tag: 1.2
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -64,9 +64,13 @@ That's it!
 
 = Can I customize the look and feel of the mobile app? =
 
-You can upload custom graphics for the load screen, logo, and other images for the app in the 'Logo, Images and Theme' tab in the Weever Apps Configuration screen.  Additional documentation to do advanced customization of CSS and HTML coming soon.
+Yes!  You can customize your app in a number of ways:
 
-The template for the individual content screens can currently be found in templates/content-single.php with a more robust theming system planned.
+1. Upload custom graphics for the load screen, logo, and other images for the app in the 'Logo, Images and Theme' tab in the Weever Apps Configuration screen
+1. Copy templates/weever-content-single.php to your current theme to customize the look of individual pages / posts
+1. Add custom CSS in the 'Logo, Images and Theme' tab, under 'Advanced Theme Settings'
+
+You can determine the appropriate CSS classes to use by loading your private app URL in a Webkit browser such as Google Chrome or Safari, and inspecting the appropriate HTML elements.
 
 == Screenshots ==
 
@@ -82,6 +86,11 @@ The template for the individual content screens can currently be found in templa
 
 == Changelog ==
 
+= 1.2 =
+* Ability to customize the app using Wordpress theme files (weever-content-single.php, weever.css)
+* Additional 'Welcome' tab
+* Several plugin UI improvements
+
 = 1.1.2 =
 * Slight changes to interface
 * Correct issue with feed filter
@@ -95,6 +104,9 @@ The template for the individual content screens can currently be found in templa
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2 =
+Ability to customize the app using Wordpress themes, additional 'Welcome' tab
 
 = 1.1.2 =
 Corrects issue with feed filter, update recommended

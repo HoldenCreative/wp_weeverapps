@@ -102,9 +102,14 @@ $tabsUnpublished = 0;
     	<div id="<?php echo $row->component . 'Tab' ?>">
 
 		<div class="row-settings">
-			<span class="edit"><a href="#" title="<?php echo $row->component; ?>" class="wx-nav-label-edit">Edit Tab Name</a></span> | <span class="edit"><a href="#" class="wx-nav-icon-edit" title="<?php echo $row->component; ?>">Edit Tab Icon</a></span>
+			<span class="edit"><a href="#" title="<?php echo $row->component; ?>" class="wx-nav-label-edit"><?php echo __( 'Edit Tab Name', 'weever' ); ?></a></span> | <span class="edit"><a href="#" class="wx-nav-icon-edit" title="<?php echo $row->component; ?>"><?php echo __( 'Edit Tab Icon', 'weever'); ?></a></span>
 			<?php if ( 'panel' == $row->component ): ?>
-			| <span class="edit"><a href="#" title="<?php echo $row->component; ?>">Settings</a></span>
+			| <span class="edit"><a href="#" id="wx-select-panel-settings" class="wx-nav-settings" title="<?php echo $row->component; ?>"><?php echo __( 'Advanced Settings', 'weever' ); ?></a></span>
+			<input type="hidden" id="wx-panel-headers" value="<?php echo $row->var->content_header; ?>" />
+			<input type="hidden" id="wx-panel-animate" value="<?php echo $row->var->animation->type; ?>" />
+			<input type="hidden" id="wx-panel-animate-duration" value="<?php echo $row->var->animation->duration; ?>" />
+			<input type="hidden" id="wx-panel-timeout" value="<?php echo $row->var->animation->timeout; ?>" />
+			<input type="hidden" id="wx-panel-tab-id" value="<?php echo $row->id; ?>" />			
 			<?php endif; ?>
 		</div>
 

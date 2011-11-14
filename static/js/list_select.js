@@ -368,4 +368,156 @@ jQuery(document).ready(function(){
 		jQuery('.wx-dummy').hide();
 	});
 
+	jQuery('#wx-select-panel-settings').click(function() {
+		
+		event.preventDefault();
+		
+		var panelAnimate = jQuery("input#wx-panel-animate").val(),
+		panelAnimateDuration = jQuery("input#wx-panel-animate-duration").val(),
+		panelHeaders = jQuery("input#wx-panel-headers").val(),
+		timeout = jQuery("input#wx-panel-timeout").val(),
+		siteKey = jQuery("input#wx-site-key").val(),
+		tabId = jQuery("input#wx-panel-tab-id").val();
+		var nonce = jQuery("input#nonce").val();		
+	
+		if (panelAnimate == "fade") {
+			var selected = 'selected="selected"';
+		} else {
+			var selected = null;	
+		}
+		
+		if (panelHeaders == "true") {
+			var selectedHeader = 'selected="selected"';
+		} else {
+			var selectedHeader = null;	
+		}
+		
+		switch (panelAnimateDuration) {
+		
+			case "1450": 
+				var defaultDuration = 'selected="selected"';
+				break;
+			case "1925":
+				var longDuration = 'selected="selected"';
+				break;
+			case "725":
+				var shortDuration = 'selected="selected"';
+				break;
+			default:	
+				var defaultDuration = 'selected="selected"';
+				break;
+		}	
+		
+		switch (timeout) {
+		
+			case "4500": 
+				var shortTimeout = 'selected="selected"';
+				break;
+			case "7250":
+				var defaultTimeout = 'selected="selected"';
+				break;
+			case "10000":
+				var longTimeout = 'selected="selected"';
+				break;
+			default:	
+				var defaultTimeout = 'selected="selected"';
+				break;
+		}	
+		
+		var txt = 	'<table class="admintable">'+
+					'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_PANEL_TRANSITION_ANIMATIONS+'</h3>'+
+					'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_PANEL_TRANSITION_TOOLTIP+
+					'">'+WPText.WEEVER_JS_PANEL_TRANSITION_TOGGLE+'</td>'+
+					'<td><select name="wx-input-panel-animate"><option value="none">'+
+					WPText.WEEVER_CONFIG_DISABLED+'</option>'+
+					'<option value="fade" '+selected+'>'+WPText.WEEVER_CONFIG_ENABLED+'</option></select>'+
+					'</td></tr>'+
+					'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_PANEL_TRANSITION_DURATION_TOOLTIP+
+					'">'+WPText.WEEVER_JS_PANEL_TRANSITION_DURATION+'</td>'+
+					'<td><select name="wx-input-panel-animate-duration"><option value="725" '+shortDuration+'>'+
+					WPText.WEEVER_JS_PANEL_TRANSITION_DURATION_SHORT+'</option>'+
+					'<option value="1450" '+defaultDuration+'>'+WPText.WEEVER_JS_PANEL_TRANSITION_DURATION_DEFAULT+
+					'</option>'+
+					'<option value="1925" '+longDuration+'>'+WPText.WEEVER_JS_PANEL_TRANSITION_DURATION_LONG+
+					'</option></select>'+
+					'</td></tr>'+
+					'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_PANEL_TIMEOUT_TOOLTIP+
+					'">'+WPText.WEEVER_JS_PANEL_TIMEOUT+'</td>'+
+					'<td><select name="wx-input-panel-timeout"><option value="4500" '+shortTimeout+'>'+
+					WPText.WEEVER_JS_PANEL_TIMEOUT_SHORT+'</option>'+
+					'<option value="7250" '+defaultTimeout+'>'+WPText.WEEVER_JS_PANEL_TIMEOUT_DEFAULT+
+					'</option>'+
+					'<option value="10000" '+longTimeout+'>'+WPText.WEEVER_JS_PANEL_TIMEOUT_LONG+
+					'</option></select>'+
+					'</td></tr>'+
+					'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_PANEL_HEADERS_TOOLTIP+
+					'">'+WPText.WEEVER_JS_PANEL_HEADERS+'</td>'+
+					'<td><select name="wx-input-panel-headers"><option value="false">'+
+					WPText.WEEVER_CONFIG_DISABLED+'</option>'+
+					'<option value="true" '+selectedHeader+'>'+WPText.WEEVER_CONFIG_ENABLED+
+					'</option></select>'+
+					'</td></tr></table>';
+					
+		var clickedElem = jQuery(this);
+					
+		myCallbackForm = function(v,m,f) {
+		
+			if (v != undefined && v == true)
+			{ 
+				/*var animate = encodeURIComponent(f["wx-input-panel-animate"]),
+					animateDuration = encodeURIComponent(f["wx-input-panel-animate-duration"]),
+					timeout = encodeURIComponent(f["wx-input-panel-timeout"]),
+					headers = encodeURIComponent(f["wx-input-panel-headers"]);*/
+
+					jQuery.ajax({
+					   type: "POST",
+					   url: ajaxurl,
+					   data: {
+						   action: 'ajaxUpdateTabSettings',
+						   type: 'panel',
+						   id: tabId,
+						   'var': f["wx-input-panel-animate"] + ',' + f["wx-input-panel-animate-duration"] + ',' + f["wx-input-panel-timeout"] + ',' + f["wx-input-panel-headers"],
+						   nonce: nonce
+					   },
+					   success: function(msg){
+						   jQuery('#wx-modal-loading-text').html(msg);
+						   jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+						   document.location.reload(true);
+					   },
+					   error: function(v,msg){
+						   jQuery('#wx-modal-loading-text').html(msg);
+					    
+					     	jQuery('#wx-modal-secondary-text').html('');
+					     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+					   }
+					 });
+			
+			}
+		}	
+		
+		submitCheck = function(v,m,f){
+			
+			an = m.children('#alertName');
+		
+			if(f.alertName == "" && v == true){
+				an.css("border","solid #ff0000 1px");
+				return false;
+			}
+			
+			return true;
+		
+		}		
+		
+		var aniSettings = jQuery.prompt(txt, {
+				callback: myCallbackForm, 
+				submit: submitCheck,
+				overlayspeed: "fast",
+				buttons: {  Cancel: false, Submit: true },
+				focus: 1
+				});
+				
+		jQuery('input#alertName').select();
+		
+	});
+	
 });
