@@ -11,7 +11,7 @@ function weever_admin_add_page() {
     if ( function_exists('add_menu_page') )
     {
         // Ensure there are no directory references
-        $page = basename( $_GET['page'] );
+        $page = ( isset( $_GET['page'] ) ? basename( $_GET['page'] ) : '' );
 
         // Pseudo-page to enable/disable
         $mypage = add_submenu_page( '', __( 'Weever Apps Configuration', 'weever' ), __( 'Weever Apps Configuration', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );

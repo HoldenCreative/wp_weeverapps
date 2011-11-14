@@ -232,8 +232,13 @@ function weever_app_request() {
 		$jsonHtml->author = get_the_author_meta('display_name');
 		$jsonHtml->datetime["published"] = get_lastpostdate('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostdate('GMT'), false);  //$v->created;
 		$jsonHtml->datetime["modified"] = get_lastpostmodified('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostmodified('GMT'), false); //$v->modified;
-		
-        include( dirname( __FILE__ ) . '/templates/weever-content-single.php' );
+
+		if ( file_exists( get_stylesheet_directory() . '/weever-content-single.php' ) )
+			include( get_stylesheet_directory() . '/weever-content-single.php' );
+		elseif ( file_exists( get_template_directory() . '/weever-content-single.php' ) )
+			include( get_template_directory() . '/weever-content-single.php' );
+		else		
+        	include( dirname( __FILE__ ) . '/templates/weever-content-single.php' );
 
 		$jsonHtml->html =  ob_get_clean();
 		$jsonHtml->image = null;
