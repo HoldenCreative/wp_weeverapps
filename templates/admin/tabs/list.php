@@ -121,7 +121,7 @@ $tabsUnpublished = 0;
                 	<th class='title'><?php echo __( 'NAME', 'weever' ); ?> &nbsp;(<a style="color:#1C94C4;" href="http://weeverapps.com/mobile-app-layout" target="_blank">?</a>)</th>
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'PUBLISHED' ); ?></th>
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'ORDER' ); ?></th>
-                	<th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>
+                	<!-- <th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>-->
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'Delete' ); ?></th>
             	</tr>
         	</thead>
@@ -148,9 +148,9 @@ $tabsUnpublished = 0;
             			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/downarrow.png" width="16" height="16" border="0" title="Move Down"></a>
             			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/uparrow.png" width="16" height="16" border="0" title="Move Up"></a>
             		</td>
-            		<td align='center'>
+            		<!-- <td align='center'>
             			<?php echo $row->id; ?>
-            		</td>
+            		</td> -->
             		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" alt="<?php echo __( 'delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" /></a></td>
         		</tr>
 

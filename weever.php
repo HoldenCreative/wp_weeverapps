@@ -209,7 +209,74 @@ function weever_app_request() {
 
     if ( array_key_exists( 'template', $wp_query->query_vars ) && $wp_query->query_vars['template'] == 'weever_cartographer' )
     {
-        include( dirname( __FILE__ ) . '/templates/content-single.php' );
+    	// Capture the HTML from the template file
+		ob_start();
+		
+		the_post();
+		
+		header('Content-type: application/json');
+		header('Cache-Control: no-cache, must-revalidate');
+		
+		$callback = get_query_var('callback');
+		
+		// specs @ https://github.com/WeeverApps/r3s-spec
+		
+		$jsonHtml = new R3SHtmlContentDetailsMap;
+		
+		$jsonHtml->language = get_locale();
+		
+		// TODO: Get the sitename from the current site state
+		$jsonHtml->publisher = get_option('blogname'); // $conf->getValue('config.sitename');
+		
+		$jsonHtml->name = get_the_title();
+		$jsonHtml->author = get_the_author_meta('display_name');
+		$jsonHtml->datetime["published"] = get_lastpostdate('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostdate('GMT'), false);  //$v->created;
+		$jsonHtml->datetime["modified"] = get_lastpostmodified('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostmodified('GMT'), false); //$v->modified;
+		
+        include( dirname( __FILE__ ) . '/templates/weever-content-single.php' );
+
+		$jsonHtml->html =  ob_get_clean();
+		$jsonHtml->image = null;
+		
+		$html = SimpleHTMLDomHelper::str_get_html( $jsonHtml->html );
+	
+		foreach ( @$html->find('img') as $vv )
+		{
+			if ( $vv->src )
+			{
+				$jsonHtml->image = WeeverHelper::make_absolute($vv->src, site_url());
+				break;
+			}
+		}
+	
+		if ( ! $jsonHtml->image )
+			$jsonHtml->image = "";
+		
+		// Mask external links so we leave only internal ones to play with.
+		$jsonHtml->html = str_replace("href=\"http://", "hrefmask=\"weever://", $jsonHtml->html);
+		
+		// For HTML5 compliance, we take out spare target="_blank" links just so we don't duplicate
+		$jsonHtml->html = str_replace("target=\"_blank\"", "", $jsonHtml->html);
+		$jsonHtml->html = str_replace("href=\"", "target=\"_blank\" href=\"".site_url(), $jsonHtml->html);
+		$jsonHtml->html = str_replace("src=\"/", "src=\"".site_url(), $jsonHtml->html);
+		$jsonHtml->html = str_replace("src=\"images", "src=\"".site_url()."images", $jsonHtml->html);
+		
+		// Restore external links, ensure target="_blank" applies
+		$jsonHtml->html = str_replace("hrefmask=\"weever://", "target=\"_blank\" href=\"http://", $jsonHtml->html);
+		$jsonHtml->html = str_replace("<iframe title=\"YouTube video player\" width=\"480\" height=\"390\"",
+											"<iframe title=\"YouTube video player\" width=\"160\" height=\"130\"", $jsonHtml->html);
+		
+		$jsonOutput = new jsonOutput;
+		$jsonOutput->results[] = $jsonHtml;
+		$output = json_encode($jsonOutput);
+		
+		if($callback)
+			$json = $callback."(".$output.")";
+		else
+			$json = $output;
+		
+		print_r($json);
+        
         exit;
     }
 }
