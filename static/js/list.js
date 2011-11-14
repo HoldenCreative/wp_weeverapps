@@ -137,7 +137,7 @@ jQuery(document).ready(function(){
 		}
 		
 	});
-	
+	/*
 	jQuery("#wx-app-status-button").click(function(e) {
 	
 		var siteKey = jQuery("input#wx-site-key").val();
@@ -201,7 +201,7 @@ jQuery(document).ready(function(){
 		}
 	
 	});
-	
+	*/
 	
 	
 	jQuery("li.wx-nav-tabs").bind("mouseover", function(){

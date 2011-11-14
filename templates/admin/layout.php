@@ -18,8 +18,6 @@
 			<a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp; | &nbsp; <a href="http://eepurl.com/fP-oD">Newsletter</a>
 
 
-			<?php if ( $page == 'weever-list' ) : ?>
-
     <?php
     $onlineSpan = "";
     $offlineSpan = "";
@@ -39,19 +37,17 @@
 	<span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
     <span id="wx-status-boldonline"><strong><?php echo __( 'online', 'weever' ); ?></strong></span>
     <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
-	<span id="wx-status-takeoffline"><?php echo __( 'Take App Offline', 'weever' ); ?></span>
+	<span id="wx-status-takeoffline"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=0" ); ?>"><?php echo __( 'Take App Offline', 'weever' ); ?></a></span>
   </span>
     
   <span id="wx-app-status-offline" <?php echo $offlineSpan; ?>>
     <span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
     <span id="wx-status-boldoffline"><strong><?php echo __( 'offline', 'weever' ); ?></strong></span>
     <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
-	<span id="wx-status-turnonline"><?php echo __( 'Turn App Online', 'weever' ); ?></span>
+	<span id="wx-status-turnonline"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=1" ); ?>"><?php echo __( 'Turn App Online', 'weever' ); ?></a></span>
   </span>
 
 </span>
-
-	<?php endif; ?>
 </div>
 
 

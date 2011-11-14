@@ -49,115 +49,126 @@ function weever_admin_page() {
 	$page = basename( $_GET['page'] );
 	$content = dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php';
 
-    // Verify this is a valid page
-	if ( ! file_exists( $content ) )
-	    die( __( 'Invalid page given', 'weever' ) );
-
-	// Load the weeverapp object, which fetches the admin page content
-	try {
-        $weeverapp = new WeeverApp();
-
-        if ( ! $weeverapp->loaded ) {
-	        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-        } else {
-        	if ( isset( $_GET['page'] ) and 'weever-theme' == $_GET['page'] ) {
-        		$weeverapp->load_theme();
-        	}
-        }
-        
-        
-	} catch (Exception $e) {
-	    add_settings_error('weever_settings', 'weever_settings', __( 'Error loading necessary data' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	if ( ( function_exists('current_user_can') && current_user_can('manage_options') ) ) {
+	    // Verify this is a valid page
+		if ( ! file_exists( $content ) )
+		    die( __( 'Invalid page given', 'weever' ) );
+	
+		// Load the weeverapp object, which fetches the admin page content
+		try {
+	        $weeverapp = new WeeverApp();
+	
+	        if ( ! $weeverapp->loaded ) {
+		        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	        } else {
+	        	if ( isset( $_GET['page'] ) and 'weever-theme' == $_GET['page'] ) {
+	        		$weeverapp->load_theme();
+	        	}
+	        }
+		} catch (Exception $e) {
+		    add_settings_error('weever_settings', 'weever_settings', __( 'Error loading necessary data' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+		}
+	
+		if ( isset( $_GET['weever-app-enabled'] ) ) {
+			try {
+				if ( 0 == $_GET['weever-app-enabled'] || 1 == $_GET['weever-app-enabled'] ) {
+					$weeverapp->app_enabled = ( $_GET['weever-app-enabled'] ? 1 : 0 );
+					$weeverapp->save();
+	        	    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps status updated', 'weever' ), 'updated' );
+				}					
+			} catch ( Exception $e ) {
+	        	add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+			}
+		}
+		
+		// Check if the domain is different than the current site domain
+	    if ( $weeverapp->loaded && $weeverapp->site_key ) {
+	        if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
+		        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	    }
+	
+	    // Handle form submission
+		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {	
+	    	switch ( $_GET['page'] ) {
+	    	    case 'weever-theme':
+	                try {
+	                    // Handle any image uploads
+	                    $overrides = array( 'test_form' => false );
+	                    $images = array( 'tablet_load_live', 'tablet_landscape_load_live', 'phone_load_live', 'icon_live', 'titlebar_logo_live' );
+	
+	                    foreach ( $images as $image ) {
+	                        if ( array_key_exists( $image, $_FILES ) ) {
+	                            $file = wp_handle_upload( $_FILES[$image], $overrides );
+	                            if ( isset( $file['error'] ) && 'No file was uploaded.' != $file['error'] ) {
+	                                add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
+	                            } elseif ( isset( $file['url'] ) ) {
+	                                $weeverapp->theme->$image = $file['url'];
+	                                add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
+	                            }
+	                        }
+	                    }
+	
+	                    $weeverapp->theme->css = $_POST['css'];
+	                    $weeverapp->theme->useCssOverride = ( isset( $_POST['useCssOverride'] ) && $_POST['useCssOverride'] ) ? 1 : 0;
+	                    $weeverapp->theme->titlebarSource = $_POST['titlebarSource'];
+	                    $weeverapp->theme->titlebarHtml = $_POST['titlebarHtml'];
+	                    $weeverapp->theme->template = $_POST['template'];
+	                    $weeverapp->title = $_POST['title'];
+	                    $weeverapp->titlebar_title = $_POST['titlebar_title'];
+	
+	                    $weeverapp->save_theme();
+	                    $weeverapp->save();
+	                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps theme settings saved', 'weever' ), 'updated');
+	                } catch (Exception $e) {
+	        	        add_settings_error('weever_theme', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	                }
+	
+	    	        break;
+	
+	    	    case 'weever-account':
+	    	        try {
+	                    $weeverapp->site_key = $_POST['site_key'];
+	
+	                    if ( isset( $_POST['stagingmode'] ) ) {
+	                        // Toggle staging mode
+	                        $weeverapp->staging_mode = ! $weeverapp->staging_mode;
+	                    }
+	
+	                    $weeverapp->save();
+	                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps account settings saved', 'weever' ), 'updated');
+	    	        } catch (Exception $e) {
+	        	        add_settings_error('weever_api_key', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	    	        }
+	    	        break;
+	
+	    	    case 'weever-config':
+	    	        try {
+	        	        // Save each of the mobile device options
+	        	        foreach ( $weeverapp->get_device_option_names() as $option ) {
+	                        // Sanitize input
+	                        $weeverapp->$option = ( isset( $_POST[$option] ) && $_POST[$option] ) ? 1 : 0;
+	        	        }
+	
+	        	        // Remaining options
+	                    $weeverapp->google_analytics = ( isset( $_POST['google_analytics'] ) ? $_POST['google_analytics'] : '' );
+	                    $weeverapp->ecosystem = ( isset( $_POST['ecosystem'] ) ? $_POST['ecosystem'] : '' );
+	                    $weeverapp->domain = ( isset( $_POST['domain'] ) ? $_POST['domain'] : '' );
+	                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
+	                    $weeverapp->save();
+	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps configuration settings saved', 'weever' ), 'updated');
+	    	        } catch (Exception $e) {
+	        	        add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+	    	        }
+	
+	    	        break;
+	    	}
+	
+	        // Most form control handled via AJAX calls rather than direct post
+		}
+	} else {
+		die( __( 'Access denied', 'weever' ) );
 	}
-
-	// Check if the domain is different than the current site domain
-    if ( $weeverapp->loaded && $weeverapp->site_key ) {
-        if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
-	        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-    }
-
-    // Handle form submission
-	if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {
-		if ( ( function_exists('current_user_can') && ! current_user_can('manage_options') ) || ! check_admin_referer( 'weever_settings', 'weever_settings_nonce' ) )
-			die( __( 'Access denied', 'weever' ) );
-
-    	switch ( $_GET['page'] ) {
-    	    case 'weever-theme':
-                try {
-                    // Handle any image uploads
-                    $overrides = array( 'test_form' => false );
-                    $images = array( 'tablet_load_live', 'tablet_landscape_load_live', 'phone_load_live', 'icon_live', 'titlebar_logo_live' );
-
-                    foreach ( $images as $image ) {
-                        if ( array_key_exists( $image, $_FILES ) ) {
-                            $file = wp_handle_upload( $_FILES[$image], $overrides );
-                            if ( isset( $file['error'] ) && 'No file was uploaded.' != $file['error'] ) {
-                                add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
-                            } elseif ( isset( $file['url'] ) ) {
-                                $weeverapp->theme->$image = $file['url'];
-                                add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
-                            }
-                        }
-                    }
-
-                    $weeverapp->theme->css = $_POST['css'];
-                    $weeverapp->theme->useCssOverride = ( isset( $_POST['useCssOverride'] ) && $_POST['useCssOverride'] ) ? 1 : 0;
-                    $weeverapp->theme->titlebarSource = $_POST['titlebarSource'];
-                    $weeverapp->theme->titlebarHtml = $_POST['titlebarHtml'];
-                    $weeverapp->theme->template = $_POST['template'];
-                    $weeverapp->title = $_POST['title'];
-                    $weeverapp->titlebar_title = $_POST['titlebar_title'];
-
-                    $weeverapp->save_theme();
-                    $weeverapp->save();
-                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps theme settings saved', 'weever' ), 'updated');
-                } catch (Exception $e) {
-        	        add_settings_error('weever_theme', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-                }
-
-    	        break;
-
-    	    case 'weever-account':
-    	        try {
-                    $weeverapp->site_key = $_POST['site_key'];
-
-                    if ( isset( $_POST['stagingmode'] ) ) {
-                        // Toggle staging mode
-                        $weeverapp->staging_mode = ! $weeverapp->staging_mode;
-                    }
-
-                    $weeverapp->save();
-                    add_settings_error('weever_api_key', 'weever_settings', __( 'Weever Apps account settings saved', 'weever' ), 'updated');
-    	        } catch (Exception $e) {
-        	        add_settings_error('weever_api_key', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-    	        }
-    	        break;
-
-    	    case 'weever-config':
-    	        try {
-        	        // Save each of the mobile device options
-        	        foreach ( $weeverapp->get_device_option_names() as $option ) {
-                        // Sanitize input
-                        $weeverapp->$option = ( isset( $_POST[$option] ) && $_POST[$option] ) ? 1 : 0;
-        	        }
-
-        	        // Remaining options
-                    $weeverapp->google_analytics = ( isset( $_POST['google_analytics'] ) ? $_POST['google_analytics'] : '' );
-                    $weeverapp->ecosystem = ( isset( $_POST['ecosystem'] ) ? $_POST['ecosystem'] : '' );
-                    $weeverapp->domain = ( isset( $_POST['domain'] ) ? $_POST['domain'] : '' );
-                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
-                    $weeverapp->save();
-                    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps configuration settings saved', 'weever' ), 'updated');
-    	        } catch (Exception $e) {
-        	        add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-    	        }
-
-    	        break;
-    	}
-
-        // Most form control handled via AJAX calls rather than direct post
-	}
-
+	
 	// Include the main content to fire things off
 	require( dirname( __FILE__) . '/templates/admin/layout.php' );
 }
@@ -267,7 +278,7 @@ function weever_page_scripts_init() {
 }
 
 function weever_app_toggle() {
-	if ( function_exists('current_user_can') && current_user_can('manage_options') )
+	if ( function_exists('current_user_can') && current_user_can('manage_options') && ! isset( $_GET['weever-app-enabled'] ) )
 	{		
 	    $weeverapp = new WeeverApp( false );
 	    if ( $weeverapp->site_key ) {
