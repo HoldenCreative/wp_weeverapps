@@ -59,7 +59,13 @@ function weever_admin_page() {
 
         if ( ! $weeverapp->loaded ) {
 	        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+        } else {
+        	if ( isset( $_GET['page'] ) and 'weever-theme' == $_GET['page'] ) {
+        		$weeverapp->load_theme();
+        	}
         }
+        
+        
 	} catch (Exception $e) {
 	    add_settings_error('weever_settings', 'weever_settings', __( 'Error loading necessary data' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	}
@@ -94,10 +100,7 @@ function weever_admin_page() {
                         }
                     }
 
-                    $weeverapp->theme->aLink = $_POST['aLink'];
-                    $weeverapp->theme->spanLogo = $_POST['spanLogo'];
-                    $weeverapp->theme->contentButton = $_POST['contentButton'];
-                    $weeverapp->theme->border = $_POST['border'];
+                    $weeverapp->theme->css = $_POST['css'];
                     $weeverapp->theme->useCssOverride = ( isset( $_POST['useCssOverride'] ) && $_POST['useCssOverride'] ) ? 1 : 0;
                     $weeverapp->theme->titlebarSource = $_POST['titlebarSource'];
                     $weeverapp->theme->titlebarHtml = $_POST['titlebarHtml'];
@@ -296,8 +299,6 @@ function weever_api_key_string() {
 function weever_api_key_validate($weever_api_key) {
 	$weever_api_key = trim($weever_api_key);
 
-	// Test getting the data using this api key
-	// TODO: Give either the stage URL or blank if live
 	$stage_url = "";
 
 	$postdata = http_build_query(

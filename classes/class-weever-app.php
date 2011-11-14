@@ -119,10 +119,9 @@ class WeeverApp {
      */
     private function reload_from_server() {
         if ( ! empty( $this->_data['site_key'] ) ) {
-        	// Test getting the data using this api key
-        	// TODO: Give either the stage URL or blank if live
         	$stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
-
+				
+			// Remaining settings
         	$postdata = array(
         				'stage' => $stage_url,
         				'app' => 'json',
@@ -215,7 +214,7 @@ class WeeverApp {
                 }
 
                 // Re-generate the qr code if needed
-                $this->generate_qr_code();
+                $this->generate_qr_code();	        	
             }
         }
     }
@@ -451,6 +450,32 @@ class WeeverApp {
         $this->reload_from_server();
     }
 
+    public function load_theme() {
+    	
+        $stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
+    	
+		// Theme settings        	
+		$postdata = 
+			array( 	
+				'stage' => $stage_url,
+				'app' => 'json',
+				'site_key' => $this->_data['site_key'],
+				'm' => "theme_sync",
+				'version' => WeeverConst::VERSION,
+				'generator' => WeeverConst::NAME
+				);
+			
+        $result = WeeverHelper::send_to_weever_server($postdata);
+			
+		// Try to decode the result
+        $state = json_decode($result);
+        
+        $this->theme->load_from_json($state->results);
+        $this->theme->load_from_json($state->results->images);
+        $this->theme->load_from_json($state->results->css);
+        
+    }
+    
 	public function save_theme() {
         // Theme settings
         update_option( 'weever_tablet_load_live', $this->theme->tablet_load_live );
@@ -466,7 +491,7 @@ class WeeverApp {
 			'm' => "edit_theme",
 			'cms' => 'wordpress',
 			);
-
+			
         $result = WeeverHelper::send_to_weever_server($postdata);
 
         if ( "" != $result )

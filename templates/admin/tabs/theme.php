@@ -133,37 +133,18 @@
                 		<legend><?php echo __( 'CSS Template Overrides' ); ?></legend>
 
                 		<div>
-                			<input type="checkbox" class="wx-check" value="1" id="wx-template-overrides" name="useCssOverride" <?php echo ($weeverapp->theme->useCssOverride == '1' ? "checked='checked'":""); ?> /><label for="wx-template-overrides" class="wx-check-label"><?php echo __( 'Use CSS Template Overrides' ); ?></label>
+                			<input type="checkbox" class="wx-check" value="1" id="wx-template-overrides" name="useCssOverride" <?php echo ($weeverapp->theme->useCssOverride == '1' ? "checked='checked'":""); ?> /><label for="wx-template-overrides" class="wx-check-label"><?php echo __( 'Use CSS Overrides' ); ?></label>
                 		</div>
 
-                		<p><?php echo __( 'Enter CSS Classes in the appropriate text boxes below.', 'weever' ); ?></p>
+						<?php $weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER; ?>
+						<?php $private_url = $weever_server . 'app/' . $weeverapp->primary_domain; ?>
+                		<p><?php echo sprintf( __( 'Enter your valid CSS in the text box below.  You can determine the CSS to override by loading your app url (<a href="%s" target="_new">%s</a>) within a Webkit browser (such as Google Chrome) and inspecting the HTML elements.', 'weever' ), $private_url, $private_url ); ?></p>
 
                 		<table class="admintable">
                     		<tr>
-                        		<td class="key">&lt;a&gt; <?php echo __( '<a> Links', 'weever' ); ?></td>
+                        		<td class="key"><?php echo __( 'CSS Overrides', 'weever' ); ?></td>
                         		<td>
-                        		<textarea name="aLink"><?php echo $weeverapp->theme->aLink; ?></textarea>
-                        		</td>
-                    		</tr>
-
-                    		<tr>
-                    			<td class="key"><?php echo __( 'Title Bar <span>', 'weever' ); ?> &lt;span&gt;</td>
-                        		<td>
-                        		<textarea name="spanLogo"><?php echo $weeverapp->theme->spanLogo; ?></textarea>
-                        		</td>
-                    		</tr>
-
-                    		<tr>
-                        		<td class="key"><?php echo __( 'Buttons', 'weever' ); ?></td>
-                        		<td>
-                        		<textarea name="contentButton"><?php echo $weeverapp->theme->contentButton; ?></textarea>
-                        		</td>
-                    		</tr>
-
-                    		<tr>
-                        		<td class="key"><?php echo __( 'Borders', 'weever' ); ?></td>
-                        		<td>
-                        		<textarea name="border"><?php echo $weeverapp->theme->border; ?></textarea>
+                        		<textarea name="css" rows="8" cols="80"><?php echo $weeverapp->theme->css; ?></textarea>
                         		</td>
                     		</tr>
                 		</table>

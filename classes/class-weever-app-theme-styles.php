@@ -19,6 +19,7 @@
     	public 		$template			= "sencha";
     	public 		$useCssOverride;
     	public 		$useCustomIcons;
+    	public		$css;
 
     	// Theme images
     	public      $tablet_load_live;
@@ -27,7 +28,7 @@
     	public      $icon_live;
     	public      $titlebar_logo_live;
     	
-    	public		$image_dimensions = array('tablet_load_live' => array('width' => 1536, 'height' => 2008),
+    	private		$image_dimensions = array('tablet_load_live' => array('width' => 1536, 'height' => 2008),
     										  'tablet_landscape_load_live' => array('width' => 1496, 'height' => 2048),
     										  'phone_load_live' => array('width' => 640, 'height' => 920),
     									      'icon_live' => array('width' => 144, 'height' => 144),
@@ -60,8 +61,11 @@
     	public function load_from_json($json_obj) {
 			if ( is_array( $json_obj ) || is_object( $json_obj ) ) {
 	    	    foreach ( $json_obj as $key => $val ) {
-					if ( isset( $this->$key ) )
+					if ( property_exists( $this, $key ) )
 	    	        	$this->$key = $json_obj->$key;
+	    	        	
+	    	        if ( property_exists( $this, $key . '_live' ) )
+	    	        	$this->{$key.'_live'} = $json_obj->$key;
 	    	    }
 			}
     	}
