@@ -244,6 +244,19 @@ jQuery(document).ready(function(){
 	    });
 	
 	
+	jQuery('a.wx-nav-icon-edit').click(function(){
+		var tabType = jQuery(this).attr('title');
+		jQuery('#'+tabType+'TabID .wx-nav-icon').dblclick();
+		event.preventDefault();
+	});
+	
+	jQuery('a.wx-nav-label-edit').click(function(){
+		var tabType = jQuery(this).attr('title');
+		jQuery('#'+tabType+'TabID .wx-nav-label').dblclick();
+		event.preventDefault();
+	});
+	
+	
 	jQuery('div.wx-nav-icon').dblclick(function(){
 	
 		var tabType = jQuery(this).attr('title');

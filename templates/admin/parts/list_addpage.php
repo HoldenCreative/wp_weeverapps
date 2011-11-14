@@ -3,17 +3,17 @@
 <div class="wx-add-ui formspacer">
 	<div class='wx-add-item-page wx-add-item-dropdown'>
 		<select id='wx-select-page' name='wx-select-page'>
-			<option value=''><?php echo __( '+ Add Site Page(s)' ); ?></option>
-			<option value='menu'><?php echo __( 'Wordpress Page' ); ?></option>
+			<option value=''><?php echo __( '+ Add Site Page(s)', 'weever' ); ?></option>
+			<option value='menu'><?php echo __( 'Wordpress Page', 'weever' ); ?></option>
 		</select>
 	</div>
 	
 	<div class='wx-dummy wx-page-dummy'>
-		<select disabled='disabled'><option><?php echo __( '&nbsp;' ); ?></option></select>
+		<select disabled='disabled'><option><?php echo __( '&nbsp;', 'weever' ); ?></option></select>
 	</div>
 	
 	<div class='wx-dummy wx-page-dummy'>
-		<input type='text' disabled='disabled' placeholder='<?php echo __( '&nbsp;' ); ?>' />
+		<input type='text' disabled='disabled' placeholder='<?php echo __( '&nbsp;', 'weever' ); ?>' />
 	</div>
 
 	<div class='wx-add-item-value wx-page-reveal wx-reveal'>
@@ -27,11 +27,11 @@
 	
 	<div class='wx-add-title wx-page-reveal wx-reveal'>
 		<input type='text' value='' id='wx-page-title' class='wx-title wx-input wx-page-input' name='noname' />
-		<label for='wx-page-title'><?php echo __( 'Page Name' ); ?></label>
+		<label for='wx-page-title'><?php echo __( 'Page Name', 'weever' ); ?></label>
 	</div>
 	
 	<div class='wx-add-submit'>
-		<input type='submit' id='wx-page-submit' class='wx-submit' value='<?php echo __( 'Submit' ); ?>' name='add' />
+		<input type='submit' id='wx-page-submit' class='wx-submit' value='<?php echo __( 'Submit', 'weever' ); ?>' name='add' />
 	</div>
 
 </div>

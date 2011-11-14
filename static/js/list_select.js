@@ -256,6 +256,37 @@ jQuery(document).ready(function(){
 			jQuery('.wx-page-reveal').show();
 		}		
 	});
+
+	jQuery('#wx-select-panel').change(function() {
+
+		jQuery('.wx-title').attr('name','noname');
+		jQuery('#wx-panel-title').attr('name','name');
+		jQuery('.wx-cms-feed-select').attr('name','noname');
+		jQuery('.wx-panel-help').hide();
+		jQuery('.wx-dummy').hide();
+		//jQuery('select.wx-cms-feed-select option[value="0"]').removeAttr('disabled');
+		
+		if (jQuery(this).val() == '') {
+			jQuery('.wx-panel-reveal').hide();
+			jQuery('.wx-dummy').show();
+		} else {
+				
+			if(jQuery(this).val() == "menu") 
+			{
+				jQuery('#wx-add-panel-menu-item').show();
+				jQuery('#wx-add-panel-menu-item-select').attr('name', 'cms_feed');
+				jQuery('#wx-add-panel-menu-item-help').show();
+			}
+			
+			jQuery('.wx-panel-reveal').show();
+		}		
+	});
+	
+	jQuery('.wx-panel-feed-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-panel-title').val(jQuery('option:selected', this).text());
+		}
+	});	
 	
 	jQuery('.wx-cms-feed-select').change(function() {
 		if (jQuery(this).val() != "") {

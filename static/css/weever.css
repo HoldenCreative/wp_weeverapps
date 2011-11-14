@@ -124,6 +124,20 @@ ul#listTabsSortable {
     padding: 0;
 }
 
+.ui-tabs .ui-tabs-panel .row-settings {
+	visibility: visible;
+	padding-top: 30px;
+}
+
+.ui-tabs .ui-tabs-panel .row-settings a {
+	text-decoration: none;
+	color: #1C94C4;
+}
+
+.ui-tabs .ui-tabs-panel .row-settings a:hover {
+	text-decoration: underline;
+	color: #D54E21;
+}
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: pointer; }
 
@@ -547,7 +561,7 @@ margin-right:20px;
     width: 100%;
 }
 
-.formspacer { margin: 2em 0 1em; }
+.formspacer { margin: 1em 0 1em; }
 
 .wx-add-ui .error { border: 2px solid #ff0000 }
 

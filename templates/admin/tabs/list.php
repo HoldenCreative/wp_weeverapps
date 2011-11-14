@@ -64,7 +64,7 @@ $tabsUnpublished = 0;
 
 	</ul>
 
-    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __( 'This icon has no published items' ); ?></div><img id="wx-overlay-drag-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/drag.png" /><div><?php echo __( '<b>Double-click</b> icon <b>name</b> or <b>image</b> to edit.' ); ?></div></div>
+    <div id="wx-overlay-drag"><div id="wx-overlay-unpublished"><?php echo __( 'This tab has no published items' ); ?></div><img id="wx-overlay-drag-img" src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/drag.png" /></div>
 
     <div id='wx-modal-loading'>
         <div id='wx-modal-loading-text'></div>
@@ -85,41 +85,6 @@ $tabsUnpublished = 0;
     	//$componentRowsName = $row->component . 'Rows';
     	$componentRows = $row->get_subtabs();
 
-    	switch ( $row->component ) {
-    		case "blog":
-    			$componentName = __('WEEVER_TYPE_BLOG', 'weever');
-    			$componentHelp = __('WEEVER_LIST_BLOG_HELP', 'weever');
-    			break;
-    		case "page":
-    			$componentName = __('WEEVER_TYPE_ARTICLE', 'weever');
-    			$componentHelp = __('WEEVER_LIST_ARTICLE_HELP', 'weever');
-    			break;
-    		case "contact":
-    			$componentName = __('WEEVER_TYPE_CONTACT', 'weever');
-    			$componentHelp = __('WEEVER_LIST_CONTACT_HELP', 'weever');
-    			break;
-    		case "component":
-    			$componentName = __('WEEVER_TYPE_COMPONENT', 'weever');
-    			$componentHelp = __('WEEVER_LIST_COMPONENT_HELP', 'weever');
-    			break;
-    		case "listingcomponent":
-    			$componentName = __('WEEVER_TYPE_COMPONENT_LIST', 'weever');
-    			$componentHelp = __('WEEVER_LIST_COMPONENT_LIST_HELP', 'weever');
-    			break;
-    		case "video":
-    			$componentName = __('WEEVER_TYPE_VIDEO_FEED', 'weever');
-    			$componentHelp = __('WEEVER_LIST_VIDEO_HELP', 'weever');
-    			break;
-    		case "social":
-    			$componentName = __('WEEVER_TYPE_SOCIAL_NETWORK', 'weever');
-    			$componentHelp = __('WEEVER_LIST_SOCIAL_NETWORK_HELP', 'weever');
-    			break;
-    		case "photo":
-    			$componentName = __('WEEVER_TYPE_PHOTO_FEED', 'weever');
-    			$componentHelp = __('WEEVER_LIST_PHOTO_FEED_HELP', 'weever');
-    			break;
-    	}
-
     	if ( count( $componentRows ) ) {
     		$published = ''; //JHTML::_('grid.published', $row, $iii);
     		$checked = ''; //JHTML::_('grid.id', $iii, $row->id);
@@ -136,6 +101,13 @@ $tabsUnpublished = 0;
 
     	<div id="<?php echo $row->component . 'Tab' ?>">
 
+		<div class="row-settings">
+			<span class="edit"><a href="#" title="<?php echo $row->component; ?>" class="wx-nav-label-edit">Edit Tab Name</a></span> | <span class="edit"><a href="#" class="wx-nav-icon-edit" title="<?php echo $row->component; ?>">Edit Tab Icon</a></span>
+			<?php if ( 'panel' == $row->component ): ?>
+			| <span class="edit"><a href="#" title="<?php echo $row->component; ?>">Settings</a></span>
+			<?php endif; ?>
+		</div>
+
     	<?php require( dirname( __FILE__) . "/../parts/list_add{$row->component}.php" ); ?>
 
     	<input type="hidden" name="boxchecked<?php echo $row->component; ?>" id="boxchecked<?php echo $row->component; ?>" value="0" />
@@ -146,7 +118,7 @@ $tabsUnpublished = 0;
                 		<input type='checkbox' name='toggle<?php echo $row->component; ?>' id='toggle<?php echo $row->component; ?>' value='' onclick='checkAllTab(<?php echo count($componentRows); ?>, "cb", document.getElementById("boxchecked<?php echo $row->component; ?>"), document.getElementById("toggle<?php echo $row->component; ?>"), <?php echo $iii; ?> + 1);' />
                 	</th>
 
-                	<th class='title'><?php echo __( 'NAME OF SUBMENU TAB', 'weever' ); ?> &nbsp;(<a style="color:#1C94C4;" href="http://weeverapps.com/mobile-app-layout" target="_blank">?</a>)</th>
+                	<th class='title'><?php echo __( 'NAME', 'weever' ); ?> &nbsp;(<a style="color:#1C94C4;" href="http://weeverapps.com/mobile-app-layout" target="_blank">?</a>)</th>
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'PUBLISHED' ); ?></th>
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'ORDER' ); ?></th>
                 	<th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>
