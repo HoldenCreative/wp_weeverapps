@@ -28,6 +28,7 @@ The plugin will forward the devices you specify to your app, and automatically p
 Currently supports:
 
 - Blog content from pages, categories, tags, and custom taxonomy
+- Creation of a landing page or a slide-show using Wordpress page content
 - Contact information
 - Social: Twitter, Facebook, Identi.ca
 - Video: Youtube, Vimeo
@@ -41,7 +42,7 @@ Additional Features:
 - Staging Mode: allows developers to play around with new layouts or work on an app for a new version of a site without needing another API key and without affecting a Live app.
 - QR Codes: This extension will generate QR codes both for quick previewing of your app as you're building it, and for promoting your app publicly.
 
-- Coming soon: content panels, GPS mapping
+- Coming soon: GPS mapping
 
 == Installation ==
 
@@ -88,7 +89,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 = 1.2 =
 * Ability to customize the app using Wordpress theme files (weever-content-single.php, weever.css)
-* Additional 'Welcome' tab
+* Additional 'landing page' tab
 * Several plugin UI improvements
 
 = 1.1.2 =
@@ -106,7 +107,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 == Upgrade Notice ==
 
 = 1.2 =
-Ability to customize the app using Wordpress themes, additional 'Welcome' tab
+Ability to customize the app using Wordpress themes, additional 'Welcome' tab, UI improvements
 
 = 1.1.2 =
 Corrects issue with feed filter, update recommended
