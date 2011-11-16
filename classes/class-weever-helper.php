@@ -172,10 +172,10 @@
                 if ( is_array( $result ) and isset( $result['body'] ) ) {
             	    $retval = $result['body'];
             	} else {
-            	    throw new Exception( __( 'Error communicating with the Weever Apps server' ) );
+            	    throw new Exception( __( 'Error communicating with the Weever Apps server', 'weever' ) );
             	}
             } else {
-                throw new Exception( __( 'Invalid postdata sent to function or weeverapp not set' ) );
+                throw new Exception( __( 'Invalid postdata sent to function or weeverapp not set', 'weever' ) );
             }
 
         	return $retval;
