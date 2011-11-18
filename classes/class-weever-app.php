@@ -6,6 +6,7 @@ class WeeverApp {
     const TIER_PRO = 1;
 
     private $_data = array();
+    private $_changed = array();
     private $_device_options = array(
             // Granular options
             'DetectIphoneOrIpod' => 0,
@@ -94,11 +95,13 @@ class WeeverApp {
                     $this->_data['staging_mode'] = 1;
                 else
                     $this->_data['staging_mode'] = 0;
+                $this->_changed[$var] = $var;
                 break;
 
             case 'site_key':
                 // TODO: Add any pre-validation here
                 $this->_data['site_key'] = $val;
+                $this->_changed[$var] = $var;
                 break;
 
             case 'primary_domain':
@@ -108,6 +111,7 @@ class WeeverApp {
             default:
                 if ( array_key_exists( $var, $this->_data ) ) {
                     $this->_data[$var] = $val;
+                    $this->_changed[$var] = $var;
                 } else {
                     throw new Exception( "Invalid parameter name $var" );
                 }
@@ -121,7 +125,7 @@ class WeeverApp {
     private function reload_from_server() {
         if ( ! empty( $this->_data['site_key'] ) ) {
         	$stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
-				
+
 			// Remaining settings
         	$postdata = array(
         				'stage' => $stage_url,
@@ -142,7 +146,7 @@ class WeeverApp {
             } else {
                 if ( ! is_array( $state->results->tabs ) )
                     throw new Exception( __( 'No tabs found') );
-                    
+
                 // Get the settings
                 $this->_data['title'] = $state->results->config->title;
                 $this->_data['titlebar_title'] = $state->results->config->titlebar_title;
@@ -174,7 +178,7 @@ class WeeverApp {
                         $this->_data['tabs'][] = new WeeverAppSubtab( $tab->cloud_tab_id, $tab->name, $tab->type, $tab->ordering, $tab->published );
                     }
                 }
-                
+
                 // Theme params, just use the object
                 $this->theme->load_from_json($theme_params);
 
@@ -191,7 +195,7 @@ class WeeverApp {
 					$this->theme->icon_live = $state->results->config->launchscreen->icon;
 					$this->theme->titlebar_logo_live = $state->results->config->launchscreen->titlebar_logo;
                 }
-                
+
                 if ( ! function_exists( 'tab_order' ) ) {
                     function tab_order($a, $b) {
                         if ( $a->ordering == $b->ordering )
@@ -215,7 +219,7 @@ class WeeverApp {
                 }
 
                 // Re-generate the qr code if needed
-                $this->generate_qr_code();	        	
+                $this->generate_qr_code();
             }
         }
     }
@@ -269,12 +273,12 @@ class WeeverApp {
      */
     public function & get_tab($id) {
     	$tab = false;
-    	
+
         foreach ( $this->_data['tabs'] as $tab ) {
             if ( $tab->id == $id || ( $tab->is_top_level_tab() && $tab->component == $id ) )
                 return $tab;
         }
-        
+
         return $tab;
     }
 
@@ -452,17 +456,42 @@ class WeeverApp {
 		if ( "1" != $result )
 		    throw new Exception( __( 'Error saving config' ) );
 
+		if ( array_key_exists( 'site_key', $this->_changed ) ) {
+			// Make sure this site key has been upgraded
+			$this->upgrade_site_key();
+		}
+
+		// Reset the changed array
+		$this->_changed = array();
+
         // Reload the data afterwards to ensure everything was saved
         $this->reload_from_server();
     }
 
+    /**
+     * Ensure the current site key is up to date with the latest features and tabs
+     */
+    public function upgrade_site_key() {
+    	if ( $this->_data['site_key'] ) {
+	    	$postdata = array(
+	    			'app' => 'ajax',
+	    			'cms' => 'wordpress',
+	    			'm' => "upgrade",
+	    	);
+
+	    	$result = WeeverHelper::send_to_weever_server($postdata);
+
+	    	// Do not check return value as it varies depending on new features added
+    	}
+    }
+
     public function load_theme() {
-    	
+
         $stage_url = ($this->_data['staging_mode'] ? WeeverConst::LIVE_STAGE : "");
-    	
-		// Theme settings        	
-		$postdata = 
-			array( 	
+
+		// Theme settings
+		$postdata =
+			array(
 				'stage' => $stage_url,
 				'app' => 'json',
 				'site_key' => $this->_data['site_key'],
@@ -470,18 +499,18 @@ class WeeverApp {
 				'version' => WeeverConst::VERSION,
 				'generator' => WeeverConst::NAME
 				);
-			
+
         $result = WeeverHelper::send_to_weever_server($postdata);
-			
+
 		// Try to decode the result
         $state = json_decode($result);
-        
+
         $this->theme->load_from_json($state->results);
         $this->theme->load_from_json($state->results->images);
         $this->theme->load_from_json($state->results->css);
-        
+
     }
-    
+
 	public function save_theme() {
         // Theme settings
         update_option( 'weever_tablet_load_live', $this->theme->tablet_load_live );
@@ -497,7 +526,7 @@ class WeeverApp {
 			'm' => "edit_theme",
 			'cms' => 'wordpress',
 			);
-			
+
         $result = WeeverHelper::send_to_weever_server($postdata);
 
         if ( "" != $result )

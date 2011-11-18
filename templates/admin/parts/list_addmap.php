@@ -1,9 +1,11 @@
-<form action='' method='post' name='blogAdminForm' id='blogAdminForm'>
+<form action='' method='post' name='mapAdminForm' id='mapAdminForm'>
+
+<div><?php echo __( 'Add geotagged posts to add to the map using either the <a href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a> or the <a href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a>.' ); ?></div>
 
 <div class="wx-add-ui formspacer">
 	<div class='wx-add-item-blog wx-add-item-dropdown'>
 		<select id='wx-select-blog' name="wx-select-blog">
-			<option value=""><?php echo __( '+ Add Blog Content', 'weever' ); ?></option>
+			<option value=""><?php echo __( '+ Add Geotagged Content', 'weever' ); ?></option>
 			<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 			<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
 			<option value="<?php echo $taxonomy->query_var; ?>"><?php 

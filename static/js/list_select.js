@@ -368,6 +368,90 @@ jQuery(document).ready(function(){
 		jQuery('.wx-dummy').hide();
 	});
 
+	jQuery('#wx-select-map-settings').click(function() {
+		var startLat = jQuery("input#wx-map-start-latitude").val(),
+		startLong = jQuery("input#wx-map-start-longitude").val(),
+		startZoom = jQuery("input#wx-map-start-zoom").val(),
+		marker = jQuery("input#wx-map-marker").val(),
+		tabId = jQuery("input#wx-map-tab-id").val();
+		var nonce = jQuery("input#nonce").val();		
+	
+		var txt = 	'<table class="admintable">'+
+				'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_MAP_SETTINGS+'</h3>'+
+				'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_MAP_START_LATITUDE_TOOLTIP+
+				'">'+WPText.WEEVER_JS_MAP_START_LATITUDE+'</td>'+
+				'<td><input type="text" name="wx-input-map-start-lat" value="'+startLat+'" />'+
+				'</td></tr>'+
+				'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_MAP_START_LONGITUDE_TOOLTIP+
+				'">'+WPText.WEEVER_JS_MAP_START_LONGITUDE+'</td>'+
+				'<td><input type="text" name="wx-input-map-start-long" value="'+startLong+'" />'+
+				'</td></tr>'+
+				'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_MAP_START_ZOOM_TOOLTIP+
+				'">'+WPText.WEEVER_JS_MAP_START_ZOOM+'</td>'+
+				'<td><input type="text" name="wx-input-map-start-zoom" value="'+startZoom+'" />'+
+				'</td></tr>'+
+				'<tr><td class="key hasTip" title="'+WPText.WEEVER_JS_MAP_DEFAULT_MARKER_TOOLTIP+
+				'">'+WPText.WEEVER_JS_MAP_DEFAULT_MARKER+'</td>'+
+				'<td><img src="'+marker+'" /><br /><input type="text" name="wx-input-map-marker" value="'+marker+'" />'+
+				'</td></tr></table><div>NOTE: If markers must be PNG image sprites that are 128 pixels by 74 pixels. '+
+				'The image on the left is the normal state, the one on the right is the selected state; each is 64x74 pixels '+
+				'placed beside each other in the same transparent PNG image file.</div>';
+				
+		var clickedElem = jQuery(this);
+
+		myCallbackForm = function(v,m,f) {
+		
+			if (v != undefined && v == true)
+			{
+				jQuery.ajax({
+					   type: "POST",
+					   url: ajaxurl,
+					   data: {
+						   action: 'ajaxUpdateTabSettings',
+						   type: 'map',
+						   id: tabId,
+						   'var': f["wx-input-map-start-lat"] + ',' + f["wx-input-map-start-long"] + ',' + f["wx-input-map-start-zoom"] + ',' + f["wx-input-map-marker"],
+						   nonce: nonce
+					   },
+					   success: function(msg){
+						   jQuery('#wx-modal-loading-text').html(msg);
+						   jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+						   document.location.reload(true);
+					   },
+					   error: function(v,msg){
+						   jQuery('#wx-modal-loading-text').html(msg);
+					    
+					     	jQuery('#wx-modal-secondary-text').html('');
+					     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+					   }
+					 });			
+			}
+		}
+		
+		submitCheck = function(v,m,f){
+			
+			an = m.children('#alertName');
+		
+			if(f.alertName == "" && v == true){
+				an.css("border","solid #ff0000 1px");
+				return false;
+			}
+			
+			return true;
+		
+		}		
+		
+		var mapSettings = jQuery.prompt(txt, {
+				callback: myCallbackForm, 
+				submit: submitCheck,
+				overlayspeed: "fast",
+				width: 500,
+				buttons: {  Cancel: false, Submit: true },
+				focus: 1
+				});
+		
+	});
+	
 	jQuery('#wx-select-panel-settings').click(function() {
 		
 		event.preventDefault();
