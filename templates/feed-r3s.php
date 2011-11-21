@@ -59,6 +59,28 @@
 //		$feedItem->url = str_replace("?template=weever_cartographer","",$feedItem->url);
 //		$feedItem->url = str_replace("&template=weever_cartographer","",$feedItem->url);
 
+		if ( function_exists( 'get_post_meta' ) and get_post_meta( get_the_ID(), 'geo_public', true ) != '' ) {
+			// Make sure geo is enabled on the post and pass the lat/lon
+			$geo_on = get_post_meta( get_the_ID(), 'geo_enabled', true );
+			if ( '' == $geo_on )
+				$geo_on = true;
+			
+			if ( $geo_on ) {
+				$geo_latitude = get_post_meta( get_the_ID(), 'geo_latitude', true );
+				$geo_longitude = get_post_meta( get_the_ID(), 'geo_longitude', true );
+				$geo_address = get_post_meta( get_the_ID(), 'geo_address', true );
+				
+				$feedItem->geo[0]['latitude'] = $geo_latitude;
+				$feedItem->geo[0]['longitude'] = $geo_longitude;
+				$feedItem->geo[0]['altitude'] = '';
+				$feedItem->geo[0]['address'] = $geo_address;
+				$feedItem->geo[0]['label'] = '';
+				// TODO: Allow for the marker to be customized on a per-post basis
+				$feedItem->geo[0]['marker'] = '';
+				$feedItem->geo[0]['kml'] = '';
+			}
+		}
+		
 		$feed->items[] = $feedItem;
 	}
 
@@ -75,7 +97,39 @@
 
 	print_r($json);
 
-
+	
+	/**
+	 * Function from the Geolocation plugin:
+	 * http://wordpress.org/extend/plugins/geolocation/
+	 */
+	function weever_reverse_geocode($latitude, $longitude) {
+		$url = "http://maps.google.com/maps/api/geocode/json?latlng=".$latitude.",".$longitude."&sensor=false";
+		$result = wp_remote_get($url);
+		$json = json_decode($result['body']);
+		foreach ($json->results as $result)
+		{
+			foreach($result->address_components as $addressPart) {
+				if((in_array('locality', $addressPart->types)) && (in_array('political', $addressPart->types)))
+					$city = $addressPart->long_name;
+				else if((in_array('administrative_area_level_1', $addressPart->types)) && (in_array('political', $addressPart->types)))
+					$state = $addressPart->long_name;
+				else if((in_array('country', $addressPart->types)) && (in_array('political', $addressPart->types)))
+					$country = $addressPart->long_name;
+			}
+		}
+	
+		if(($city != '') && ($state != '') && ($country != ''))
+			$address = $city.', '.$state.', '.$country;
+		else if(($city != '') && ($state != ''))
+			$address = $city.', '.$state;
+		else if(($state != '') && ($country != ''))
+			$address = $state.', '.$country;
+		else if($country != '')
+			$address = $country;
+	
+		return $address;
+	}
+	
 
 /*
 

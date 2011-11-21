@@ -281,6 +281,35 @@ jQuery(document).ready(function(){
 			jQuery('.wx-panel-reveal').show();
 		}		
 	});
+	jQuery('#wx-select-map').change(function() {
+		
+		jQuery('.wx-title').attr('name','noname');
+		jQuery('#wx-map-title').attr('name','name');
+		jQuery('.wx-cms-feed-select').attr('name','noname');
+		jQuery('.wx-blog-help').hide();
+		jQuery('.wx-dummy').hide();
+		
+		// Hide all items initially, then show the options for the selected one
+		jQuery('.wx-map-item-choose').hide();
+		jQuery('.wx-map-item-choose select').attr('name', 'unnamed');
+		
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-map-reveal').hide();
+		} else {
+			jQuery('#wx-add-map-' + jQuery(this).val() + '-item').show();
+			jQuery('#wx-add-map-' + jQuery(this).val() + '-item select').attr('name', 'map_cms_feed');
+			jQuery('.wx-map-reveal').show();
+		}	
+
+	});
+	
+	jQuery('.wx-map-item-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-map-title').val(jQuery('option:selected', this).text());
+		}
+	});
+		
 	
 	jQuery('.wx-panel-feed-select').change(function() {
 		if (jQuery(this).val() != "") {

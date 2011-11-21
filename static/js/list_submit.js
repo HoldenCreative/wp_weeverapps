@@ -1,9 +1,9 @@
 /*	
-*	Weever Apps Administrator Component for Joomla
+*	Weever Apps Administrator Component for Wordpress
 *	(c) 2010-2011 Weever Apps Inc. <http://www.weeverapps.com/>
 *
-*	Author: 	Robert Gerald Porter (rob.porter@weever.ca)
-*	Version: 	0.9.3
+*	Author: 	Robert Gerald Porter (rob.porter@weever.ca) / Brian Hogg (brian@weeverapps.com)
+*	Version: 	1.2
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -104,9 +104,8 @@ jQuery(document).ready(function(){
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
 
-			  	var cmsFeed = jQuery("select[name=cms_feed]").val();
+			  	var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
 			  	var tabName = jQuery('input#wx-panel-title').val();
-			  	var siteKey = jQuery("input#wx-site-key").val();
 				var nonce = jQuery("input#nonce").val();
 			  	
 			  	jQuery.ajax({
@@ -155,7 +154,7 @@ jQuery(document).ready(function(){
   	  		submitHandler: function(form) {
   	  			e.preventDefault();
 
-			  	var cmsFeed = jQuery("select[name=cms_feed]").val();
+			  	var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
 			  	var tabName = jQuery('input#wx-page-title').val();
 			  	var siteKey = jQuery("input#wx-site-key").val();
 				var nonce = jQuery("input#nonce").val();
@@ -209,10 +208,9 @@ jQuery(document).ready(function(){
   	  			e.preventDefault();
   	  			
   	  			var optionVal = jQuery('#wx-select-blog').val();
-  	    		var cmsFeed = jQuery("select[name=cms_feed]").val();
+  	    		var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
   	    	  	var tabName = jQuery('input#wx-blog-title').val();
-  	    	  	var tabSearchTerm = jQuery('input[name=s]').val();
-  	    	  	var siteKey = jQuery("input#wx-site-key").val();
+  	    	  	var tabSearchTerm = jQuery('input[name=s]:visible').val();
   	    	  	var nonce = jQuery("input#nonce").val();
   	    	  	
   	  			if (optionVal == 's') {
@@ -229,7 +227,7 @@ jQuery(document).ready(function(){
   		  	  		   component: 'blog',
   		  	  		   weever_action: 'add',
   		  	  		   published: '1',
-  		  	  		   cms_feed: cmsFeed,
+  		  	  		   'cms_feed': cmsFeed,
   		  	  		   name: tabName,
   		  	  		   nonce: nonce
   		  	  	   },
@@ -249,6 +247,67 @@ jQuery(document).ready(function(){
   	  		}
   	  	});
 	});
+	
+	
+	jQuery('input#wx-map-submit').click(function(e) {
+
+  	  	// Validation
+  	  	jQuery('#mapAdminForm').validate({ 
+  	  		rules: {
+  	  	  		s: { required: true },
+  	  			cms_feed: { required: true },
+  	  			name: { required: true },
+  	  			"wx-select-map": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+  	  			
+  	  			var optionVal = jQuery('#wx-select-map').val();
+  	    		var cmsFeed = jQuery("select[name=map_cms_feed]:visible").val();
+  	    	  	var tabName = jQuery('input#wx-map-title').val();
+  	    	  	var tabSearchTerm = jQuery('input[name=map_s]:visible').val();
+  	    	  	var nonce = jQuery("input#nonce").val();
+  	    	  	
+  	  			if (optionVal == 's') {
+  	  				// Search feed
+  	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
+  	  			}
+  	  			
+  		  	  	jQuery.ajax({
+  		  	  	   type: "POST",
+  		  	  	   url: ajaxurl,
+  		  	  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+  		  	  		   type: 'map',
+  		  	  		   component: 'map',
+  		  	  		   weever_action: 'add',
+  		  	  		   published: '1',
+  		  	  		   'cms_feed': cmsFeed,
+  		  	  		   name: tabName,
+  		  	  		   nonce: nonce
+  		  	  	   },
+  		  	  	   success: function(msg){
+  		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+  		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+  		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#mapTab";
+  		  	  	     	document.location.reload(true);
+  		  	  	   },
+  		  	  	   error: function(v,msg){
+   		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+  		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+  		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+  		  	  	   }
+  		  	  	 });
+  	  		}
+  	  	});
+	});
+	
 	
 	jQuery('input#wx-video-submit').click(function(e) {
 	  

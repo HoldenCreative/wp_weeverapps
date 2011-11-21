@@ -3,8 +3,8 @@
 <div><?php echo __( 'Add geotagged posts to add to the map using either the <a href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a> or the <a href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a>.' ); ?></div>
 
 <div class="wx-add-ui formspacer">
-	<div class='wx-add-item-blog wx-add-item-dropdown'>
-		<select id='wx-select-blog' name="wx-select-blog">
+	<div class='wx-add-item-map wx-add-item-dropdown'>
+		<select id='wx-select-map' name="wx-select-map">
 			<option value=""><?php echo __( '+ Add Geotagged Content', 'weever' ); ?></option>
 			<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 			<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
@@ -21,20 +21,20 @@
 		</select>
 	</div>
 
-	<div class='wx-dummy wx-blog-dummy'>
+	<div class='wx-dummy wx-map-dummy'>
 		<select disabled='disabled'><option><?php echo __( '&nbsp;', 'weever' ); ?></option></select>
 	</div>
 
-	<div class='wx-dummy wx-blog-dummy'>
+	<div class='wx-dummy wx-map-dummy'>
 		<input type='text' disabled='disabled' placeholder='<?php echo __( '&nbsp;', 'weever' ); ?>' />
 	</div>
 
-	<div class='wx-add-item-option wx-blog-reveal wx-reveal'>
+	<div class='wx-add-item-option wx-map-reveal wx-reveal'>
 
 		<?php foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ): ?>
 		<?php if ( ! $taxonomy->query_var || $taxonomy->query_var == 'post_format' ) continue; ?>
-		<div id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-item" class="wx-blog-item-choose">
-    		<select id="wx-add-blog-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-blog-item-select required">
+		<div id="wx-add-map-<?php echo $taxonomy->query_var; ?>-item" class="wx-map-item-choose">
+    		<select id="wx-add-map-<?php echo $taxonomy->query_var; ?>-select" name="unnamed" class="wx-map-item-select required">
     			<option value=""><?php echo __( '(Choose an option)', 'weever' ); ?></option>
             	<?php foreach ( get_terms( $taxonomy->name ) as $term ): ?>
     			<option value="<?php echo WeeverHelper::get_term_feed_link_relative( $term ); ?>"><?php echo $term->name; ?></option>
@@ -43,21 +43,21 @@
     	</div>
 		<?php endforeach; ?>
 
-		<div id="wx-add-blog-s-item" class="wx-blog-item-choose">
-    		<input type='text' value='' id='wx-add-blog-s-input' class='wx-input wx-blog-input' name='s' placeholder='<?php echo __( 'Search Term', 'weever' ); ?>' />
-    		<label for='wx-add-blog-s-input' id='wx-add-blog-s-input-label' class='wx-blog-label'><?php echo __( 'Search Term Description', 'weever' ); ?></label>
+		<div id="wx-add-map-s-item" class="wx-map-item-choose">
+    		<input type='text' value='' id='wx-add-map-s-input' class='wx-input wx-map-input' name='map_s' placeholder='<?php echo __( 'Search Term', 'weever' ); ?>' />
+    		<label for='wx-add-map-s-input' id='wx-add-map-s-input-label' class='wx-map-label'><?php echo __( 'Search Term Description', 'weever' ); ?></label>
 		</div>
 
 	</div>
 
-	<div class='wx-add-title wx-blog-reveal wx-reveal'>
+	<div class='wx-add-title wx-map-reveal wx-reveal'>
 
-		<input type='text' id='wx-blog-title' value='' class='wx-title wx-input wx-blog-input' name='noname' />
-		<label for='wx-blog-title'><?php echo __( 'Submenu Tab Name/Description', 'weever' ); ?></label>
+		<input type='text' id='wx-map-title' value='' class='wx-title wx-input wx-map-input' name='noname' />
+		<label for='wx-map-title'><?php echo __( 'Submenu Tab Name/Description', 'weever' ); ?></label>
 	</div>
 
 	<div class='wx-add-submit'>
-		<input type='submit' id='wx-blog-submit' class='wx-submit' value='<?php echo __( 'Submit', 'weever' ); ?>' name='add' />
+		<input type='submit' id='wx-map-submit' class='wx-submit' value='<?php echo __( 'Submit', 'weever' ); ?>' name='add' />
 	</div>
 
 </div>

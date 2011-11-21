@@ -51,6 +51,7 @@ class R3SItemMap {
 	public 		$datetime		= array("published"=>"","modified"=>"","start"=>"","end"=>"");
 	public 		$image			= array("mobile"=>"","full"=>"");
 	public 		$tags			= array();
+	public		$geo			= array();
 	public 		$url;
 	public 		$uuid;
 	public 		$author;
