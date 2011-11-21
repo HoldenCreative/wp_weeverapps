@@ -8,10 +8,6 @@
 </h1>
 
 	<?php if ( ! is_page() ): ?>
-		
-		<dd class="category-name">
-		<?php echo sprintf(__('Categories: %s', 'weever'), get_the_category_list(' ')); ?>
-		</dd>
 	
 		<dd class="published">
 		<?php echo sprintf(__('Published: %s', 'weever'), get_the_time(get_option('date_format'))); ?>
