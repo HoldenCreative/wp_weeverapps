@@ -1,6 +1,6 @@
 <form action='' method='post' name='mapAdminForm' id='mapAdminForm'>
 
-<div><?php echo __( 'Add geotagged posts to add to the map using either the <a href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a> or the <a href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a>.' ); ?></div>
+<div><?php echo __( 'Add geotagged posts to add to the map using either the <a target="_blank" href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a> or the <a target="_blank" href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a>.' ); ?></div>
 
 <div class="wx-add-ui formspacer">
 	<div class='wx-add-item-map wx-add-item-dropdown'>
@@ -53,7 +53,7 @@
 	<div class='wx-add-title wx-map-reveal wx-reveal'>
 
 		<input type='text' id='wx-map-title' value='' class='wx-title wx-input wx-map-input' name='noname' />
-		<label for='wx-map-title'><?php echo __( 'Submenu Tab Name/Description', 'weever' ); ?></label>
+		<label for='wx-map-title'><?php echo __( 'Description', 'weever' ); ?></label>
 	</div>
 
 	<div class='wx-add-submit'>
