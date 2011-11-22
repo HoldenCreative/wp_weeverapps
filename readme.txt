@@ -35,14 +35,13 @@ Currently supports:
 - Photo: Flickr, Picasa, Facebook Albums, Foursquare Venue Photos
 - Events: Google Calendar, Facebook Events
 - Forms through Wufoo
+- Maps using geolocation stored in posts (using the Wordpress mobile apps for iPhone, Android and Blackberry, or the official Geolocation plugin)
 - App works for iPhone/iPod/iPad, Android devices, Blackberry touch devices, with further compatibilities coming soon.
 
 Additional Features:
 
 - Staging Mode: allows developers to play around with new layouts or work on an app for a new version of a site without needing another API key and without affecting a Live app.
 - QR Codes: This extension will generate QR codes both for quick previewing of your app as you're building it, and for promoting your app publicly.
-
-- Coming soon: GPS mapping
 
 == Installation ==
 
@@ -77,15 +76,20 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 1. Select blog content by category, tag, search terms, and custom taxonomy
 2. Sample page content
-3. Include social media feeds from Twitter, Identi.ca and Facebook
-4. Event listing from Facebook or Google Calendar
-5. Photos from Flickr, Facebook, Foursquare
-6. Video streams from Youtube, Vimeo
-7. Contact information
-8. Forms generated using Wufoo
-9. Add to launch screen ability with customizable icon
+3. Easily add maps using standard Wordpress post geolocation data
+4. Include social media feeds from Twitter, Identi.ca and Facebook
+5. Event listing from Facebook or Google Calendar
+6. Photos from Flickr, Facebook, Foursquare
+7. Video streams from Youtube, Vimeo
+8. Contact information
+9. Forms generated using Wufoo
+10. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.3 =
+* Added maps support
+* Fixes various issues with the UI
 
 = 1.2 =
 * Ability to customize the app using Wordpress theme files (weever-content-single.php, weever.css)
@@ -105,6 +109,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3 =
+Maps support and several UI issues fixed
 
 = 1.2 =
 Ability to customize the app using Wordpress themes, additional 'Welcome' tab, UI improvements
