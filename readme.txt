@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -87,6 +87,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 == Changelog ==
 
+= 1.3.3 =
+* Corrects issue when entering subscription key for the first time
+
 = 1.3.2 =
 * Small UI issue when uploading files
 
@@ -115,6 +118,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+* Corrects layout issue that caused some users to not be able to enter their key
 
 = 1.3.1 =
 * Added query param to scripts and stylesheets to force reload on plugin update

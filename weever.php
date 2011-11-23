@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 1.3.2
+Version: 1.3.3
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
