@@ -54,14 +54,14 @@
 
     <div id="appmanager-header"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" />
 
-<?php if ( $weeverapp->site_key ): ?>
+<?php /*if ( $weeverapp->site_key ): ?>
 	<?php if ( $weeverapp->tier == 1 ): ?>
 		<span style="float: right; font-size: 10px;">• Mobile GPS Maps!<br>• Rebrand & Resell<br>• Custom Domains</span>
 		<span style="float:right; line-height: 1.25em; font-size: 1em; text-align: right; margin:1px 1.5em 0 0;">Weever Apps Pro & Premium<br><a target="_blank" href="http://weeverapps.com/pricing" id="headerbutton">Learn more</a></span>
 	<?php elseif ( $weeverapp->tier == 2.1 ): ?>
 		<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" target="_blank" href="http://weeverapps.com/pricing">Sign Up</a>Enjoying Your Free Trial?<br><span style="font-size:.5em; float:left;">We add powerful new features each month.</span></span>
 	<?php endif; ?>
-<?php endif; ?>
+<?php endif; */?>
 
 
 </div>
@@ -134,12 +134,12 @@
 
 
     	<div style="clear:both;"></div>
-  
-	<?php endif; ?>
 
    </fieldset>
     
    </div>
+    	
+	<?php endif; ?>
 
 
 
