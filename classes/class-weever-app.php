@@ -505,10 +505,11 @@ class WeeverApp {
 		// Try to decode the result
         $state = json_decode($result);
 
-        $this->theme->load_from_json($state->results);
-        $this->theme->load_from_json($state->results->images);
-        $this->theme->load_from_json($state->results->css);
-
+		if ( 'Site key missing or invalid.' != $state ) {
+	        $this->theme->load_from_json($state->results);
+	        $this->theme->load_from_json($state->results->images);
+	        $this->theme->load_from_json($state->results->css);
+		}
     }
 
 	public function save_theme() {
