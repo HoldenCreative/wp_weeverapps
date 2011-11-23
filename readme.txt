@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -87,6 +87,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 == Changelog ==
 
+= 1.3.1 =
+* Added query param to scripts and stylesheets to force reload on plugin update
+
 = 1.3 =
 * Added maps support
 * Fixes various issues with the UI
@@ -109,6 +112,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+* Added query param to scripts and stylesheets to force reload on plugin update
 
 = 1.3 =
 Maps support and several UI issues fixed
