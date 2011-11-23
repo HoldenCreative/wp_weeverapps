@@ -100,7 +100,7 @@ function weever_admin_page() {
 	                        if ( array_key_exists( $image, $_FILES ) ) {
 	                            $file = wp_handle_upload( $_FILES[$image], $overrides );
 	                            if ( isset( $file['error'] ) && 'No file was uploaded.' != $file['error'] ) {
-	                                add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %', 'weever' ), $file['error'] ) );
+	                                add_settings_error('weever_theme', 'weever_settings', sprintf( __( 'Error uploading file: %s', 'weever' ), $file['error'] ) . ' ' . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	                            } elseif ( isset( $file['url'] ) ) {
 	                                $weeverapp->theme->$image = $file['url'];
 	                                add_settings_error('weever_api_key', 'weever_settings', __( 'Theme image updated', 'weever' ), 'updated');
