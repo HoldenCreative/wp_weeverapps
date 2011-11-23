@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 
@@ -86,6 +86,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 10. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.3.2 =
+* Small UI issue when uploading files
 
 = 1.3.1 =
 * Added query param to scripts and stylesheets to force reload on plugin update
