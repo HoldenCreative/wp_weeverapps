@@ -341,6 +341,10 @@ jQuery(document).ready(function(){
 		if (jQuery(this).val() == "") {
 			jQuery('.wx-dummy').show();
 			jQuery('.wx-blog-reveal').hide();
+		} else if (jQuery(this).val() == "weever_all") {
+			jQuery('.wx-dummy').hide();
+			jQuery('#wx-blog-title').attr('value', 'All');
+			jQuery('.wx-blog-reveal').show();
 		} else {
 			jQuery('#wx-add-blog-' + jQuery(this).val() + '-item').show();
 			jQuery('#wx-add-blog-' + jQuery(this).val() + '-item select').attr('name', 'cms_feed');

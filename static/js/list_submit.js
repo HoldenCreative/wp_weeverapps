@@ -216,6 +216,9 @@ jQuery(document).ready(function(){
   	  			if (optionVal == 's') {
   	  				// Search feed
   	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
+  	  			} else if (optionVal == 'weever_all') {
+  	  				// All posts - search term of nothing
+  	  				cmsFeed = 'index.php?feed=r3s';
   	  			}
   	  			
   		  	  	jQuery.ajax({
@@ -236,7 +239,7 @@ jQuery(document).ready(function(){
 
   		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
   		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#blogTab";
-  		  	  	     	document.location.reload(true);
+  		  	  	     	//document.location.reload(true);
   		  	  	   },
   		  	  	   error: function(v,msg){
    		  	  	     jQuery('#wx-modal-loading-text').html(msg);
