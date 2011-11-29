@@ -86,6 +86,15 @@
 		    	'WEEVER_JS_PANEL_TIMEOUT_LONG' => __( 'Longer', 'weever' ),
 		    	'WEEVER_JS_PANEL_HEADERS_TOOLTIP' => __( 'When disabled, article/content items\' titles, authors, and other meta-data is not displayed.', 'weever' ),
 		    	'WEEVER_JS_PANEL_HEADERS' => __( 'Content Headers', 'weever' ),
+		    	'WEEVER_JS_MAP_SETTINGS' => __( 'Map Settings', 'weever' ),
+		    	'WEEVER_JS_MAP_START_LATITUDE_TOOLTIP' => __( 'Latitude that which the map first starts at.', 'weever' ),
+		    	'WEEVER_JS_MAP_START_LATITUDE' => __( 'Starting Latitude', 'weever' ),
+		    	'WEEVER_JS_MAP_START_LONGITUDE_TOOLTIP' => __( 'Longitude that which the map first starts at.', 'weever' ),
+		    	'WEEVER_JS_MAP_START_LONGITUDE' => __( 'Starting Longitude', 'weever' ),
+		    	'WEEVER_JS_MAP_START_ZOOM_TOOLTIP' => __( 'Zoom level that which the map first starts at. (1-15)', 'weever' ),
+		    	'WEEVER_JS_MAP_START_ZOOM' => __( 'Zoom Level (1-15)', 'weever' ),
+		    	'WEEVER_JS_MAP_DEFAULT_MARKER_TOOLTIP' => __( 'Default marker sprite, used when a marker sprite is unspecified. Must be a 128x74 PNG file, containging two images 64x74 side by side.', 'weever' ),
+		    	'WEEVER_JS_MAP_DEFAULT_MARKER' => __( 'Default Marker Image URL', 'weever' ),
 		    );
         }
 
