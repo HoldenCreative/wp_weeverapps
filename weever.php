@@ -245,12 +245,22 @@ function weever_app_request() {
 				$jsonHtml->datetime["published"] = get_lastpostdate('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostdate('GMT'), false);  //$v->created;
 				$jsonHtml->datetime["modified"] = get_lastpostmodified('GMT'); //mysql2date('Y-m-d H:i:s', get_lastpostmodified('GMT'), false); //$v->modified;
 
-				if ( file_exists( get_stylesheet_directory() . '/weever-content-single.php' ) )
-					include( get_stylesheet_directory() . '/weever-content-single.php' );
-				elseif ( file_exists( get_template_directory() . '/weever-content-single.php' ) )
-					include( get_template_directory() . '/weever-content-single.php' );
-				else
-		        	include( dirname( __FILE__ ) . '/templates/weever-content-single.php' );
+                // Look for post type before more generic stylesheet
+                $post = get_post( get_the_ID() );
+                $template_suffixes = array( '-' . $post->post_type, '' );
+
+                foreach ( $template_suffixes as $suffix ) {
+    				if ( file_exists( get_stylesheet_directory() . '/weever-content-single' . $suffix . '.php' ) ) {
+    					include( get_stylesheet_directory() . '/weever-content-single' . $suffix . '.php' );
+    					break;
+    				} elseif ( file_exists( get_template_directory() . '/weever-content-single' . $suffix . '.php' ) ) {
+    					include( get_template_directory() . '/weever-content-single' . $suffix . '.php' );
+    					break;
+    				} elseif ( file_exists( dirname( __FILE__ ) . '/templates/weever-content-single' . $suffix . '.php' ) ) {
+    		        	include( dirname( __FILE__ ) . '/templates/weever-content-single' . $suffix . '.php' );
+    		        	break;
+    				}
+                }
 
 				$jsonHtml->html =  ob_get_clean();
 				$jsonHtml->image = null;
