@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 
 Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
 

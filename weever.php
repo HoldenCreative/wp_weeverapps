@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps Administrator Component for Wordpress
-Version: 1.3.5
+Version: 1.3.6
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -275,8 +275,12 @@ function weever_app_request() {
 				// For HTML5 compliance, we take out spare target="_blank" links just so we don't duplicate
 				$jsonHtml->html = str_replace("target=\"_blank\"", "", $jsonHtml->html);
 				$jsonHtml->html = str_replace("href=\"", "target=\"_blank\" href=\"".site_url(), $jsonHtml->html);
-				$jsonHtml->html = str_replace("src=\"/", "src=\"".site_url(), $jsonHtml->html);
-				$jsonHtml->html = str_replace("src=\"images", "src=\"".site_url()."images", $jsonHtml->html);
+				//$jsonHtml->html = str_replace("src=\"/", "src=\"".site_url(), $jsonHtml->html);
+				//$jsonHtml->html = str_replace("src=\"images", "src=\"".site_url()."images", $jsonHtml->html);
+
+				// Change all links to absolute vs. relative
+				// http://wintermute.com.au/bits/2005-09/php-relative-absolute-links/
+                $jsonHtml->html = preg_replace( '#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . get_site_url() . '/$2$3', $jsonHtml->html );
 
 				// Restore external links, ensure target="_blank" applies
 				$jsonHtml->html = str_replace("hrefmask=\"weever://", "target=\"_blank\" href=\"http://", $jsonHtml->html);
