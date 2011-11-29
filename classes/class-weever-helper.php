@@ -107,8 +107,8 @@
     			$link = "index.php?feed=$feed&amp;tag=$term->slug";
     		} else {
     			$t = get_taxonomy( $taxonomy );
-    			if ( ! $t->query_var )
-    			$link = "index.php?feed=$feed&amp;$t->query_var=$term->slug";
+    			if ( $t->query_var )
+    				$link = "index.php?feed=$feed&amp;$t->query_var=$term->slug";
     		}
 
     		return $link;

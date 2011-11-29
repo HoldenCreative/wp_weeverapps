@@ -59,28 +59,44 @@
 //		$feedItem->url = str_replace("?template=weever_cartographer","",$feedItem->url);
 //		$feedItem->url = str_replace("&template=weever_cartographer","",$feedItem->url);
 
-		if ( function_exists( 'get_post_meta' ) and get_post_meta( get_the_ID(), 'geo_public', true ) != '' ) {
-			// Make sure geo is enabled on the post and pass the lat/lon
-			$geo_on = get_post_meta( get_the_ID(), 'geo_enabled', true );
-			if ( '' == $geo_on )
-				$geo_on = true;
-			
-			if ( $geo_on ) {
-				$geo_latitude = get_post_meta( get_the_ID(), 'geo_latitude', true );
-				$geo_longitude = get_post_meta( get_the_ID(), 'geo_longitude', true );
-				$geo_address = get_post_meta( get_the_ID(), 'geo_address', true );
-				
-				$feedItem->geo[0]['latitude'] = $geo_latitude;
-				$feedItem->geo[0]['longitude'] = $geo_longitude;
+
+
+		if ( function_exists( 'get_post_meta' ) ) {
+		    if ( get_post_meta( get_the_ID(), 'geo_public', true ) != '' ) {
+    			// Make sure geo is enabled on the post and pass the lat/lon
+    			$geo_on = get_post_meta( get_the_ID(), 'geo_enabled', true );
+    			if ( '' == $geo_on )
+    				$geo_on = true;
+
+    			if ( $geo_on ) {
+    				$geo_latitude = get_post_meta( get_the_ID(), 'geo_latitude', true );
+    				$geo_longitude = get_post_meta( get_the_ID(), 'geo_longitude', true );
+    				$geo_address = get_post_meta( get_the_ID(), 'geo_address', true );
+
+    				$feedItem->geo[0]['latitude'] = $geo_latitude;
+    				$feedItem->geo[0]['longitude'] = $geo_longitude;
+    				$feedItem->geo[0]['altitude'] = '';
+    				$feedItem->geo[0]['address'] = $geo_address;
+    				$feedItem->geo[0]['label'] = '';
+    				// TODO: Allow for the marker to be customized on a per-post basis
+    				$feedItem->geo[0]['marker'] = '';
+    				$feedItem->geo[0]['kml'] = '';
+    			}
+		    }
+
+		    if ( ! isset( $feedItem->geo[0] ) and get_post_meta( get_the_ID(), '_wp_geo_latitude', true ) != '' and get_post_meta( get_the_ID(), '_wp_geo_longitude', true ) != '' ) {
+		        // WP Geo
+				$feedItem->geo[0]['latitude'] = get_post_meta( get_the_ID(), '_wp_geo_latitude', true );
+				$feedItem->geo[0]['longitude'] = get_post_meta( get_the_ID(), '_wp_geo_longitude', true );
 				$feedItem->geo[0]['altitude'] = '';
-				$feedItem->geo[0]['address'] = $geo_address;
+				$feedItem->geo[0]['address'] = '';
 				$feedItem->geo[0]['label'] = '';
 				// TODO: Allow for the marker to be customized on a per-post basis
 				$feedItem->geo[0]['marker'] = '';
 				$feedItem->geo[0]['kml'] = '';
-			}
+		    }
 		}
-		
+
 		$feed->items[] = $feedItem;
 	}
 
@@ -97,7 +113,7 @@
 
 	print_r($json);
 
-	
+
 	/**
 	 * Function from the Geolocation plugin:
 	 * http://wordpress.org/extend/plugins/geolocation/
@@ -117,7 +133,7 @@
 					$country = $addressPart->long_name;
 			}
 		}
-	
+
 		if(($city != '') && ($state != '') && ($country != ''))
 			$address = $city.', '.$state.', '.$country;
 		else if(($city != '') && ($state != ''))
@@ -126,10 +142,10 @@
 			$address = $state.', '.$country;
 		else if($country != '')
 			$address = $country;
-	
+
 		return $address;
 	}
-	
+
 
 /*
 
