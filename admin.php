@@ -80,13 +80,7 @@ function weever_admin_page() {
 	        	add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 			}
 		}
-		
-		// Check if the domain is different than the current site domain
-	    if ( $weeverapp->loaded && $weeverapp->site_key ) {
-	        if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
-		        add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App site url %s does not match the current Wordpress site url %s - please verify your Wordpress settings or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
-	    }
-	
+			
 	    // Handle form submission
 		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {	
 	    	switch ( $_GET['page'] ) {
@@ -166,6 +160,13 @@ function weever_admin_page() {
 	
 	        // Most form control handled via AJAX calls rather than direct post
 		}
+		
+		// Check if the domain is different than the current site domain
+		if ( $weeverapp->loaded && $weeverapp->site_key ) {
+			if ( ! stripos( site_url(), $weeverapp->primary_domain ) )
+				add_settings_error('weever_settings', 'weever_settings', sprintf( __( 'Your Weever App subscription key url %s does not match the current Wordpress site url %s - please verify your Wordpress settings, that you have the correct subscription key, or contact support.' ), $weeverapp->primary_domain, site_url() ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+		}
+		
 	} else {
 		die( __( 'Access denied', 'weever' ) );
 	}
