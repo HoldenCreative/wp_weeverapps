@@ -90,6 +90,9 @@
 					</tr>	
 
                 	</table>
+                	
+                	<p class="wx-theme-submithelp"><?php echo __( 'NOTE: These settings will only work if you have a <a target="_blank" href="http://weeverapps.com/pricing">Weever Apps Pro</a> subscription', 'weever' ); ?></p>
+                	
             	</fieldset>
         	</div>
 		</div>
