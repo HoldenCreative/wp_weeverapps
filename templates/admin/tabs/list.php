@@ -133,10 +133,8 @@ $tabsUnpublished = 0;
                 	</th>
 
                 	<th class='title'><?php echo __( 'NAME', 'weever' ); ?> &nbsp;(<a style="color:#1C94C4;" href="http://weeverapps.com/mobile-app-layout" target="_blank">?</a>)</th>
-                	<th width='8%' nowrap='nowrap'><?php echo __( 'PUBLISHED' ); ?></th>
+                	<th width='10%' nowrap='nowrap'><?php echo __( 'STATUS' ); ?></th>
                 	<th width='8%' nowrap='nowrap'><?php echo __( 'ORDER' ); ?></th>
-                	<!-- <th width='5%' nowrap='nowrap'><?php echo __( 'ID' ); ?></th>-->
-                	<th width='8%' nowrap='nowrap'><?php echo __( 'Delete' ); ?></th>
             	</tr>
         	</thead>
 
@@ -153,19 +151,20 @@ $tabsUnpublished = 0;
             			<?php //echo JHTML::_('grid.id', $iii, $row->id); ?>
             		</td>
             		<td>
-            			<a href='#' title="ID #<?php echo $row->id; ?>" class="wx-subtab-link"><?php echo $row->name; ?></a>
+            			<span class="wx-subtab-link-text"><?php echo $row->name; ?></span>
+            			<div class="row-actions">
+            				<span class="edit"><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-link">Edit Name</a></span> | 
+            				<span class="toggle_publish"><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish" rel="<?php echo ( $row->published ? 1 : 0 ); ?>"><?php echo __( 'Toggle Published', 'weever' ); ?></a></span> | 
+            				<span class="delete"><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" alt="<?php echo __( 'Delete', 'weever' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><?php echo __( 'Delete', 'weever' ); ?></a></span>
+            			</div>
             		</td>
             		<td align='center'>
-            			 <a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-publish"<?php echo ($row->published ? 'rel="1"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/tick.png" border="0" alt="Published">' : 'rel="0"><img src="' . WEEVER_PLUGIN_URL . 'static/images/icons/publish_x.png" border="0" alt="Unpublished">'); ?></a>
+            			<span class="wx-subtab-publish-text"><?php echo ( $row->published ? __( 'Published', 'weever' ) : __( 'Unpublished', 'weever' ) ); ?></span>
             		</td>
             		<td align="center">
             			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-down" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/downarrow.png" width="16" height="16" border="0" title="Move Down"></a>
             			<a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-up" rel="<?php echo $row->type; ?>"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/uparrow.png" width="16" height="16" border="0" title="Move Up"></a>
             		</td>
-            		<!-- <td align='center'>
-            			<?php echo $row->id; ?>
-            		</td> -->
-            		<td align='center'><a href="#" title="ID #<?php echo $row->id; ?>" class="wx-subtab-delete" rel="<?php echo $row->type; ?>" alt="<?php echo __( 'delete' ); ?> &quot;<?php echo htmlentities($row->name); ?>&quot;"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" /></a></td>
         		</tr>
 
         	<?php
@@ -174,16 +173,16 @@ $tabsUnpublished = 0;
 
 
         	<?php if ( ! count( $componentRows ) ): ?>
-        		<tr><td colspan='6'><?php echo __( 'There are no items in this tab.' ); ?></td></tr>
+        		<tr><td colspan='6'><?php echo __( 'There are no items in this tab.', 'weever' ); ?></td></tr>
         	<?php else: ?>
         		<tr>
         			<td colspan='6'>
         				<div class="wx-list-actions">
             				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/arrow_leftup.png" />
-            				<?php echo __( 'With selected:' ); ?> &nbsp;
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/tick.png" id="wx-publish-selected" title="Publish" />
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/publish_x.png" id="wx-unpublish-selected" title="Unpublish" />
-            				<img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/wx-delete-mark.png" id="wx-delete-selected" title="Delete" />
+            				<?php echo __( 'With selected:', 'weever' ); ?> &nbsp;
+            				<a href="#" id="wx-publish-selected" title="Publish"><?php echo __( 'Publish', 'weever' ); ?></a> |
+            				<a href="#" id="wx-unpublish-selected" title="Unpublish"><?php echo __( 'Unpublish', 'weever' ); ?></a> |
+            				<a href="#" id="wx-delete-selected" title="Delete"><?php echo __( 'Delete', 'weever' ); ?></a>
             			</div>
         			</td>
         		</tr>

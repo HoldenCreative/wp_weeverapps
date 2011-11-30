@@ -79,11 +79,11 @@ jQuery(document).ready(function(){
 
 	// Functions with selected list elements
 	jQuery("#wx-delete-selected, #wx-publish-selected, #wx-unpublish-selected").click(function(e) {
-		var nonce = jQuery("input#nonce").val();	
+		var nonce = jQuery("input#nonce").val();
 		var clickedAction = jQuery(this).attr('title');
 		var action = 'ajax'+clickedAction+'Selected';
-		var unpublishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
-		var publishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
+		var unpublishedIcon = 'Unpublished'; //'<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
+		var publishedIcon = 'Published'; //'<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
 		
 		// Verify at least one item is selected on the current form
 		var items = jQuery("input[name^='cid[]']:visible:checked");
@@ -114,9 +114,13 @@ jQuery(document).ready(function(){
 				     	case 'Unpublish':
 				     		// Step through each checkbox item and get the a.wx-subtab-publish element to display the right icon
 				     		items.each(function () {
-				     			var link = jQuery(this).parent("td:first").parent("tr:first").find("a.wx-subtab-publish:first");
-				     			link.html((clickedAction == 'Publish' ? publishedIcon : unpublishedIcon));
-				     			link.attr('rel', (clickedAction == 'Publish' ? 1 : 0));
+				     			// Status text
+				     			var text = jQuery(this).parent("td:first").parent("tr:first").find(".wx-subtab-publish-text:first");
+				     			text.html((clickedAction == 'Publish' ? publishedIcon : unpublishedIcon));
+				     			
+				     			// Toggle link
+				     			var text = jQuery(this).parent("td:first").parent("tr:first").find(".wx-subtab-publish:first");
+				     			text.attr('rel', (clickedAction == 'Publish' ? 1 : 0));
 				     		});
 				     		break;
 				     	case 'Delete':
@@ -445,13 +449,14 @@ jQuery(document).ready(function(){
 
 	jQuery('a.wx-subtab-link').click(function() {
 	
+		event.preventDefault();
+		
+		var clickedElem = jQuery(this).parents("td:first").find(".wx-subtab-link-text:first");
 		var tabId = jQuery(this).attr('title');
 		tabId = tabId.substring(4);
-		var siteKey = jQuery("input#wx-site-key").val();
-		var htmlName = jQuery(this).html();
+		var htmlName = clickedElem.html();
 		var txt = 	'<h3 class="wx-imp-h3">'+WPText.WEEVER_JS_ENTER_NEW_APP_ITEM+'</h3>'+
 					'<input type="text" id="alertName" name="alertName" value="'+htmlName+'" />';
-		var clickedElem = jQuery(this);
 		var nonce = jQuery("input#nonce").val();		
 					
 		myCallbackForm = function(v,m,f) {
@@ -525,11 +530,13 @@ jQuery(document).ready(function(){
 		var nonce = jQuery("input#nonce").val();		
 		var tabId = jQuery(this).attr('title');
 		tabId = tabId.substring(4);
-		var siteKey = jQuery("input#wx-site-key").val();
 		var clickedElem = jQuery(this);
+		var statustext = jQuery(this).parents("tr:first").find(".wx-subtab-publish-text:first");
 		var pubStatus = jQuery(this).attr('rel');
-		var unpublishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
-		var publishedIcon = '<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
+		var unpublishedIcon = 'Unpublished'; //'<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/publish_x.png" border="0" alt="Unpublished">';
+		var publishedIcon = 'Published'; //'<img src="'+WPText.WEEVER_JS_STATIC_PATH+'images/icons/tick.png" border="0" alt="Published">';
+
+		event.preventDefault();
 		
 		jQuery.ajax({
 		   type: "POST",
@@ -547,13 +554,17 @@ jQuery(document).ready(function(){
 	     	
 	     	if(pubStatus == 1)
 	     	{
-	     		clickedElem.html(unpublishedIcon);
+	     		//clickedElem.html(unpublishedIcon);
 	     		clickedElem.attr('rel', 0);
+     			// Status text
+     			statustext.html(unpublishedIcon);
 	     	}
 	     	else
 	     	{
-	     		clickedElem.html(publishedIcon);
+	     		//clickedElem.html(publishedIcon);
 	     		clickedElem.attr('rel', 1);
+     			// Status text
+     			statustext.html(publishedIcon);
 	     	}
 		   },
 		   error: function(v,msg){
@@ -570,9 +581,7 @@ jQuery(document).ready(function(){
 		
 			var tabId = jQuery(this).attr('title');
 			tabId = tabId.substring(4);
-			var siteKey = jQuery("input#wx-site-key").val();
 			var nonce = jQuery("input#nonce").val();
-			var tabType = jQuery(this).attr('rel');
 			var tabName = jQuery(this).attr('alt');
 			var deleteButton = this;
 			var confDelete = confirm(WPText.WEEVER_JS_ARE_YOU_SURE_YOU_WANT_TO+tabName+WPText.WEEVER_JS_QUESTION_MARK);
@@ -593,8 +602,7 @@ jQuery(document).ready(function(){
 			     
 			     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
 			     	// Delete the table row this delete image is in
-			     	console.debug(deleteButton);
-			     	jQuery(deleteButton).parent("td:first").parent("tr:first").remove();
+			     	jQuery(deleteButton).parents("tr:first").remove();
 		     		//document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+'#'+tabType+'Tab';
 		     		//setTimeout("document.location.reload(true);",20);
 			   },
