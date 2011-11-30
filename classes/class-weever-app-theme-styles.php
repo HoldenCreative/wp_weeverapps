@@ -15,7 +15,7 @@
     	public 		$photoIcon;
     	public 		$mapIcon;
     	public 		$titlebarHtml;
-    	public 		$titlebarSource		= "text";
+    	public 		$titlebarSource		= "image";
     	public 		$template			= "sencha";
     	public 		$useCssOverride;
     	public 		$useCustomIcons;
