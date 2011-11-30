@@ -281,12 +281,12 @@ function weever_app_request() {
 
 				// Mask external links so we leave only internal ones to play with.
 				$jsonHtml->html = str_replace("href=\"http://", "hrefmask=\"weever://", $jsonHtml->html);
-
+				
 				// For HTML5 compliance, we take out spare target="_blank" links just so we don't duplicate
 				$jsonHtml->html = str_replace("target=\"_blank\"", "", $jsonHtml->html);
-				$jsonHtml->html = str_replace("href=\"", "target=\"_blank\" href=\"".site_url(), $jsonHtml->html);
-				//$jsonHtml->html = str_replace("src=\"/", "src=\"".site_url(), $jsonHtml->html);
-				//$jsonHtml->html = str_replace("src=\"images", "src=\"".site_url()."images", $jsonHtml->html);
+				$jsonHtml->html = str_replace("href=\"", "target=\"_blank\" href=\"", $jsonHtml->html);
+				//$jsonHtml->html = str_replace("src=\"/", "src=\"".get_site_url()."/", $jsonHtml->html);
+				//$jsonHtml->html = str_replace("src=\"images", "src=\"".get_site_url()."/images", $jsonHtml->html);
 
 				// Change all links to absolute vs. relative
 				// http://wintermute.com.au/bits/2005-09/php-relative-absolute-links/
