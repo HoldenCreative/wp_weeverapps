@@ -6,7 +6,7 @@ Requires at least: 3.2.1
 Tested up to: 3.2.1
 Stable tag: 1.3.6
 
-Weever Apps Administrator Component for Wordpress: http://weeverapps.com/
+Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
 == Description ==
 
@@ -18,7 +18,7 @@ This plugin enables you to build and manage your app entirely within WordPress' 
 
 Setting up a Weever App is extremely easy. All you do is:
 
-- Sign up for an API key
+- Sign up for an subscription key at http://weeverapps.com/
 - Install the plugin
 - Paste in the API key
 - Start adding content and branding to your app!
@@ -67,7 +67,7 @@ That's it!
 Yes!  You can customize your app in a number of ways:
 
 1. Upload custom graphics for the load screen, logo, and other images for the app in the 'Logo, Images and Theme' tab in the Weever Apps Configuration screen
-1. Copy templates/weever-content-single.php to your current theme to customize the look of individual pages / posts
+1. Copy templates/weever-content-single.php in the plugin folder to your current theme to customize the look of individual pages / posts, or rename to weever-content-single-{posttype}.php to override only for certain post types (standard or custom)
 1. Add custom CSS in the 'Logo, Images and Theme' tab, under 'Advanced Theme Settings'
 
 You can determine the appropriate CSS classes to use by loading your private app URL in a Webkit browser such as Google Chrome or Safari, and inspecting the appropriate HTML elements.
@@ -86,6 +86,12 @@ You can determine the appropriate CSS classes to use by loading your private app
 10. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.3.6 =
+* Fixed issue with saving map settings
+* Ability to customize the look of content by placing either weever-content-single.php or weever-content
+* Custom taxonomies now save correctly for the Blogs tab
+* More Wordpress-standard interface for editing tabs
 
 = 1.3.4 =
 * Ability to quickly add all published post content to the Blog tab
@@ -121,6 +127,11 @@ You can determine the appropriate CSS classes to use by loading your private app
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.6 =
+* Fixed issue with saving map settings
+* Custom taxonomies now save correctly for the Blogs tab
+* More Wordpress-standard interface for editing tabs
 
 = 1.3.4 =
 * Ability to quickly add all published post content to the Blog tab

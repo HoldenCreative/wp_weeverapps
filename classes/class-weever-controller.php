@@ -67,6 +67,10 @@ class WeeverController {
 						$tab->var->start->longitude = $submitted_vars[1];
 						$tab->var->start->zoom = $submitted_vars[2];
 						$tab->var->marker = $submitted_vars[3];
+						
+						// TODO: Figure out how to detect changes to the object itself if possible
+						$tab->var = $tab->var;
+						
 						$tab->save();
 						break;
 						

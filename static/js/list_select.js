@@ -402,6 +402,9 @@ jQuery(document).ready(function(){
 	});
 
 	jQuery('#wx-select-map-settings').click(function() {
+		
+		event.preventDefault();
+		
 		var startLat = jQuery("input#wx-map-start-latitude").val(),
 		startLong = jQuery("input#wx-map-start-longitude").val(),
 		startZoom = jQuery("input#wx-map-start-zoom").val(),
@@ -449,7 +452,8 @@ jQuery(document).ready(function(){
 					   success: function(msg){
 						   jQuery('#wx-modal-loading-text').html(msg);
 						   jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-						   document.location.reload(true);
+				  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#mapTab";
+				  	     	document.location.reload(true);
 					   },
 					   error: function(v,msg){
 						   jQuery('#wx-modal-loading-text').html(msg);
@@ -599,7 +603,8 @@ jQuery(document).ready(function(){
 					   success: function(msg){
 						   jQuery('#wx-modal-loading-text').html(msg);
 						   jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
-						   document.location.reload(true);
+				  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#panelTab";
+				  	     	document.location.reload(true);
 					   },
 					   error: function(v,msg){
 						   jQuery('#wx-modal-loading-text').html(msg);

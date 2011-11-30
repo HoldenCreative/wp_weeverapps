@@ -23,6 +23,7 @@
             	<div>
                 	<fieldset class='adminForm'>
                 	<legend><?php echo __( 'Basic Settings', 'weever' ); ?></legend>
+                	
 					<input type="hidden" name="template" value="sencha" />
                 	<table class="admintable">
                     	<!-- <tr>
@@ -52,7 +53,10 @@
                         	<td><input type="text" name="title" maxlength="10" style="width:90px;" value="<?php echo htmlentities($weeverapp->title, ENT_QUOTES, "UTF-8"); ?>" class="required" /></td>
                     	</tr>
                 	</table>
-                	</fieldset>
+                	
+                	<p class="wx-theme-submithelp">NOTE: You can further customize the look of your content by copying templates/weever-content-single.php from the Weever Apps plugin directory into your current theme directory, or copy to weever-content-single-{posttype}.php to customize only certain post types.</p>
+                	
+                	</fieldset>                	
                 </div>
 
 
