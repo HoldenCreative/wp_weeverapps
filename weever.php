@@ -333,8 +333,14 @@ add_action('template_redirect', 'weever_app_request');
 function weever_query_vars($vars) {
     $vars[] = 'template';
 
+    // For pagination in the r3s feed
+    $vars[] = 'limit';
+    $vars[] = 'start';
+    $vars[] = 'page';
+
     // For including a callback function for R3S feed/document
     $vars[] = 'callback';
+    
     return $vars;
 }
 
