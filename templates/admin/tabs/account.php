@@ -25,8 +25,21 @@
                         	<tr><td class="key"><?php _e( 'Subscription Key', 'weever' ); ?></td>
                         	<td><input type="text" name="site_key" maxlength="42" style="width:250px;" value="<?php echo $weeverapp->site_key; ?>" /></td>
                         	</tr>
-
-                        	<tr><td class="key"><?php _e( 'Subscription Domain' ); ?></td>
+                        	
+                        	<?php if ( $weeverapp->expiry and strtotime( $weeverapp->expiry ) !== false ): ?>
+                        	<tr><td class="key"><?php _e( 'Subscription Expires' ); ?></td>
+                        	<td>
+                        		<?php if ( strtotime( $weeverapp->expiry ) > time() ): ?>
+	                        	<?php echo date( 'F d, Y', strtotime( $weeverapp->expiry ) ); ?>
+	                        	<?php else: ?>
+	                        	<strong><?php echo __( 'Expired', 'weever' ); ?></strong> (<a href="http://weeverapps.com/pricing"><?php echo __( 'Renew', 'weever' ); ?></a>)
+	                        	<?php endif; ?>
+                        	</td>
+                        	</tr>
+                        	
+                        	<?php endif; ?>
+                        	
+                        	<tr><td class="key"><?php _e( 'Subscription Domain', 'weever' ); ?></td>
                         	<td>
 	                        	<?php if ( $weeverapp->primary_domain ): ?>
                         	    <?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever' ), $weeverapp->primary_domain ); ?>
