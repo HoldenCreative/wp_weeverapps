@@ -89,6 +89,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 = 1.3.6 =
 * Fixed issue with saving map settings
+* Added support for WP Geo
 * Ability to customize the look of content by placing either weever-content-single.php or weever-content
 * Custom taxonomies now save correctly for the Blogs tab
 * More Wordpress-standard interface for editing tabs
@@ -130,6 +131,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 = 1.3.6 =
 * Fixed issue with saving map settings
+* Added support for WP Geo
 * Custom taxonomies now save correctly for the Blogs tab
 * More Wordpress-standard interface for editing tabs
 
