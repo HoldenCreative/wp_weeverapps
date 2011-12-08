@@ -358,6 +358,39 @@ jQuery(document).ready(function(){
 			jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
 		}
 	});
+
+	/*
+	 * User interface for the Directory tab
+	 */
+	jQuery('#wx-select-directory').change(function() {
+	
+		jQuery('.wx-title').attr('name','noname');
+		jQuery('#wx-directory-title').attr('name','name');
+		jQuery('.wx-cms-feed-select').attr('name','noname');
+		jQuery('.wx-blog-help').hide();
+		jQuery('.wx-dummy').hide();
+		
+		// Hide all items initially, then show the options for the selected one
+		jQuery('.wx-directory-item-choose').hide();
+		jQuery('.wx-directory-item-choose select').attr('name', 'unnamed');
+		
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-directory-reveal').hide();
+		} else {
+			jQuery('#wx-add-directory-' + jQuery(this).val() + '-item').show();
+			jQuery('#wx-add-directory-' + jQuery(this).val() + '-item select').attr('name', 'cms_feed');
+			jQuery('.wx-directory-reveal').show();
+		}	
+
+	});
+	
+	jQuery('.wx-directory-item-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-directory-title').val(jQuery('option:selected', this).text());
+		}
+	});
+	
 	
 	jQuery('#wx-select-contact').change(function() {
 	

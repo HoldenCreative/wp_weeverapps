@@ -14,13 +14,13 @@ function weever_admin_add_page() {
         $page = ( isset( $_GET['page'] ) ? basename( $_GET['page'] ) : '' );
 
         // Pseudo-page to enable/disable
-        $mypage = add_submenu_page( '', __( 'Weever Apps Configuration', 'weever' ), __( 'Weever Apps Configuration', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
+        $mypage = add_submenu_page( '', __( 'Weever App', 'weever' ), __( 'Weever App', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
         
         
         // If this is a weever page, add it as the admin menu item (so it is always highlighted properly between admin page tabs)
         if ( substr( $page, 0, strlen('weever-') ) == 'weever-' && file_exists( dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php' ) )
         {
-    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', $page, 'weever_admin_page', '');
+    		$mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', $page, 'weever_admin_page', '');
     		add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
@@ -28,9 +28,9 @@ function weever_admin_add_page() {
         {
 //    		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
             if ( get_option( 'weever_api_key' ) )
-    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-list', 'weever_admin_page', '');
+    		    $mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', 'weever-list', 'weever_admin_page', '');
             else
-    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
+    		    $mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
             add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
@@ -150,7 +150,7 @@ function weever_admin_page() {
 	                    $weeverapp->loadspinner = ( isset( $_POST['loadspinner'] ) ? $_POST['loadspinner'] : '' );
 	                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
 	                    $weeverapp->save();
-	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps configuration settings saved', 'weever' ), 'updated');
+	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever App settings saved', 'weever' ), 'updated');
 	    	        } catch (Exception $e) {
 	        	        add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	    	        }

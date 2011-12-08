@@ -14,7 +14,7 @@
 		</dd>
 	
 		<dd class="createdby">
-		<?php echo sprintf(esc_attr__('Written by: %s', 'weever'), get_the_author_link()); ?>
+		<?php echo sprintf(esc_attr__('Written by: %s', 'weever'), get_the_author()); ?>
 		</dd>
 
 	<?php endif; ?>

@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -87,6 +87,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 == Changelog ==
 
+= 1.3.7 =
+* Adding new directory tab for trial and premium/pro
+
 = 1.3.6 =
 * Fixed issue with saving map settings
 * Added support for WP Geo
@@ -128,6 +131,9 @@ You can determine the appropriate CSS classes to use by loading your private app
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.7 =
+* Added Directory tab
 
 = 1.3.6 =
 * Fixed issue with saving map settings
