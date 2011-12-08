@@ -14,7 +14,7 @@
 
 
 
-<div style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
+<div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
 			<a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp; | &nbsp; <a href="http://eepurl.com/fP-oD">Newsletter</a>
 
 
