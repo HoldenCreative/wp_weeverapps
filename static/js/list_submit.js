@@ -275,6 +275,7 @@ jQuery(document).ready(function(){
   	    	  	var tabName = jQuery('input#wx-directory-title').val();
   	    	  	var tabSearchTerm = jQuery('input[name=s]:visible').val();
   	    	  	var nonce = jQuery("input#nonce").val();
+  	    	  	var imageUrl = jQuery("input#wx-directory-image-url").val();
   	    	  	
   	  			if (optionVal == 's') {
   	  				// Search feed
@@ -291,6 +292,7 @@ jQuery(document).ready(function(){
   		  	  		   weever_action: 'add',
   		  	  		   published: '1',
   		  	  		   'cms_feed': cmsFeed,
+  		  	  		   'var': imageUrl,
   		  	  		   name: tabName,
   		  	  		   nonce: nonce
   		  	  	   },
