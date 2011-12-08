@@ -78,9 +78,8 @@
     				$feedItem->geo[0]['altitude'] = '';
     				$feedItem->geo[0]['address'] = $geo_address;
     				$feedItem->geo[0]['label'] = '';
-    				// TODO: Allow for the marker to be customized on a per-post basis
-    				$feedItem->geo[0]['marker'] = '';
-    				$feedItem->geo[0]['kml'] = '';
+    				$feedItem->geo[0]['marker'] = get_post_meta( get_the_ID(), 'weever_map_marker', true );
+    				$feedItem->geo[0]['kml'] = get_post_meta( get_the_ID(), 'weever_kml', true );
     			}
 		    }
 
@@ -91,9 +90,19 @@
 				$feedItem->geo[0]['altitude'] = '';
 				$feedItem->geo[0]['address'] = '';
 				$feedItem->geo[0]['label'] = '';
-				// TODO: Allow for the marker to be customized on a per-post basis
-				$feedItem->geo[0]['marker'] = '';
-				$feedItem->geo[0]['kml'] = '';
+				$feedItem->geo[0]['marker'] = get_post_meta( get_the_ID(), 'weever_map_marker', true );
+				$feedItem->geo[0]['kml'] = get_post_meta( get_the_ID(), 'weever_kml', true );
+		    }
+
+		    if ( ! isset( $feedItem->geo[0] ) and get_post_meta( get_the_ID(), 'weever_kml', true ) != '' ) {
+		    	// Just KML
+			    $feedItem->geo[0]['latitude'] = '';
+			    $feedItem->geo[0]['longitude'] = '';
+			    $feedItem->geo[0]['altitude'] = '';
+			    $feedItem->geo[0]['address'] = '';
+			    $feedItem->geo[0]['label'] = '';
+			    $feedItem->geo[0]['marker'] = get_post_meta( get_the_ID(), 'weever_map_marker', true );
+			    $feedItem->geo[0]['kml'] = get_post_meta( get_the_ID(), 'weever_kml', true );
 		    }
 		}
 

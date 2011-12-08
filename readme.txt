@@ -72,6 +72,8 @@ Yes!  You can customize your app in a number of ways:
 
 You can determine the appropriate CSS classes to use by loading your private app URL in a Webkit browser such as Google Chrome or Safari, and inspecting the appropriate HTML elements.
 
+Our support site - http://support.weeverapps.com/ - contains many more answers and our community forums.
+
 == Screenshots ==
 
 1. Select blog content by category, tag, search terms, and custom taxonomy
@@ -89,6 +91,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 = 1.3.7 =
 * Adding new directory tab for trial and premium/pro
+* Ability to specify KML data and a custom map marker for each post
 
 = 1.3.6 =
 * Fixed issue with saving map settings
@@ -134,6 +137,7 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 = 1.3.7 =
 * Added Directory tab
+* Ability to specify KML data and a custom map marker for each post
 
 = 1.3.6 =
 * Fixed issue with saving map settings

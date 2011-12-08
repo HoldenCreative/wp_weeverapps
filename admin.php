@@ -300,6 +300,78 @@ function weever_app_toggle() {
 
 add_action( 'admin_notices', 'weever_app_toggle' );
 
+/**
+ * Add custom fields for post editing, for KML and custom marker url
+ */
+
+function weever_add_custom_box() {
+	add_meta_box('weever_sectionid', __( 'Weever Apps - Map Data', 'myplugin_textdomain' ), 'weever_inner_custom_box', 'post', 'advanced' );
+}
+
+add_action('admin_menu', 'weever_add_custom_box');
+
+function weever_inner_custom_box() {
+	echo '<input type="hidden" id="weever_nonce" name="weever_nonce" value="' .
+			wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '
+	<p>
+		<label for="weever-kml">KML File URL:</label>
+		<input type="text" id="weever-kml" name="weever-kml" value="">
+	</p>
+	<p>
+		<label for="weever-kml">Custom Map Marker URL:</label>
+		<input type="text" id="weever-map-marker" name="weever-map-marker" value="">
+	</p>
+	<p>
+		NOTE: Custom map markers must be PNG image sprites that are 128 pixels by 74 pixels. The image on the left is the normal state, the one on the right is the selected state; each is 64x74 pixels placed beside each other in the same transparent PNG image file.
+	</p>
+	';
+}
+
+function weever_post_admin_head() {
+	global $post;
+	$post_id = $post->ID;
+	$post_type = $post->post_type;
+	$zoom = (int) get_option('geolocation_default_zoom');
+	?>
+	<script type="text/javascript">
+	jQuery(function() {
+		jQuery(document).ready(function() {
+			jQuery('#weever-kml').val('<?php echo esc_js(get_post_meta($post_id, 'weever_kml', true)); ?>');
+			jQuery('#weever-map-marker').val('<?php echo esc_js(get_post_meta($post_id, 'weever_map_marker', true)); ?>');
+		});
+	});
+	</script>
+	<?php 
+}
+
+add_action('admin_head-post-new.php', 'weever_post_admin_head');
+add_action('admin_head-post.php', 'weever_post_admin_head');
+
+function weever_save_postdata($post_id) {
+	// Check authorization, permissions, autosave, etc
+	if ( ! wp_verify_nonce( $_POST['weever_nonce'], plugin_basename( __FILE__ ) ) )
+		return $post_id;
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return $post_id;
+
+	if( 'page' == $_POST['post_type'] ) {
+		if( ! current_user_can( 'edit_page', $post_id ) )
+			return $post_id;
+	} else {
+		if ( ! current_user_can( 'edit_post', $post_id ) )
+			return $post_id;
+	}
+
+	update_post_meta($post_id, 'weever_kml', $_POST['weever-kml']);
+	update_post_meta($post_id, 'weever_map_marker', $_POST['weever-map-marker']);
+
+	return $post_id;
+}
+
+add_action('save_post', 'weever_save_postdata');
+
 function weever_section_text() {
 	echo '<p></p>';
 }
