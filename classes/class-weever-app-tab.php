@@ -126,16 +126,6 @@ class WeeverAppTab {
 
         if ( 'Item Added' != $result )
             throw new Exception( sprintf( __( 'Error adding new tab: %s', 'weever' ), $result ) );
-
-        // TODO: Remove this shortly as it is no longer be necessary
-		$postdata = array(
-				'local_tab_id' => rand(1000,5000),
-				'hash' => $hash,
-				'app' => 'ajax',
-				'm' => 'tab_local_id'
-				);
-
-        $result = WeeverHelper::send_to_weever_server($postdata);
     }
 
     public function & get_subtabs() {

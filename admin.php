@@ -37,6 +37,13 @@ function weever_admin_add_page() {
 	}
 }
 
+function weever_remove_wp_magic_quotes() {
+	$_GET    = stripslashes_deep( $_GET );
+	$_POST   = stripslashes_deep( $_POST );
+	$_COOKIE = stripslashes_deep( $_COOKIE );
+	$_REQUEST = stripslashes_deep( $_REQUEST );
+}
+
 /**
  * Page controller, loads the wrapper layout and the indivdual page content
  *
@@ -82,7 +89,11 @@ function weever_admin_page() {
 		}
 			
 	    // Handle form submission
-		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {	
+		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {
+
+			// Remove wordpress slashes
+			weever_remove_wp_magic_quotes();
+			
 	    	switch ( $_GET['page'] ) {
 	    	    case 'weever-theme':
 	                try {
