@@ -73,6 +73,7 @@ class WeeverApp {
             $this->_data['loaded'] = true;
         } catch ( Exception $e ) {
             $this->_data['loaded'] = false;
+            $this->_data['error_message'] = $e->getMessage();
         }
     }
 

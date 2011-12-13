@@ -66,7 +66,7 @@ function weever_admin_page() {
 	        $weeverapp = new WeeverApp();
 	
 	        if ( ! $weeverapp->loaded ) {
-		        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+		        add_settings_error('weever_settings', 'weever_settings', $weeverapp->error_message . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	        } else {
 	        	if ( isset( $_GET['page'] ) and 'weever-theme' == $_GET['page'] ) {
 	        		$weeverapp->load_theme();
@@ -87,7 +87,7 @@ function weever_admin_page() {
 	        	add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 			}
 		}
-			
+
 	    // Handle form submission
 		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {
 

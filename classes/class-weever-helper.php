@@ -164,6 +164,11 @@
             
             $retval = false;
 
+            // Check for debug mode
+            if ( is_admin() and isset( $_GET['debug'] ) ) {
+            	$_SESSION[ 'weever_debug_mode' ] = ( $_GET['debug'] ? 1 : 0 );
+            }
+            
             if ( is_array( $postdata ) && self::$_weeverapp !== false ) {
             	$server = (self::$_weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER);
 
@@ -176,12 +181,24 @@
                 $postdata['cms'] = WeeverConst::CMS;
                 $postdata['cms_version'] = $wp_version;
             	
+                if ( is_admin() and isset( $_SESSION[ 'weever_debug_mode' ] ) and $_SESSION[ 'weever_debug_mode' ] ) {
+                	echo "Sending to $server...";
+                	var_dump($postdata);
+                }
+                
             	$result = wp_remote_get( $server."?".http_build_query( $postdata ) );
 
+            	if ( is_admin() and isset( $_SESSION[ 'weever_debug_mode' ] ) and $_SESSION[ 'weever_debug_mode' ] ) {
+            		echo "...receiving...";
+            		var_dump($result);
+            	}
+            	
                 if ( is_array( $result ) and isset( $result['body'] ) ) {
             	    $retval = $result['body'];
             	} else {
-            	    throw new Exception( __( 'Error communicating with the Weever Apps server', 'weever' ) );
+            		$error = ( is_wp_error( $result ) ? ': ' . $result->get_error_message() : '' );
+            		
+            	    throw new Exception( __( 'Error communicating with the Weever Apps server' . $error, 'weever' ) );
             	}
             } else {
                 throw new Exception( __( 'Invalid postdata sent to function or weeverapp not set', 'weever' ) );
