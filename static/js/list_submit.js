@@ -63,6 +63,8 @@ jQuery(document).ready(function(){
 					 town: jQuery('input#wx-contact-town').val(),
 					 state: jQuery('input#wx-contact-state').val(),
 					 country: jQuery('input#wx-contact-country').val(),
+					 image: jQuery('input#wx-contact-image').val(),
+					 misc: jQuery('#wx-contact-misc').val(),
 					 type: 'contact',
 					 emailform: emailForm,
 					 googlemaps: googleMaps,

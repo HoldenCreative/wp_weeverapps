@@ -99,6 +99,15 @@ class WeeverAppTab {
 			$contact->country = $data['country'];
 			$contact->googlemaps = ( $data['googlemaps'] ? 1 : 0 );
 			$contact->emailform = ( $data['emailform'] ? 1 : 0 );
+			
+			if ( isset( $data['misc'] ) )
+				$contact->misc = $data['misc'];
+			
+			if ( isset( $data['image'] ) ) {
+				$contact->image = $data['image'];
+				$contact->showimage = 1;
+			}
+
 			$data['var'] = json_encode( $contact );
         }
 

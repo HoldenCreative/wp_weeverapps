@@ -45,7 +45,9 @@
     		<label for='wx-contact-email'><?php echo __( 'E-mail Address', 'weever' ); ?></label>
     		<input type='text' value='' id='wx-contact-email' class='wx-title wx-input wx-contact-input' name='email' />
     	</div>
-
+	</div>
+	
+	<div class='wx-add-contact'>
     	<div class='wx-add-title'>
     		<label for='wx-contact-address'><?php echo __( 'Address', 'weever' ); ?></label>
     		<input type='text' value='' id='wx-contact-address' class='wx-title wx-input wx-contact-input' name='address' />
@@ -66,6 +68,19 @@
     		<input type='text' value='' id='wx-contact-country' class='wx-title wx-input wx-contact-input' name='country' />
     	</div>
 
+	</div>
+
+	<div class='wx-add-contact'>
+    	<div class='wx-add-title'>
+    		<label for='wx-contact-misc'><?php echo __( 'Miscellaneous Text', 'weever' ); ?></label>
+    		<textarea id='wx-contact-misc' class='wx-title wx-input wx-contact-input' name='misc'></textarea>
+    	</div>
+    	
+    	<div class='wx-add-title'>
+    		<label for='wx-contact-image'><?php echo __( 'Contact Photo URL', 'weever' ); ?></label>
+    		<input type='text' value='' id='wx-contact-image' placeholder='http://' class='wx-title wx-input wx-contact-input' name='image' />
+    	</div>
+    	
     	<div class='wx-contact-options'>
     		<input type="checkbox" name="emailform" id="wx-contact-option-email-form" value="1" />
     		<label for="wx-contact-option-email-form" class="key hasTip" title="<?php echo __( '<strong>Note:</strong> Hides the email address, except on BlackBerry phones which have a form bug and where a direct email link is the only option.', 'weever' ); ?>"><?php echo __( 'Use an email form*', 'weever' ); ?></label>
@@ -73,12 +88,14 @@
     		<input type="checkbox" name="googlemaps" id="wx-contact-option-google-maps" value="1" />
     		<label for="wx-contact-option-google-maps"><?php echo __( 'Display a Google Maps&trade; link', 'weever' ); ?></label>
     	</div>
+    	
 	</div>
-
-	<div class='wx-add-submit'>
-		<input type='submit' id='wx-contact-submit' class='wx-submit' value='<?php echo __( 'Submit', 'weever' ); ?>' name='add' />
+	
+	<div class='wx-add-contact'>
+		<div class='wx-add-submit'>
+			<input type='submit' id='wx-contact-submit' class='wx-submit' value='<?php echo __( 'Submit', 'weever' ); ?>' name='add' />
+		</div>
 	</div>
-
 </div>
 
 </form>
