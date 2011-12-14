@@ -169,6 +169,14 @@ jQuery(document).ready(function(){
 				jQuery('label#wx-flickr-url').show();
 				jQuery('input#wx-photo-url').val('');
 				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
+				jQuery('input#wx-photo-title').val('Flickr Latest');
+			}
+			
+			if(jQuery(this).val() == "flickr.photosets") 
+			{
+				jQuery('label#wx-flickr-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
 				jQuery('input#wx-photo-title').val('Flickr');
 			}
 			
@@ -185,8 +193,16 @@ jQuery(document).ready(function(){
 			{
 				jQuery('label#wx-google-picasa-email').show();
 				jQuery('input#wx-photo-url').val('');
-				jQuery('input#wx-photo-url').attr('placeholder', 'yourname@email.com');
+				jQuery('input#wx-photo-url').attr('placeholder', 'https://picasa… OR you@gmail.com');
 				jQuery('input#wx-photo-title').val('Picasa');
+			}
+			
+			if(jQuery(this).val() == "facebook.photos")
+			{
+				jQuery('label#wx-facebook-photos-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://facebook.com/yourprofile');
+				jQuery('input#wx-photo-title').val('Facebook');		
 			}
 			
 			
