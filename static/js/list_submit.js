@@ -562,8 +562,6 @@ jQuery(document).ready(function(){
 			  	var tabEmail = jQuery('#wx-google-calendar-email').val();
 			  	var tabUrl = jQuery('#wx-facebook-calendar-url').val();
 			  	var tabName = jQuery('input#wx-calendar-title').val();
-			  	var siteKey = jQuery("input#wx-site-key").val();
-			  	var timezone = jQuery("#wx-select-facebook-timezone-time").val();
 			  	var component = jQuery("select#wx-select-calendar").val();
 			  	var componentBehaviour = null;
 			  	var nonce = jQuery("input#nonce").val();
@@ -584,7 +582,6 @@ jQuery(document).ready(function(){
 			  		   published: 1,
 			  		   component: component,
 			  		   component_behaviour: componentBehaviour,
-			  		   'var': timezone,
 			  		   nonce: nonce
 			  	   },
 			  	   success: function(msg){
