@@ -75,7 +75,7 @@
 
 
 
-<p>For more quesitons and answers, please visit our <a href="http://weeverapps.zendesk.com">support site</a>.</p>
+<p>For more quesitons and answers, please visit our <a href="http://support.weeverapps.com/">support site</a>.</p>
 <br/>
 
 

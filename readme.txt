@@ -89,6 +89,10 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.3.8 =
+* Additional photo feed options
+* Ability to add photo to contact along with miscellaneous information (such as hours of operation)
+
 = 1.3.7 =
 * Adding new directory tab for trial and premium/pro
 * Ability to specify KML data and a custom map marker for each post
@@ -134,6 +138,10 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.8 =
+* Additional photo feed options
+* Ability to add photo to contact along with miscellaneous information (such as hours of operation)
 
 = 1.3.7 =
 * Added Directory tab
