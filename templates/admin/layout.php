@@ -59,7 +59,7 @@
 		<span style="float: right; font-size: 10px;">&middot; Rebrand & Resell<br>&middot; Custom Domains</span>
 		<span style="float:right; line-height: 1.25em; font-size: 1em; text-align: right; margin:1px 1.5em 0 0;">Weever Apps Pro - White Label<br><a target="_blank" href="http://weeverapps.com/pricing" id="headerbutton">Learn more</a></span>
 	<?php elseif ( $weeverapp->tier == 2.1 ): ?>
-		<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" target="_blank" href="http://weeverapps.com/pricing">Go Pro</a>Enjoying Your Free App?<br><span style="font-size:.5em; float:left;">Go Pro to keep all features and more.</span></span>
+		<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" target="_blank" href="http://weeverapps.com/pricing">Go Pro</a>Enjoying Your Free App?<br><span style="font-size:.5em; float:left;">Marketing Features & More</span></span>
 	<?php endif; ?>
 <?php endif; ?>
 

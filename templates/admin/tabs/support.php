@@ -7,7 +7,7 @@
 
 
 
-<p>If you are new to Weever Apps — <a href="http://weeverapps.zendesk.com/" title="Weever Apps Support" target="_blank">http://weeverapps.zendesk.com</a> is <em>the</em> place to start. Ask questions, find answers and request new features!</p>
+<p>If you are new to Weever Apps — <a href="http://support.weeverapps.com/" title="Weever Apps Support" target="_blank">http://support.weeverapps.com</a> is <em>the</em> place to start. Ask questions, find answers and request new features!</p>
 
 
 
