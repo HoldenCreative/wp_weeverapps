@@ -187,10 +187,12 @@ function weever_admin_page() {
 }
 
 function weever_admin_warnings() {
-	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) ) {
+	global $wp_version;
+	
+	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) && ( function_exists( 'is_multisite' ) || ! version_compare( $wp_version, '3.0', '<' ) ) ) {
 		function weever_warning() {
 			echo "
-			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps API key</a> for it to work.', 'weever'), "plugins.php?page=weever-account")."</p></div>
+			<div id='weever-warning' class='updated'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps Subscription Key</a> for it to work.  Don\'t have one?  <a target="_blank" href="http://weeverapps.com/pricing">Get one here</a>.', 'weever'), "plugins.php?page=weever-account")."</p></div>
 			";
 		}
 		add_action( 'admin_notices', 'weever_warning' );
@@ -206,7 +208,7 @@ function weever_admin_init() {
 
         function weever_version_warning() {
             echo "
-            <div id='weever-warning' class='updated fade'><p><strong>".sprintf( __( 'Weever Apps %s requires WordPress 3.0 or higher.', 'weever' ), WeeverConst::VERSION ) ."</strong> ".sprintf( __( 'Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever' ), 'http://codex.wordpress.org/Upgrading_WordPress' ). "</p></div>
+            <div id='weever-warning' class='updated'><p><strong>".sprintf( __( 'Weever Apps %s requires WordPress 3.0 or higher.', 'weever' ), WeeverConst::VERSION ) ."</strong> ".sprintf( __( 'Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever' ), 'http://codex.wordpress.org/Upgrading_WordPress' ). "</p></div>
             ";
         }
         add_action( 'admin_notices', 'weever_version_warning' );
