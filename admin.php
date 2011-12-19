@@ -14,13 +14,13 @@ function weever_admin_add_page() {
         $page = ( isset( $_GET['page'] ) ? basename( $_GET['page'] ) : '' );
 
         // Pseudo-page to enable/disable
-        $mypage = add_submenu_page( '', __( 'Weever Apps Configuration', 'weever' ), __( 'Weever Apps Configuration', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
+        $mypage = add_submenu_page( '', __( 'Weever App', 'weever' ), __( 'Weever App', 'weever' ), 'manage_options', 'weever-app-toggle', 'weever_admin_page' );
         
         
         // If this is a weever page, add it as the admin menu item (so it is always highlighted properly between admin page tabs)
         if ( substr( $page, 0, strlen('weever-') ) == 'weever-' && file_exists( dirname( __FILE__ ) . '/templates/admin/tabs/' . str_replace( 'weever-', '', $page ) . '.php' ) )
         {
-    		$mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', $page, 'weever_admin_page', '');
+    		$mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', $page, 'weever_admin_page', '');
     		add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
@@ -28,13 +28,20 @@ function weever_admin_add_page() {
         {
 //    		$mypage = add_submenu_page('', __('Weever Apps Configuration', 'weever'), __('App Features and Navigation', 'weever'), 'manage_options', 'weever-tabs', 'weever_conf');
             if ( get_option( 'weever_api_key' ) )
-    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-list', 'weever_admin_page', '');
+    		    $mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', 'weever-list', 'weever_admin_page', '');
             else
-    		    $mypage = add_menu_page(__('Weever Apps Configuration', 'weever'), __('Weever Apps Configuration', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
+    		    $mypage = add_menu_page(__('Weever App', 'weever'), __('Weever App', 'weever'), 'manage_options', 'weever-account', 'weever_admin_page', '');
             add_action( "admin_print_scripts-$mypage", 'weever_page_scripts_init' );
     		add_action( "admin_print_styles-$mypage", 'weever_page_styles_init' );
         }
 	}
+}
+
+function weever_remove_wp_magic_quotes() {
+	$_GET    = stripslashes_deep( $_GET );
+	$_POST   = stripslashes_deep( $_POST );
+	$_COOKIE = stripslashes_deep( $_COOKIE );
+	$_REQUEST = stripslashes_deep( $_REQUEST );
 }
 
 /**
@@ -59,7 +66,7 @@ function weever_admin_page() {
 	        $weeverapp = new WeeverApp();
 	
 	        if ( ! $weeverapp->loaded ) {
-		        add_settings_error('weever_settings', 'weever_settings', __( 'Unable to load data from the Weever Apps server' ) . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
+		        add_settings_error('weever_settings', 'weever_settings', $weeverapp->error_message . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	        } else {
 	        	if ( isset( $_GET['page'] ) and 'weever-theme' == $_GET['page'] ) {
 	        		$weeverapp->load_theme();
@@ -80,9 +87,13 @@ function weever_admin_page() {
 	        	add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 			}
 		}
-			
+
 	    // Handle form submission
-		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {	
+		if ( isset( $_POST['submit'] ) || isset( $_POST['stagingmode'] ) ) {
+
+			// Remove wordpress slashes
+			weever_remove_wp_magic_quotes();
+			
 	    	switch ( $_GET['page'] ) {
 	    	    case 'weever-theme':
 	                try {
@@ -150,7 +161,7 @@ function weever_admin_page() {
 	                    $weeverapp->loadspinner = ( isset( $_POST['loadspinner'] ) ? $_POST['loadspinner'] : '' );
 	                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
 	                    $weeverapp->save();
-	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever Apps configuration settings saved', 'weever' ), 'updated');
+	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever App settings saved', 'weever' ), 'updated');
 	    	        } catch (Exception $e) {
 	        	        add_settings_error('weever_config', 'weever_settings', $e->getMessage() . " " . sprintf( __( '<a target="_new" href="%s">Contact Weever Apps support</a>', 'weever' ), 'http://weeverapps.com/support' ) );
 	    	        }
@@ -176,10 +187,12 @@ function weever_admin_page() {
 }
 
 function weever_admin_warnings() {
-	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) ) {
+	global $wp_version;
+	
+	if ( ! get_option( 'weever_api_key' ) && ! isset( $_POST['submit']) && ( function_exists( 'is_multisite' ) || ! version_compare( $wp_version, '3.0', '<' ) ) ) {
 		function weever_warning() {
 			echo "
-			<div id='weever-warning' class='updated fade'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps API key</a> for it to work.', 'weever'), "plugins.php?page=weever-account")."</p></div>
+			<div id='weever-warning' class='updated'><p><strong>".__('Weever Apps is almost ready.', 'weever')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Weever Apps Subscription Key</a> for it to work.  Don\'t have one?  <a target="_blank" href="http://weeverapps.com/pricing">Get one here</a>.', 'weever'), "plugins.php?page=weever-account")."</p></div>
 			";
 		}
 		add_action( 'admin_notices', 'weever_warning' );
@@ -195,7 +208,7 @@ function weever_admin_init() {
 
         function weever_version_warning() {
             echo "
-            <div id='weever-warning' class='updated fade'><p><strong>".sprintf( __( 'Weever Apps %s requires WordPress 3.0 or higher.', 'weever' ), WeeverConst::VERSION ) ."</strong> ".sprintf( __( 'Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever' ), 'http://codex.wordpress.org/Upgrading_WordPress' ). "</p></div>
+            <div id='weever-warning' class='updated'><p><strong>".sprintf( __( 'Weever Apps %s requires WordPress 3.0 or higher.', 'weever' ), WeeverConst::VERSION ) ."</strong> ".sprintf( __( 'Please <a href="%s">upgrade WordPress</a> to a current version.', 'weever' ), 'http://codex.wordpress.org/Upgrading_WordPress' ). "</p></div>
             ";
         }
         add_action( 'admin_notices', 'weever_version_warning' );
@@ -299,6 +312,78 @@ function weever_app_toggle() {
 }
 
 add_action( 'admin_notices', 'weever_app_toggle' );
+
+/**
+ * Add custom fields for post editing, for KML and custom marker url
+ */
+
+function weever_add_custom_box() {
+	add_meta_box('weever_sectionid', __( 'Weever Apps - Map Data', 'myplugin_textdomain' ), 'weever_inner_custom_box', 'post', 'advanced' );
+}
+
+add_action('admin_menu', 'weever_add_custom_box');
+
+function weever_inner_custom_box() {
+	echo '<input type="hidden" id="weever_nonce" name="weever_nonce" value="' .
+			wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '
+	<p>
+		<label for="weever-kml">KML File URL:</label>
+		<input type="text" id="weever-kml" name="weever-kml" value="">
+	</p>
+	<p>
+		<label for="weever-kml">Custom Map Marker URL:</label>
+		<input type="text" id="weever-map-marker" name="weever-map-marker" value="">
+	</p>
+	<p>
+		NOTE: Custom map markers must be PNG image sprites that are 128 pixels by 74 pixels. The image on the left is the normal state, the one on the right is the selected state; each is 64x74 pixels placed beside each other in the same transparent PNG image file.
+	</p>
+	';
+}
+
+function weever_post_admin_head() {
+	global $post;
+	$post_id = $post->ID;
+	$post_type = $post->post_type;
+	$zoom = (int) get_option('geolocation_default_zoom');
+	?>
+	<script type="text/javascript">
+	jQuery(function() {
+		jQuery(document).ready(function() {
+			jQuery('#weever-kml').val('<?php echo esc_js(get_post_meta($post_id, 'weever_kml', true)); ?>');
+			jQuery('#weever-map-marker').val('<?php echo esc_js(get_post_meta($post_id, 'weever_map_marker', true)); ?>');
+		});
+	});
+	</script>
+	<?php 
+}
+
+add_action('admin_head-post-new.php', 'weever_post_admin_head');
+add_action('admin_head-post.php', 'weever_post_admin_head');
+
+function weever_save_postdata($post_id) {
+	// Check authorization, permissions, autosave, etc
+	if ( ! wp_verify_nonce( $_POST['weever_nonce'], plugin_basename( __FILE__ ) ) )
+		return $post_id;
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return $post_id;
+
+	if( 'page' == $_POST['post_type'] ) {
+		if( ! current_user_can( 'edit_page', $post_id ) )
+			return $post_id;
+	} else {
+		if ( ! current_user_can( 'edit_post', $post_id ) )
+			return $post_id;
+	}
+
+	update_post_meta($post_id, 'weever_kml', $_POST['weever-kml']);
+	update_post_meta($post_id, 'weever_map_marker', $_POST['weever-map-marker']);
+
+	return $post_id;
+}
+
+add_action('save_post', 'weever_save_postdata');
 
 function weever_section_text() {
 	echo '<p></p>';

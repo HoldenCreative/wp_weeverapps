@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: brianhogg
 Donate link: http://weeverapps.com/
-Tags: AJAX, android, apple, blackberry, weever, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
-Requires at least: 3.2.1
-Tested up to: 3.2.1
-Stable tag: 1.3.6
+Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
+Requires at least: 3.0
+Tested up to: 3.3
+Stable tag: 1.3.10
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
 == Description ==
 
-Weever is a new service that turns your WordPress site into a true web app for iPhone, Blackberry Touch, Android and iPad - Instantly and affordably.
+Weever is a new service that turns your WordPress site into a true web app for iPhone, Blackberry Touch, Android and iPad.
 
 Weever functions and feels just like a native iOS, Android, or Blackberry app, except with no App Store barriers!
 
@@ -72,6 +72,8 @@ Yes!  You can customize your app in a number of ways:
 
 You can determine the appropriate CSS classes to use by loading your private app URL in a Webkit browser such as Google Chrome or Safari, and inspecting the appropriate HTML elements.
 
+Our support site - http://support.weeverapps.com/ - contains many more answers and our community forums.
+
 == Screenshots ==
 
 1. Select blog content by category, tag, search terms, and custom taxonomy
@@ -87,8 +89,17 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 == Changelog ==
 
+= 1.3.8 =
+* Additional photo feed options
+* Ability to add photo to contact along with miscellaneous information (such as hours of operation)
+
+= 1.3.7 =
+* Adding new directory tab for trial and premium/pro
+* Ability to specify KML data and a custom map marker for each post
+
 = 1.3.6 =
 * Fixed issue with saving map settings
+* Added support for WP Geo
 * Ability to customize the look of content by placing either weever-content-single.php or weever-content
 * Custom taxonomies now save correctly for the Blogs tab
 * More Wordpress-standard interface for editing tabs
@@ -128,8 +139,17 @@ You can determine the appropriate CSS classes to use by loading your private app
 
 == Upgrade Notice ==
 
+= 1.3.8 =
+* Additional photo feed options
+* Ability to add photo to contact along with miscellaneous information (such as hours of operation)
+
+= 1.3.7 =
+* Added Directory tab
+* Ability to specify KML data and a custom map marker for each post
+
 = 1.3.6 =
 * Fixed issue with saving map settings
+* Added support for WP Geo
 * Custom taxonomies now save correctly for the Blogs tab
 * More Wordpress-standard interface for editing tabs
 

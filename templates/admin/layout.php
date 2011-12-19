@@ -4,7 +4,7 @@
 
 	<?php if (is_array($errors)): ?>
     	<?php foreach($errors as $error): ?>
-		<div id="message" class="<?php echo $error['type']; ?> fade"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
+		<div id="message" class="<?php echo $error['type']; ?>"><p><strong><?php echo __($error['message'], 'weever'); ?></strong></p></div>
     	<?php endforeach; ?>
     <?php endif; ?>
     
@@ -14,7 +14,7 @@
 
 
 
-<div style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
+<div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
 			<a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp; | &nbsp; <a href="http://eepurl.com/fP-oD">Newsletter</a>
 
 
@@ -54,14 +54,14 @@
 
     <div id="appmanager-header"><img src="<?php echo WEEVER_PLUGIN_URL; ?>static/images/icons/icon-48-weever_toolbar_title<?php echo $weeverapp->staging_mode ? '_staging' : ''; ?>.png" title="<?php _e('Weever Apps Configuration', 'weever'); ?>" />
 
-<?php /*if ( $weeverapp->site_key ): ?>
-	<?php if ( $weeverapp->tier == 1 ): ?>
-		<span style="float: right; font-size: 10px;">• Mobile GPS Maps!<br>• Rebrand & Resell<br>• Custom Domains</span>
-		<span style="float:right; line-height: 1.25em; font-size: 1em; text-align: right; margin:1px 1.5em 0 0;">Weever Apps Pro & Premium<br><a target="_blank" href="http://weeverapps.com/pricing" id="headerbutton">Learn more</a></span>
+<?php if ( $weeverapp->site_key ): ?>
+	<?php if ( $weeverapp->tier == 3 ): ?>
+		<span style="float: right; font-size: 10px;">&middot; Rebrand & Resell<br>&middot; Custom Domains</span>
+		<span style="float:right; line-height: 1.25em; font-size: 1em; text-align: right; margin:1px 1.5em 0 0;">Weever Apps Pro - White Label<br><a target="_blank" href="http://weeverapps.com/pricing" id="headerbutton">Learn more</a></span>
 	<?php elseif ( $weeverapp->tier == 2.1 ): ?>
-		<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" target="_blank" href="http://weeverapps.com/pricing">Sign Up</a>Enjoying Your Free Trial?<br><span style="font-size:.5em; float:left;">We add powerful new features each month.</span></span>
+		<span style="float:right; line-height: 1.25em; font-size:1.5em; text-align: right; margin:1px .5em 0 0;"><a id="headerbutton" style="margin:0 1em 0; float:left;" target="_blank" href="http://weeverapps.com/pricing">Go Pro</a>Enjoying Your Free App?<br><span style="font-size:.5em; float:left;">Marketing Features & More</span></span>
 	<?php endif; ?>
-<?php endif; */?>
+<?php endif; ?>
 
 
 </div>
@@ -149,7 +149,7 @@
 		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?>
 		<?php echo WeeverConst::COPYRIGHT_YEAR; ?> <a target="_blank" href="<?php echo WeeverConst::COPYRIGHT_URL; ?>"><?php echo WeeverConst::COPYRIGHT; ?></a><br />
 		Released <?php echo WeeverConst::RELEASE_DATE; ?> under <a target="_blank" href="<?php echo WeeverConst::LICENSE_URL; ?>"><?php echo WeeverConst::LICENSE; ?></a>.
-		<a target="_blank" href="http://weeverapps.zendesk.com/home">Contact Support</a>
+		<a target="_blank" href="http://support.weeverapps.com/">Contact Support</a>
 	</div>
 </div>
 

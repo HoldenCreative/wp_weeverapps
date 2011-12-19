@@ -63,6 +63,8 @@ jQuery(document).ready(function(){
 					 town: jQuery('input#wx-contact-town').val(),
 					 state: jQuery('input#wx-contact-state').val(),
 					 country: jQuery('input#wx-contact-country').val(),
+					 image: jQuery('input#wx-contact-image').val(),
+					 misc: jQuery('#wx-contact-misc').val(),
 					 type: 'contact',
 					 emailform: emailForm,
 					 googlemaps: googleMaps,
@@ -250,6 +252,69 @@ jQuery(document).ready(function(){
   	  		}
   	  	});
 	});
+	
+
+	jQuery('input#wx-directory-submit').click(function(e) {
+
+  	  	// Validation
+  	  	jQuery('#directoryAdminForm').validate({ 
+  	  		rules: {
+  	  	  		s: { required: true },
+  	  			cms_feed: { required: true },
+  	  			name: { required: true },
+  	  			"wx-select-directory": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+  	  			
+  	  			var optionVal = jQuery('#wx-select-directory').val();
+  	    		var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
+  	    	  	var tabName = jQuery('input#wx-directory-title').val();
+  	    	  	var tabSearchTerm = jQuery('input[name=s]:visible').val();
+  	    	  	var nonce = jQuery("input#nonce").val();
+  	    	  	var imageUrl = jQuery("input#wx-directory-image-url").val();
+  	    	  	
+  	  			if (optionVal == 's') {
+  	  				// Search feed
+  	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
+  	  			}
+  	  			
+  		  	  	jQuery.ajax({
+  		  	  	   type: "POST",
+  		  	  	   url: ajaxurl,
+  		  	  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+  		  	  		   type: 'directory',
+  		  	  		   component: 'directory',
+  		  	  		   weever_action: 'add',
+  		  	  		   published: '1',
+  		  	  		   'cms_feed': cmsFeed,
+  		  	  		   'var': imageUrl,
+  		  	  		   name: tabName,
+  		  	  		   nonce: nonce
+  		  	  	   },
+  		  	  	   success: function(msg){
+  		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+  		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+  		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#blogTab";
+  		  	  	     	document.location.reload(true);
+  		  	  	   },
+  		  	  	   error: function(v,msg){
+   		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+  		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+  		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+  		  	  	   }
+  		  	  	 });
+  	  		}
+  	  	});
+	});
+	
 	
 	
 	jQuery('input#wx-map-submit').click(function(e) {
@@ -497,8 +562,6 @@ jQuery(document).ready(function(){
 			  	var tabEmail = jQuery('#wx-google-calendar-email').val();
 			  	var tabUrl = jQuery('#wx-facebook-calendar-url').val();
 			  	var tabName = jQuery('input#wx-calendar-title').val();
-			  	var siteKey = jQuery("input#wx-site-key").val();
-			  	var timezone = jQuery("#wx-select-facebook-timezone-time").val();
 			  	var component = jQuery("select#wx-select-calendar").val();
 			  	var componentBehaviour = null;
 			  	var nonce = jQuery("input#nonce").val();
@@ -519,7 +582,6 @@ jQuery(document).ready(function(){
 			  		   published: 1,
 			  		   component: component,
 			  		   component_behaviour: componentBehaviour,
-			  		   'var': timezone,
 			  		   nonce: nonce
 			  	   },
 			  	   success: function(msg){

@@ -531,6 +531,18 @@ div#wx-nav-icon-preview-wrapper img {
     padding-left: 4px;
     text-transform: uppercase; }
 
+.wx-add-ui label { 
+    padding-left:4px;
+    color: #888;
+    font-size: 0.75em;
+    padding-left: 4px;
+    text-transform: uppercase; }
+
+ 
+.wx-add-contact { float: left; margin-left: 15px; width: 200px; } 
+
+.wx-contact-options { margin-top: 10px; } 
+ 
 .wx-add-contact label { 
     padding-left:4px;
     color: #888;

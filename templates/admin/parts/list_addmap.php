@@ -1,6 +1,6 @@
 <form action='' method='post' name='mapAdminForm' id='mapAdminForm'>
 
-<div><?php echo __( 'Add geotagged posts to add to the map using either the <a target="_blank" href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a>, the <a target="_blank" href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a> or the <a target="_blank" href="http://wordpress.org/extend/plugins/wp-geo/">WP Geo plugin</a>.' ); ?></div>
+<div id="maphelp"><?php echo __( 'Create geotagged posts to add to the map using either the <a target="_blank" href="http://wordpress.org/extend/mobile/">Wordpress mobile application</a>, the <a target="_blank" href="http://wordpress.org/extend/plugins/geolocation/">Geolocation plugin</a> or the <a target="_blank" href="http://wordpress.org/extend/plugins/wp-geo/">WP Geo plugin</a>.  Add KML and custom map markers for content by editing the post, under "Weever Apps - Map Data"' ); ?></div>
 
 <div class="wx-add-ui formspacer">
 	<div class='wx-add-item-map wx-add-item-dropdown'>

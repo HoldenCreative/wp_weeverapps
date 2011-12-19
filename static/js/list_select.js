@@ -169,6 +169,14 @@ jQuery(document).ready(function(){
 				jQuery('label#wx-flickr-url').show();
 				jQuery('input#wx-photo-url').val('');
 				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
+				jQuery('input#wx-photo-title').val('Flickr Latest');
+			}
+			
+			if(jQuery(this).val() == "flickr.photosets") 
+			{
+				jQuery('label#wx-flickr-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://');
 				jQuery('input#wx-photo-title').val('Flickr');
 			}
 			
@@ -185,8 +193,16 @@ jQuery(document).ready(function(){
 			{
 				jQuery('label#wx-google-picasa-email').show();
 				jQuery('input#wx-photo-url').val('');
-				jQuery('input#wx-photo-url').attr('placeholder', 'yourname@email.com');
+				jQuery('input#wx-photo-url').attr('placeholder', 'https://picasa… OR you@gmail.com');
 				jQuery('input#wx-photo-title').val('Picasa');
+			}
+			
+			if(jQuery(this).val() == "facebook.photos")
+			{
+				jQuery('label#wx-facebook-photos-url').show();
+				jQuery('input#wx-photo-url').val('');
+				jQuery('input#wx-photo-url').attr('placeholder', 'http://facebook.com/yourprofile');
+				jQuery('input#wx-photo-title').val('Facebook');		
 			}
 			
 			
@@ -358,6 +374,39 @@ jQuery(document).ready(function(){
 			jQuery('input#wx-blog-title').val(jQuery('option:selected', this).text());
 		}
 	});
+
+	/*
+	 * User interface for the Directory tab
+	 */
+	jQuery('#wx-select-directory').change(function() {
+	
+		jQuery('.wx-title').attr('name','noname');
+		jQuery('#wx-directory-title').attr('name','name');
+		jQuery('.wx-cms-feed-select').attr('name','noname');
+		jQuery('.wx-blog-help').hide();
+		jQuery('.wx-dummy').hide();
+		
+		// Hide all items initially, then show the options for the selected one
+		jQuery('.wx-directory-item-choose').hide();
+		jQuery('.wx-directory-item-choose select').attr('name', 'unnamed');
+		
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-directory-reveal').hide();
+		} else {
+			jQuery('#wx-add-directory-' + jQuery(this).val() + '-item').show();
+			jQuery('#wx-add-directory-' + jQuery(this).val() + '-item select').attr('name', 'cms_feed');
+			jQuery('.wx-directory-reveal').show();
+		}	
+
+	});
+	
+	jQuery('.wx-directory-item-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-directory-title').val(jQuery('option:selected', this).text());
+		}
+	});
+	
 	
 	jQuery('#wx-select-contact').change(function() {
 	

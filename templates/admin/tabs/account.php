@@ -23,18 +23,36 @@
 
                     	<table class="admintable">
                         	<tr><td class="key"><?php _e( 'Subscription Key', 'weever' ); ?></td>
-                        	<td><input type="text" name="site_key" maxlength="42" style="width:250px;" value="<?php echo $weeverapp->site_key; ?>" /></td>
+                        	<td valign="top"><input <?php if ( ! $weeverapp->site_key ) echo 'class="error"'; ?> type="text" name="site_key" maxlength="42" style="width:250px;" value="<?php echo $weeverapp->site_key; ?>" /><br />
+                        	<a target="_blank" href="http://weeverapps.com/pricing"><?php echo __( 'Need a Weever Apps subscription key?' ); ?></a>
+                        	</td>
                         	</tr>
-
-                        	<tr><td class="key"><?php _e( 'Subscription Domain' ); ?></td>
+                        	
+                        	<?php if ( $weeverapp->site_key and $weeverapp->expiry and strtotime( $weeverapp->expiry ) !== false ): ?>
+                        	<tr><td class="key" valign="top"><?php echo apply_filters( 'weever_subscription_expires_title', __( 'Subscription Expires', 'weever' ) ); ?></td>
+                        	<td valign="top">
+                        		<?php if ( strtotime( $weeverapp->expiry ) > time() ): ?>
+	                        	<?php $expiry = date( 'F d, Y', strtotime( $weeverapp->expiry ) ); ?>
+	                        	<?php else: ?>
+	                        	<?php $expiry = '<strong>' . __( 'Expired', 'weever' ) .  '</strong> (<a target="_blank" href="http://weeverapps.com/pricing">' . __( 'Renew', 'weever' ) . '</a>)'; ?>
+	                        	<?php endif; ?>
+	                        	<?php $expiry .= '<p>Note that if your subscription expires and you are on a Free plan, you can continue to use your app but with only the Free features.<br /><a target="_blank" href="http://weeverapps.com/pricing">See details of each plan</a>.</p>'; ?>
+	                        	<?php echo apply_filters( 'weever_subscription_expires_message', $expiry ); ?>
+                        	</td>
+                        	</tr>
+                        	
+                        	<?php endif; ?>
+                        	
+                        	<?php if ( $weeverapp->site_key ): ?>
+                        	<tr><td class="key" valign="top"><?php _e( 'Subscription Domain', 'weever' ); ?></td>
                         	<td>
 	                        	<?php if ( $weeverapp->primary_domain ): ?>
                         	    <?php echo sprintf( __( 'This key is linked to the domain <b>%s</b>', 'weever' ), $weeverapp->primary_domain ); ?>
                         	    <?php endif; ?>
                         	    <br />
-                        	    <a target="_blank" href="http://weeverapps.com"><?php echo __( 'Need a Weever Apps subscription key?' ); ?></a>
                         	</td>
                         	</tr>
+                        	<?php endif; ?>
                     	</table>
                 	</fieldset>
             	</div>

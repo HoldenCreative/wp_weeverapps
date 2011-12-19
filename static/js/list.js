@@ -47,7 +47,12 @@ jQuery(function() {
 															
 											var nonce = jQuery("input#nonce").val();		
 											var str = String(jQuery(this).sortable('toArray'));
-											var siteKey = jQuery("input#wx-site-key").val();
+											
+											// Clear any erroneous styling on the dragged element
+											if (jQuery(info.item).attr('rel') != 'unpublished')
+												jQuery(info.item).removeAttr('style');
+											else
+												jQuery(info.item).attr('style', 'float:right;');
 											
 											jQuery.ajax({
 											   type: "POST",

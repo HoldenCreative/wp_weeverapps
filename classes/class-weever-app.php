@@ -52,6 +52,7 @@ class WeeverApp {
             $this->_data['domain'] = get_option( 'weever_domain', '' );
             $this->_data['tier'] = get_option( 'weever_tier', 0 ); // Payment tier 0-basic 1-pro
             $this->_data['loadspinner'] = '';
+            $this->_data['expiry'] = false;
 
             $this->_data['tabs'] = array();
 
@@ -72,6 +73,7 @@ class WeeverApp {
             $this->_data['loaded'] = true;
         } catch ( Exception $e ) {
             $this->_data['loaded'] = false;
+            $this->_data['error_message'] = $e->getMessage();
         }
     }
 
@@ -140,7 +142,7 @@ class WeeverApp {
 
         	// Try to decode the result
             $state = json_decode($result);
-
+            
         	if ( "Site key missing or invalid." == $result ) {
         	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
             } else {
@@ -157,6 +159,7 @@ class WeeverApp {
                 $this->_data['tier'] = $state->results->config->tier;
                 $this->_data['loadspinner'] = $state->results->config->label->loadspinner;
                 $this->_data['google_analytics'] = ( $state->results->config->analytics ? $state->results->config->analytics->code : '' );
+                $this->_data['expiry'] = $state->results->config->expiry;
 
                 // Cache the primary_domain, domain and tier value for the redirection url creation
                 update_option( 'weever_primary_domain', $this->_data['primary_domain'] );
@@ -416,51 +419,53 @@ class WeeverApp {
         update_option( 'weever_api_key', $this->_data['site_key'] );
         update_option( 'weever_staging_mode', $this->_data['staging_mode'] );
 
-        // Mobile settings
-        foreach ( $this->get_device_option_names() as $option ) {
-            update_option( 'weever_device_option_'.$option, $this->_data[$option] );
+        if ( $this->_data['site_key'] ) {
+	        // Mobile settings
+	        foreach ( $this->get_device_option_names() as $option ) {
+	            update_option( 'weever_device_option_'.$option, $this->_data[$option] );
+	        }
+	        update_option( 'weever_granular_devices', $this->_data['granular'] );
+	
+	        // Build the devices listing
+	        $devices = array();
+	        if ( $this->granular ) {
+	            foreach ( $this->get_granular_device_option_names() as $option ) {
+	                if ( $this->$option )
+	                    $devices[] = $option;
+	            }
+	        } else {
+	            foreach ( $this->get_standard_device_option_names() as $option ) {
+	                if ( $this->$option )
+	                    $devices[] = $option;
+	            }
+	        }
+	        $devices = implode( ",", $devices );
+	
+		    $postdata = array(
+					'title' => $this->title,
+		            'titlebar_title' => $this->titlebar_title,
+					'devices' => $devices,
+					'ecosystem' => $this->ecosystem,
+					'app_enabled' => $this->app_enabled,
+					'domain' => $this->domain,
+		    		'loadspinner' => $this->loadspinner,
+					'google_analytics' => $this->google_analytics,
+					'app' => 'ajax',
+					'cms' => 'wordpress',
+					'm' => "edit_config",
+					);
+	
+			$result = WeeverHelper::send_to_weever_server($postdata);
+	
+			if ( "1" != $result )
+			    throw new Exception( __( 'Error saving config: ', 'weever' ) . $result );
+	
+			if ( array_key_exists( 'site_key', $this->_changed ) ) {
+				// Make sure this site key has been upgraded
+				$this->upgrade_site_key();
+			}
         }
-        update_option( 'weever_granular_devices', $this->_data['granular'] );
-
-        // Build the devices listing
-        $devices = array();
-        if ( $this->granular ) {
-            foreach ( $this->get_granular_device_option_names() as $option ) {
-                if ( $this->$option )
-                    $devices[] = $option;
-            }
-        } else {
-            foreach ( $this->get_standard_device_option_names() as $option ) {
-                if ( $this->$option )
-                    $devices[] = $option;
-            }
-        }
-        $devices = implode( ",", $devices );
-
-	    $postdata = array(
-				'title' => $this->title,
-	            'titlebar_title' => $this->titlebar_title,
-				'devices' => $devices,
-				'ecosystem' => $this->ecosystem,
-				'app_enabled' => $this->app_enabled,
-				'domain' => $this->domain,
-	    		'loadspinner' => $this->loadspinner,
-				'google_analytics' => $this->google_analytics,
-				'app' => 'ajax',
-				'cms' => 'wordpress',
-				'm' => "edit_config",
-				);
-
-		$result = WeeverHelper::send_to_weever_server($postdata);
-
-		if ( "1" != $result )
-		    throw new Exception( __( 'Error saving config' ) );
-
-		if ( array_key_exists( 'site_key', $this->_changed ) ) {
-			// Make sure this site key has been upgraded
-			$this->upgrade_site_key();
-		}
-
+        
 		// Reset the changed array
 		$this->_changed = array();
 

@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps - Mobile Web Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry 
-Version: 1.3.6
+Version: 1.3.10
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -79,15 +79,21 @@ if ( is_admin() ) {
     add_action( 'wp_ajax_ajaxUpdateTabSettings', array( 'WeeverController', 'ajaxUpdateTabSettings' ) );
 }
 
-function weever_activate() {
-	// Call the upgrade function to make sure this key is up to date
-	$weeverapp = new WeeverApp( false );
-
-	if ( $weeverapp->site_key )
-		$weeverapp->upgrade_site_key();
+function weever_update() {
+	$db_version = get_option( 'weever_db_version', '' );
+	
+	if ( WeeverConst::VERSION != $db_version ) {
+		// Call the upgrade function to make sure this key is up to date
+		$weeverapp = new WeeverApp( false );
+	
+		if ( $weeverapp->site_key )
+			$weeverapp->upgrade_site_key();
+		
+		update_option( 'weever_db_version', WeeverConst::VERSION );
+	}
 }
 
-register_activation_hook( __FILE__, 'weever_activate' );
+add_action('init', 'weever_update', 1);
 
 function weever_init() {
     // Initialize the session
