@@ -8,7 +8,7 @@
     $feed = new R3SChannelMap;
     
     $feed->count = $wp_query->post_count;
-    /*
+    
     $start = get_query_var( 'start' );
     $limit = get_query_var( 'limit' );
     $limit = is_numeric( $limit ) ? $limit : 15;
@@ -22,11 +22,11 @@
     	$args .= '&showposts='.($limit+1);
     
     if ( is_numeric( $start ) )
-    	$args .= '&offset='.$start;
+    	$args .= '&offset='.( $start + 1 );
     
     // Modify the query for pagination
     $wp_query->query( $args );
-    */
+    
 	$feed->thisPage = 1; //$page;
 	$feed->lastPage = 1; //ceil( $feed->count / $limit );
 	$feed->language = get_locale();
