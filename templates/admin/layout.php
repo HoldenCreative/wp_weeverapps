@@ -67,7 +67,6 @@
 </div>
 
 
-
 	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content">
 		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
 			<li class="ui-state-default<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
@@ -92,20 +91,18 @@
     
     
     <fieldset class='adminForm'>
-                	<legend><?php echo __('Private QR Code for Testing Your App'); ?></legend>
+                	<legend><?php echo __('<strong>Scan This Code</strong> to Test Your App'); ?></legend>
 
      	<?php
         	$weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER;
         	?>
             <img src="<?php echo $weeverapp->qr_code_private; ?>"  class="wx-qr-imgprev" />
 
+            <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.  You can scan it each time you make a change to see how your app looks.' ); ?><br />
 
-
-            <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.' ); ?><br />
-    		<?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
-
-    		<p><?php echo __( 'Additional but <em>imperfect</em> ways to test your app: Use a webkit browser like Google Chrome or Safari, or try the Apple iPhone&trade; simulator.' ); ?></p>
-                </fieldset>
+    		<p><?php echo __( 'You can also test using <strong>Google Chrome</strong>, <strong>Safari</strong> or the <strong>Apple iOS Simulator</strong> using this link: ' ); ?></p>
+    		<a href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
+    		</fieldset>
     
     
     
@@ -120,10 +117,13 @@
 
 				<?php $weever_qr_link = (strpos($weeverapp->primary_domain, 'http://') === false ? 'http://' . $weeverapp->primary_domain : $weeverapp->primary_domain); ?>
                 
-                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?><br /><?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>">
-				<?php echo $weever_qr_link; ?></a></p>
+                <p><?php echo __( 'Share this public QR code to promote your Weever app!' ); ?></p>
                 
     			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
+    			
+                <?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>">
+				<?php echo $weever_qr_link; ?></a></p>
+    			
 
     
     	<?php else: ?>

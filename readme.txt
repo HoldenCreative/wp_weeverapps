@@ -89,6 +89,10 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.3.10 =
+* Improved handling for blogs with large amounts of content
+* Improved support tab
+
 = 1.3.8 =
 * Additional photo feed options
 * Ability to add photo to contact along with miscellaneous information (such as hours of operation)
@@ -138,6 +142,10 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.10 =
+* Improved handling for blogs with large amounts of content
+* Improved support tab
 
 = 1.3.8 =
 * Additional photo feed options
