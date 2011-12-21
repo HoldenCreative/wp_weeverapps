@@ -16,6 +16,7 @@
 			?></option>
 			<?php endforeach; ?>
 			<option value="s"><?php echo __( 'From a Search Term', 'weever' ); ?></option>
+			<!-- <option value="weever-cmsfeed"><?php echo __( 'From another R3S feed (Advanced)', 'weever' ); ?></option> -->
 		</select>
 		
 		<label for="wx-select-directory"><a target="_blank" href="http://weeverapps.zendesk.com/entries/20673217-what-is-the-directory-tab-for">Learn More About the Directory Tab</a></label>
@@ -46,6 +47,11 @@
 		<div id="wx-add-directory-s-item" class="wx-directory-item-choose">
     		<input type='text' value='' id='wx-add-directory-s-input' class='wx-input wx-directory-input' name='s' placeholder='<?php echo __( 'Search Term', 'weever' ); ?>' />
     		<label for='wx-add-directory-s-input' id='wx-add-directory-s-input-label' class='wx-directory-label'><?php echo __( 'Search Term Description', 'weever' ); ?></label>
+		</div>
+
+		<div id="wx-add-directory-weever-cmsfeed-item" class="wx-directory-item-choose">
+    		<input type='text' value='' id='wx-add-directory-weever-cmsfeed-input' class='wx-input wx-directory-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
+    		<label for='wx-add-directory-weever-cmsfeed-input' id='wx-add-directory-weever-cmsfeed-input-label' class='wx-directory-label'><?php echo __( 'R3S Feed - <a target="_blank" href="http://developers.weeverapps.com/R3S_Specifications">Details</a>', 'weever' ); ?></label>
 		</div>
 		
 	</div>

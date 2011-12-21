@@ -147,7 +147,8 @@ jQuery(document).ready(function(){
   	  		rules: {
   	  	  		cms_feed: { required: true },
   	  			name: { required: true },
-  	  			"wx-select-page": { required: true }
+  	  			"wx-select-page": { required: true },
+  	  	  		"weever-cmsfeed": { required: true, url: true }
   	  	  	},
   	  		ignore: ":hidden",
   	  		// Prevent the error label from appearing at all
@@ -158,9 +159,13 @@ jQuery(document).ready(function(){
 
 			  	var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
 			  	var tabName = jQuery('input#wx-page-title').val();
-			  	var siteKey = jQuery("input#wx-site-key").val();
 				var nonce = jQuery("input#nonce").val();
-			  	
+
+	  			if (jQuery('#wx-select-page').val() == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+  	  			}
+				
 			  	jQuery.ajax({
 			  	   type: "POST",
 			  	   url: ajaxurl,
@@ -264,6 +269,7 @@ jQuery(document).ready(function(){
   	  	jQuery('#directoryAdminForm').validate({ 
   	  		rules: {
   	  	  		s: { required: true },
+  	  			'weever-cmsfeed': { required: true, url: true },
   	  			cms_feed: { required: true },
   	  			name: { required: true },
   	  			"wx-select-directory": { required: true }
@@ -286,7 +292,10 @@ jQuery(document).ready(function(){
   	  			if (optionVal == 's') {
   	  				// Search feed
   	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
-  	  			}
+	  			} else if (optionVal == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+	  			}
   	  			
   		  	  	jQuery.ajax({
   		  	  	   type: "POST",

@@ -261,16 +261,23 @@ jQuery(document).ready(function(){
 			jQuery('.wx-page-reveal').hide();
 			jQuery('.wx-dummy').show();
 		} else {
+			// Hide all items initially, then show the options for the selected one
+			jQuery('.wx-page-reveal').show();
+			jQuery('.wx-page-item-choose').hide();
 				
 			if(jQuery(this).val() == "menu") 
 			{
-				jQuery('#wx-add-page-menu-item').show();
+				jQuery('.wx-add-page-menu-item').show();
 				jQuery('#wx-add-page-menu-item-select').attr('name', 'cms_feed');
 				jQuery('#wx-add-page-menu-item-help').show();
-			}
-			
-			jQuery('.wx-page-reveal').show();
-		}		
+				jQuery('.wx-page-reveal').show();
+			} else if (jQuery(this).val() == "weever-cmsfeed") {
+				console.debug('#wx-add-page-' + jQuery(this).val() + '-item');
+				jQuery('#wx-add-page-' + jQuery(this).val() + '-item').show();
+				jQuery('#wx-add-page-' + jQuery(this).val() + '-item select').attr('name', 'cms_feed');
+				jQuery('.wx-page-reveal').show();
+			}			
+		}
 	});
 
 	jQuery('#wx-select-panel').change(function() {
