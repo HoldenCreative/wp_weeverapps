@@ -186,7 +186,15 @@
                 	var_dump($postdata);
                 }
                 
-            	$result = wp_remote_get( $server."?".http_build_query( $postdata ) );
+            	$result = wp_remote_post( $server, array( 
+	'method' => 'POST',
+	'timeout' => 45,
+	'redirection' => 5,
+	'httpversion' => '1.0',
+	'blocking' => true,
+	'headers' => array(),
+	'body' => $postdata,
+	'cookies' => array() ) );
 
             	if ( is_admin() and isset( $_SESSION[ 'weever_debug_mode' ] ) and $_SESSION[ 'weever_debug_mode' ] ) {
             		echo "...receiving...";

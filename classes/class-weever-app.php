@@ -536,7 +536,7 @@ class WeeverApp {
         $result = WeeverHelper::send_to_weever_server($postdata);
 
         if ( "" != $result )
-            throw new Exception( __( 'Error saving theme' ) );
+            throw new Exception( __( 'Error saving theme: ' . $result ) );
 	}
 
     /**
