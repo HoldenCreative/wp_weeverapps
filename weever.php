@@ -169,7 +169,7 @@ function weever_init() {
 	}
 }
 
-add_action( 'posts_selection', 'weever_init', 0 );
+add_action( 'template_redirect', 'weever_init', 0 );
 
 /**
  * Add a link to the settings page from the plugins listing page
