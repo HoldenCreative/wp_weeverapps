@@ -52,6 +52,18 @@
                         	<td class="key hasTip" title="<?php echo __( "This name is used for visitors who <b>install</b> your app to their homescreen, and appears underneath the app's icon.", 'weever' ); ?>"><?php echo __( 'App Installation Name' ); ?></td>
                         	<td><input type="text" name="title" maxlength="10" style="width:90px;" value="<?php echo htmlentities($weeverapp->title, ENT_QUOTES, "UTF-8"); ?>" class="required" /></td>
                     	</tr>
+				
+						<tr><td class="key hasTip"><?php echo __( 'Attempt to Show Prompt to Install App', 'weever' ); ?></td>
+							<td>
+								<select name="install_prompt">
+									<option value="0"><?php echo __( 'NO', 'weever' ); ?></option>
+									<option value="1" <?php echo ($weeverapp->launch->install_prompt ? "selected='selected'":""); ?>><?php echo __( 'YES', 'weever' ); ?></option>
+								</select>
+								
+								<p style="width: 500px;">If enabled, users will be prompted to install the app to their home screen, if the device supports it and if they are not already using the installed version.</p>
+							</td>
+						</tr>
+						                    	
                 	</table>
                 	
                 	<p class="wx-theme-submithelp">NOTE: You can further customize the look of your content by copying templates/weever-content-single.php from the Weever Apps plugin directory into your current theme directory, or copy to weever-content-single-{posttype}.php to customize only certain post types.</p>

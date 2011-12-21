@@ -59,6 +59,7 @@ require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-tab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-subtab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-launch.php';
 
 if ( is_admin() ) {
 	require_once dirname( __FILE__ ) . '/admin.php';

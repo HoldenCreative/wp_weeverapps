@@ -41,6 +41,7 @@ class WeeverApp {
 
             // Initial settings
             $this->_data['theme'] = new WeeverAppThemeStyles();
+			$this->_data['launch'] = new WeeverAppThemeLaunch();
             $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
             $this->_data['site_key'] = get_option( 'weever_api_key', '' );
             $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
@@ -197,6 +198,7 @@ class WeeverApp {
 					$this->theme->phone_load_live = $state->results->config->launchscreen->phone_load;
 					$this->theme->icon_live = $state->results->config->launchscreen->icon;
 					$this->theme->titlebar_logo_live = $state->results->config->launchscreen->titlebar_logo;
+					$this->launch->install_prompt = $state->results->config->launchscreen->install_prompt;
                 }
 
                 if ( ! function_exists( 'tab_order' ) ) {
@@ -527,6 +529,7 @@ class WeeverApp {
 
 		$postdata = array(
 			'theme' => json_encode( $this->theme ),
+			'launch' => json_encode( $this->launch ),
 			'app' => 'ajax',
 			'titlebar_title' => $this->titlebar_title,
 			'm' => "edit_theme",
