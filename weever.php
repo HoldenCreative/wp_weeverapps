@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps - Mobile Web Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry 
-Version: 1.3.11
+Version: 1.4
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -59,6 +59,7 @@ require_once dirname( __FILE__ ) . '/classes/class-weever-app.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-tab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-subtab.php';
 require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-styles.php';
+require_once dirname( __FILE__ ) . '/classes/class-weever-app-theme-launch.php';
 
 if ( is_admin() ) {
 	require_once dirname( __FILE__ ) . '/admin.php';
@@ -169,7 +170,7 @@ function weever_init() {
 	}
 }
 
-add_action( 'posts_selection', 'weever_init', 0 );
+add_action( 'template_redirect', 'weever_init', 0 );
 
 /**
  * Add a link to the settings page from the plugins listing page
@@ -197,13 +198,21 @@ function weever_create_r3sfeed() {
 
 add_action( 'do_feed_r3s', 'weever_create_r3sfeed', 10, 1 );
 
-function weever_no_limits_for_feed( $limit ) {
+function weever_no_limits_for_feed( $val ) {
     global $wp_query;
 
     if ( isset( $wp_query->query_vars['feed'] ) and ( $wp_query->query_vars['feed'] == 'r3s' ) )
-	    return '';
+    {
+    	// Default values
+    	$limit = ( is_numeric( get_query_var( 'limit' ) ) and get_query_var( 'limit' ) > 0 ) ? get_query_var( 'limit' ) : 15;
+    	$page = ( is_numeric( get_query_var( 'page' ) ) and get_query_var( 'page' ) > 0 ) ? get_query_var( 'page' ) : 1;
+    	$offset = ( is_numeric( get_query_var( 'start' ) ) and get_query_var( 'start' ) > 0 ) ? get_query_var( 'start' ) : ( ( $page - 1 ) * $limit );
+    	
+    	$val = 'LIMIT ' . $offset . ', ' . $limit;
+    	return $val;
+    }
 	else
-		return $limit;
+		return $val;
 }
 
 add_filter( 'post_limits', 'weever_no_limits_for_feed' );
@@ -330,6 +339,9 @@ function weever_app_request() {
 					include( get_template_directory() . '/weever.css' );
 
 				exit;
+				
+    		case 'weever_version':
+    			die( var_dump( WeeverConst::VERSION ) );
     	}
     }
 }

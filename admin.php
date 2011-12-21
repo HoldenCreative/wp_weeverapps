@@ -118,6 +118,7 @@ function weever_admin_page() {
 	                    $weeverapp->theme->titlebarSource = $_POST['titlebarSource'];
 	                    $weeverapp->theme->titlebarHtml = $_POST['titlebarHtml'];
 	                    $weeverapp->theme->template = $_POST['template'];
+	                    $weeverapp->launch->install_prompt = $_POST['install_prompt'];
 	                    $weeverapp->title = $_POST['title'];
 	                    $weeverapp->titlebar_title = $_POST['titlebar_title'];
 	
