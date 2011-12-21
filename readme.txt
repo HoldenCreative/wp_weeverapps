@@ -89,6 +89,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.3.11 =
+* Changing hook for content feed, Wordpress 3.3 users should upgrade
+
 = 1.3.10 =
 * Improved handling for blogs with large amounts of content
 * Improved support tab
@@ -142,6 +145,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3.11 =
+* Changing hook for content feed, Wordpress 3.3 users should upgrade
 
 = 1.3.10 =
 * Improved handling for blogs with large amounts of content
