@@ -191,6 +191,7 @@ add_filter( 'plugin_action_links_weever/weever.php', 'weever_settings_link' );
  */
 
 function weever_create_r3sfeed() {
+	status_header(200);
     load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
 }
 
@@ -312,6 +313,8 @@ function weever_app_request() {
 				else
 					$json = $output;
 
+				status_header(200);
+				
 				print_r($json);
 
 		        exit;

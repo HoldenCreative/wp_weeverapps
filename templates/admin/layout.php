@@ -101,7 +101,7 @@
             <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.  You can scan it each time you make a change to see how your app looks.' ); ?><br />
 
     		<p><?php echo __( 'You can also test using <strong>Google Chrome</strong>, <strong>Safari</strong> or the <strong>Apple iOS Simulator</strong> using this link: ' ); ?></p>
-    		<a href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
+    		<a target="_blank" href="<?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?>"><?php echo $weever_server; ?>app/<?php echo $weeverapp->primary_domain; ?></a></p>
     		</fieldset>
     
     
@@ -121,7 +121,7 @@
                 
     			<p><?php echo __( 'Suggested: Business cards, flyers and more!  Be creative!' ); ?></p>
     			
-                <?php echo __( 'QR Link:' ); ?> <a href="<?php echo $weever_qr_link; ?>">
+                <?php echo __( 'QR Link:' ); ?> <a target="_blank" href="<?php echo $weever_qr_link; ?>">
 				<?php echo $weever_qr_link; ?></a></p>
     			
 

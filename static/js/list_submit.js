@@ -197,6 +197,7 @@ jQuery(document).ready(function(){
   	  	jQuery('#blogAdminForm').validate({ 
   	  		rules: {
   	  	  		s: { required: true },
+  	  	  		"weever-cmsfeed": { required: true, url: true },
   	  			cms_feed: { required: true },
   	  			name: { required: true },
   	  			"wx-select-blog": { required: true }
@@ -218,6 +219,9 @@ jQuery(document).ready(function(){
   	  			if (optionVal == 's') {
   	  				// Search feed
   	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
+  	  			} else if (optionVal == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
   	  			} else if (optionVal == 'weever_all') {
   	  				// All posts - search term of nothing
   	  				cmsFeed = 'index.php?feed=r3s';
@@ -324,6 +328,7 @@ jQuery(document).ready(function(){
   	  		rules: {
   	  	  		s: { required: true },
   	  			cms_feed: { required: true },
+  	  			'weever-cmsfeed': { required: true, url: true },
   	  			name: { required: true },
   	  			"wx-select-map": { required: true }
   	  	  	},
@@ -344,7 +349,10 @@ jQuery(document).ready(function(){
   	  			if (optionVal == 's') {
   	  				// Search feed
   	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
-  	  			}
+	  			} else if (optionVal == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+	  			}
   	  			
   		  	  	jQuery.ajax({
   		  	  	   type: "POST",

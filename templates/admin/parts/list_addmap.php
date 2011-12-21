@@ -18,6 +18,7 @@
 			?></option>
 			<?php endforeach; ?>
 			<option value="s"><?php echo __( 'From a Search Term', 'weever' ); ?></option>
+			<option value="weever-cmsfeed"><?php echo __( 'From another R3S feed (Advanced)', 'weever' ); ?></option>
 		</select>
 	</div>
 
@@ -48,6 +49,13 @@
     		<label for='wx-add-map-s-input' id='wx-add-map-s-input-label' class='wx-map-label'><?php echo __( 'Search Term Description', 'weever' ); ?></label>
 		</div>
 
+
+		<div id="wx-add-map-weever-cmsfeed-item" class="wx-map-item-choose">
+    		<input type='text' value='' id='wx-add-map-weever-cmsfeed-input' class='wx-input wx-map-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
+    		<label for='wx-add-map-weever-cmsfeed-input' id='wx-add-map-weever-cmsfeed-input-label' class='wx-map-label'><?php echo __( 'R3S Feed Description', 'weever' ); ?></label>
+		</div>
+		
+		
 	</div>
 
 	<div class='wx-add-title wx-map-reveal wx-reveal'>
