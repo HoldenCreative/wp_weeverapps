@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 1.3.11
+Stable tag: 1.3.12
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -89,8 +89,11 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.3.12 =
+* Corrected an issue with limiting the length of the content feed
+
 = 1.3.11 =
-* Changing hook for content feed, Wordpress 3.3 users should upgrade
+* Changing hook for content feed
 
 = 1.3.10 =
 * Improved handling for blogs with large amounts of content
@@ -146,8 +149,11 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Upgrade Notice ==
 
+= 1.3.12 =
+* Corrected an issue with limiting the length of the content feed
+
 = 1.3.11 =
-* Changing hook for content feed, Wordpress 3.3 users should upgrade
+* Changing hook for content feed
 
 = 1.3.10 =
 * Improved handling for blogs with large amounts of content
