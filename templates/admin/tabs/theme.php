@@ -136,9 +136,6 @@
             		<fieldset>
                 		<legend><?php echo __( 'CSS Template Overrides' ); ?></legend>
 
-                		<div>
-                			<input type="checkbox" class="wx-check" value="1" id="wx-template-overrides" name="useCssOverride" <?php echo ($weeverapp->theme->useCssOverride == '1' ? "checked='checked'":""); ?> /><label for="wx-template-overrides" class="wx-check-label"><?php echo __( 'Use CSS Overrides' ); ?></label>
-                		</div>
 
 						<?php $weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER; ?>
 						<?php $private_url = $weever_server . 'app/' . $weeverapp->primary_domain; ?>
