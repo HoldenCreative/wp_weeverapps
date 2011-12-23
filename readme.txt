@@ -48,6 +48,7 @@ Additional Features:
 1. Install directly from the Wordpress admin (search for 'Weever Apps' from the Plugins / Add New page), or upload the entire contents of the zip to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Configure the plugin by entering your subscription key and the options you wish to use
+1.
 
 You can obtain a subscription key at http://weeverapps.com/
 
@@ -57,8 +58,9 @@ You can obtain a subscription key at http://weeverapps.com/
 
 1. Install the plugin
 1. Sign up for a subscription key at http://weeverapps.com/
-1. Add the content you wish to appear in your mobile app from the 'Weever Apps Configuration' screen
-1. Turn your app online by clicking the icon in the top-right corner in the 'Weever Apps Configuration' screen
+1. Add the content you wish to appear in your mobile app from the 'App Features + Navigation' screen - simply click a tab, select the content you want to appear, and submit!
+1. Scan the QR code with your phone to preview your app
+1. Turn your app online by clicking the icon in the top-right corner in the 'Weever Apps' screen
 
 That's it!
 
@@ -68,7 +70,7 @@ Yes!  You can customize your app in a number of ways:
 
 1. Upload custom graphics for the load screen, logo, and other images for the app in the 'Logo, Images and Theme' tab in the Weever Apps Configuration screen
 1. Copy templates/weever-content-single.php in the plugin folder to your current theme to customize the look of individual pages / posts, or rename to weever-content-single-{posttype}.php to override only for certain post types (standard or custom)
-1. Add custom CSS in the 'Logo, Images and Theme' tab, under 'Advanced Theme Settings'
+1. Add custom CSS in the 'Logo, Images and Theme' tab, under 'Advanced Theme Settings' or add a file named weever.css to your current Wordpress theme
 
 You can determine the appropriate CSS classes to use by loading your private app URL in a Webkit browser such as Google Chrome or Safari, and inspecting the appropriate HTML elements.
 
@@ -88,6 +90,12 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 10. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.4 =
+* Ability to prompt users to 'install' your app by adding a link to their homescreen
+* Added new 'About App' tab for pro users
+* Ability to take an [R3SFeed](http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for "R3S Feed") from another site and use it in your app
+* Titles are now properly hidden on the Welcome tab
 
 = 1.3.12 =
 * Corrected an issue with limiting the length of the content feed
@@ -148,6 +156,12 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.4 =
+* Ability to prompt users to 'install' your app by adding a link to their homescreen
+* Added new 'About App' tab for pro users
+* Ability to take an [R3SFeed](http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for "R3S Feed") from another site and use it in your app
+* Titles are now properly hidden on the Welcome tab
 
 = 1.3.12 =
 * Corrected an issue with limiting the length of the content feed
