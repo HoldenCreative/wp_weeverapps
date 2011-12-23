@@ -3,9 +3,11 @@
 ?>
 <div class="item-page">
 
+<?php if ( ! isset( $_GET['content_header'] ) or $_GET['content_header'] != 'false' ): ?>
 <h1 class="wx-article-title">
 	<?php echo get_the_title(); ?>
 </h1>
+<?php endif; ?>
 
 	<?php if ( ! is_page() ): ?>
 	
