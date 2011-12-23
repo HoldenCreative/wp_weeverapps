@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 1.4
+Stable tag: 1.4.1
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -92,6 +92,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 10. Add to launch screen ability with customizable icon
 
 == Changelog ==
+
+= 1.4.1 =
+* Minor fixes
 
 = 1.4 =
 * Ability to prompt users to 'install' your app by adding a link to their homescreen
