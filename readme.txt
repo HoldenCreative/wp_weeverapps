@@ -47,8 +47,10 @@ Additional Features:
 
 1. Install directly from the Wordpress admin (search for 'Weever Apps' from the Plugins / Add New page), or upload the entire contents of the zip to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Configure the plugin by entering your subscription key and the options you wish to use
-1.
+1. Configure the plugin by entering your subscription key
+1. Add the content you wish to appear in your mobile app from the 'App Features + Navigation' screen - simply click a tab, select the content you want to appear, and submit!
+1. Scan the QR code with your phone to preview your app
+1. Turn your app online by clicking the icon in the top-right corner in the 'Weever Apps' screen
 
 You can obtain a subscription key at http://weeverapps.com/
 
