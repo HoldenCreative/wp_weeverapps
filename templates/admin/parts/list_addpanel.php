@@ -5,6 +5,7 @@
 		<select id='wx-select-panel' name='wx-select-panel'>
 			<option value=''><?php echo __( '+ Add Site Page(s)', 'weever' ); ?></option>
 			<option value='menu'><?php echo __( 'Wordpress Page', 'weever' ); ?></option>
+			<option value="weever-cmsfeed"><?php echo __( 'From another R3S item (Advanced)', 'weever' ); ?></option>
 		</select>
 	</div>
 	
@@ -17,12 +18,17 @@
 	</div>
 
 	<div class='wx-add-item-value wx-panel-reveal wx-reveal'>
-		<select id="wx-add-panel-menu-item-select" class="wx-panel-feed-select" name="cms_feed">
+		<select id="wx-add-panel-menu-item-select" class="wx-panel-feed-select wx-panel-item-choose" name="cms_feed">
 			<option value=""><?php echo __( '(Choose a Content Item)', 'weever' ); ?></option>
 			<?php foreach ( get_pages() as $page ): ?>
 			<option value="<?php echo WeeverHelper::get_page_link_relative( $page ); ?>"><?php echo $page->post_title; ?></option>
 			<?php endforeach; ?>
 		</select>
+		
+		<div id="wx-add-panel-weever-cmsfeed-item" class="wx-panel-item-choose">
+    		<input type='text' value='' id='wx-add-panel-weever-cmsfeed-input' class='wx-input wx-panel-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
+    		<label for='wx-add-panel-weever-cmsfeed-input' id='wx-add-panel-weever-cmsfeed-input-label' class='wx-panel-label'><?php echo __( 'R3S Item - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
+		</div>
 	</div>
 	
 	<div class='wx-add-title wx-panel-reveal wx-reveal'>

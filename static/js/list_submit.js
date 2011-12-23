@@ -97,7 +97,8 @@ jQuery(document).ready(function(){
   	  		rules: {
   	  	  		cms_feed: { required: true },
   	  			name: { required: true },
-  	  			"wx-select-panel": { required: true }
+  	  			"wx-select-panel": { required: true },
+  	  	  		"weever-cmsfeed": { required: true, url: true }
   	  	  	},
   	  		ignore: ":hidden",
   	  		// Prevent the error label from appearing at all
@@ -109,6 +110,11 @@ jQuery(document).ready(function(){
 			  	var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
 			  	var tabName = jQuery('input#wx-panel-title').val();
 				var nonce = jQuery("input#nonce").val();
+				
+	  			if (jQuery('#wx-select-panel').val() == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+  	  			}
 			  	
 			  	jQuery.ajax({
 			  	   type: "POST",
@@ -195,6 +201,63 @@ jQuery(document).ready(function(){
   	  		}
   	  	});
 	});
+	
+
+	jQuery('input#wx-aboutapp-submit').click(function(e) {
+  
+  	  	jQuery('#aboutappAdminForm').validate({ 
+  	  		rules: {
+  	  	  		cms_feed: { required: true },
+  	  			name: { required: true },
+  	  			"wx-select-aboutapp": { required: true },
+  	  	  		"weever-cmsfeed": { required: true, url: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+	  	  	
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+
+			  	var cmsFeed = jQuery("select[name=cms_feed]:visible").val();
+			  	var tabName = jQuery('input#wx-page-title').val();
+				var nonce = jQuery("input#nonce").val();
+
+	  			if (jQuery('#wx-select-aboutapp').val() == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+  	  			}
+				
+			  	jQuery.ajax({
+			  	   type: "POST",
+			  	   url: ajaxurl,
+			  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+			  		   name: tabName,
+			  		   type: 'aboutapp',
+			  		   component: 'aboutapp',
+			  		   component_behaviour: 'leaf',
+			  		   published: '1',
+			  		   cms_feed: cmsFeed,
+			  		   nonce: nonce
+			  	   },
+  		  	  	   success: function(msg){
+    		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+    		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+    		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#aboutappTab";
+    		  	  	     	document.location.reload(true);
+    		  	  	   },
+    		  	  	   error: function(v,msg){
+     		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+    		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+    		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+    		  	  	   }
+			  	 });
+  	  		}
+  	  	});
+	});
+	
 	
 	jQuery('input#wx-blog-submit').click(function(e) {
 

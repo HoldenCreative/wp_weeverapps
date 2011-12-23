@@ -52,7 +52,7 @@
 
 		<div id="wx-add-map-weever-cmsfeed-item" class="wx-map-item-choose">
     		<input type='text' value='' id='wx-add-map-weever-cmsfeed-input' class='wx-input wx-map-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
-    		<label for='wx-add-map-weever-cmsfeed-input' id='wx-add-map-weever-cmsfeed-input-label' class='wx-map-label'><?php echo __( 'R3S Feed - <a target="_blank" href="http://developers.weeverapps.com/R3S_Specifications">Details</a>', 'weever' ); ?></label>
+    		<label for='wx-add-map-weever-cmsfeed-input' id='wx-add-map-weever-cmsfeed-input-label' class='wx-map-label'><?php echo __( 'R3S Feed - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
 		</div>
 		
 		

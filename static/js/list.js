@@ -41,6 +41,14 @@ jQuery(function() {
 	
 	});
 
+	jQuery("#listTabsSortable li a").click(function() {
+		item = jQuery(this).parent('li:first');
+		if (item.attr('rel') != 'unpublished')
+			item.removeAttr('style');
+		else
+			item.attr('style', 'float:right;');
+	});
+	
 	jQuery("#listTabsSortable").sortable({ 
 										axis: "x",
 										update: function(event, info) {

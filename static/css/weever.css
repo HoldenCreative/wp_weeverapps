@@ -94,6 +94,7 @@ legend {
     color: #333333;
 }
 
+.ui-tabs .ui-tabs-nav li a { padding: .5em .65em }
 
 /* App Manager Tabs */
 
@@ -159,7 +160,7 @@ ul#listTabsSortable {
 .ui-tabs .ui-tabs-nav li {
     float: left;
     list-style: none outside none;
-    margin: 0 .25em 0 0;
+    margin: 0 .15em 0 0;
     padding: 0;
     position: relative;
     top: 0;

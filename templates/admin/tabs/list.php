@@ -110,6 +110,13 @@ $tabsUnpublished = 0;
 				<input type="hidden" id="wx-panel-animate-duration" value="<?php echo $row->var->animation->duration; ?>" />
 				<input type="hidden" id="wx-panel-timeout" value="<?php echo $row->var->animation->timeout; ?>" />
 				<input type="hidden" id="wx-panel-tab-id" value="<?php echo $row->id; ?>" />
+			<?php elseif ( 'aboutapp' == $row->component ): ?>
+				| <span class="edit"><a href="#" id="wx-select-aboutapp-settings" class="wx-nav-settings" title="<?php echo $row->component; ?>"><?php echo __( 'Advanced Settings', 'weever' ); ?></a></span>
+				<input type="hidden" id="wx-aboutapp-headers" value="<?php echo $row->var->content_header; ?>" />
+				<input type="hidden" id="wx-aboutapp-animate" value="<?php echo $row->var->animation->type; ?>" />
+				<input type="hidden" id="wx-aboutapp-animate-duration" value="<?php echo $row->var->animation->duration; ?>" />
+				<input type="hidden" id="wx-aboutapp-timeout" value="<?php echo $row->var->animation->timeout; ?>" />
+				<input type="hidden" id="wx-aboutapp-tab-id" value="<?php echo $row->id; ?>" />
 			<?php elseif ( 'map' == $row->component ): ?>
 				| <span class="edit"><a href="#" id="wx-select-map-settings" class="wx-nav-settings" title="<?php echo $row->component; ?>"><?php echo __( 'Settings', 'weever' ); ?></a></span>
 	
