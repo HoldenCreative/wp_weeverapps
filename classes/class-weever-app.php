@@ -158,7 +158,7 @@ class WeeverApp {
                 $this->_data['ecosystem'] = $state->results->config->ecosystem;
                 $this->_data['primary_domain'] = $state->results->config->primary_domain;
                 $this->_data['tier'] = $state->results->config->tier;
-                $this->_data['loadspinner'] = $state->results->config->label->loadspinner;
+                $this->_data['loadspinner'] = ( $state->results->config->label ? $state->results->config->label->loadspinner : '' );
                 $this->_data['google_analytics'] = ( $state->results->config->analytics ? $state->results->config->analytics->code : '' );
                 $this->_data['expiry'] = $state->results->config->expiry;
 
