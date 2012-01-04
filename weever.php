@@ -116,6 +116,19 @@ function weever_init() {
 	$weeverapp = new WeeverApp( false );
 	if ( $weeverapp->site_key && $weeverapp->app_enabled && $weeverapp->primary_domain )
 	{
+		// Handle the full param and skipping mobile detection
+		$full = get_query_var( 'full' );
+		if ( $full != '' ) { 
+			if ( $full == '0' and isset( $_SESSION['ignore_mobile'] ) )
+				unset( $_SESSION['ignore_mobile'] );
+			
+			if ( $full == '1' )
+				$_SESSION['ignore_mobile'] = '1';
+		}
+		
+		if ( isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
+			return;
+		
 	    // Run the mobile checks
 		$uagent_obj = new WeeverMdetect();
 
@@ -361,6 +374,7 @@ function weever_query_vars($vars) {
 
     // For including a callback function for R3S feed/document
     $vars[] = 'callback';
+    $vars[] = 'full';
     
     return $vars;
 }
