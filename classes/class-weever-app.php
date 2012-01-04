@@ -532,6 +532,7 @@ class WeeverApp {
 			'launch' => json_encode( $this->launch ),
 			'app' => 'ajax',
 			'titlebar_title' => $this->titlebar_title,
+			'title' => $this->title,
 			'm' => "edit_theme",
 			'cms' => 'wordpress',
 			);
