@@ -142,6 +142,7 @@ function weever_desktop_print_scripts() {
 	$url = weever_get_redirect_url();
 	
 	// TODO: Add in full=0...
+	// TODO: Just give the current url with full=0?
 	
 	wp_localize_script('weever-desktop', 'WDesktop',
 			array(
@@ -222,7 +223,12 @@ function weever_init() {
 		// Finally, redirect
 		$url = weever_get_redirect_url( $weeverapp );
 
-		header( 'Location: ' . $url );
+		if ( ! headers_sent( $filename, $linenum ) ) {
+			header( 'Location: ' . $url );
+		} else {
+			echo "<!-- Headers sent by $filename (line $linenum) --> ";
+			die('<a href="'.$url.'">View our mobile web app - click here</a>');
+		}
 
 		die();
 	}
