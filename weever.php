@@ -96,6 +96,60 @@ function weever_update() {
 
 add_action('init', 'weever_update', 1);
 
+/**
+ * Function to load and show bar along the bottom if we're viewing in a mobile browser
+ */
+/*
+function weever_desktop_init() {
+	wp_register_script( 'weever-desktop', plugins_url( 'static/js/weever-desktop.js' ), array( 'jquery' ), WeeverConst::VERSION, true );		
+}
+
+add_action('init', 'weever_desktop_init');
+*/
+function weever_get_redirect_url( $weeverapp = false ) {
+	if ( $weeverapp === false )
+		$weeverapp = new WeeverApp( false );
+	
+	// Pass through the app url
+	$request_uri = $_SERVER['REQUEST_URI'];
+	
+	$request_uri = str_replace( "?full=0", "", $request_uri );
+	$request_uri = str_replace( "&full=0", "", $request_uri );
+	
+	if ( $request_uri && $request_uri != 'index.php' && $request_uri != '/' )
+		$exturl = '?exturl=' . $request_uri;
+	else
+		$exturl = "";
+	
+	// Redirect either to the app page or their own domain
+	// TODO: Check the tier is 1 also?
+	if ( $weeverapp->domain ) {
+		$url = 'http://' . $weeverapp->domain . $exturl;
+	} else {
+		$url = 'http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl;
+	}
+	
+	return $url;
+}
+
+function weever_desktop_print_scripts() {
+	$weeverapp = new WeeverApp( false );
+	
+	wp_register_script( 'weever-desktop', WEEVER_PLUGIN_URL . 'static/js/weever-desktop.js', array( 'jquery' ), WeeverConst::VERSION, true );
+	
+	wp_enqueue_script('weever-desktop');
+	
+	$url = weever_get_redirect_url();
+	
+	// TODO: Add in full=0...
+	
+	wp_localize_script('weever-desktop', 'WDesktop',
+			array(
+				'url' => weever_get_redirect_url(),						
+			)
+	);
+}
+
 function weever_init() {
     // Initialize the session
     if ( ! session_id() && !is_admin() )
@@ -126,9 +180,6 @@ function weever_init() {
 				$_SESSION['ignore_mobile'] = '1';
 		}
 		
-		if ( isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
-			return;
-		
 	    // Run the mobile checks
 		$uagent_obj = new WeeverMdetect();
 
@@ -154,28 +205,22 @@ function weever_init() {
 			}
 		}
 
+		// Show bar along the bottom if mobile device but we're not redirecting
+		if ( $weever_app_redirect === true and isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
+		{
+			add_action( 'wp_print_scripts', 'weever_desktop_print_scripts' );
+		}
+
+		if ( isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
+			return;
+		
 		if ( $weever_app_redirect === false ) {
 			$_SESSION['ignore_mobile'] = '1';
 			return;
 		}
 
-		$request_uri = $_SERVER['REQUEST_URI'];
-
-		$request_uri = str_replace( "?full=0", "", $request_uri );
-		$request_uri = str_replace( "&full=0", "", $request_uri );
-
-		if ( $request_uri && $request_uri != 'index.php' && $request_uri != '/' )
-			$exturl = '?exturl=' . $request_uri;
-		else
-			$exturl = "";
-
-        // Redirect either to the app page or their own domain
-        // TODO: Check the tier is 1 also?
-		if ( $weeverapp->domain ) {
-			$url = 'http://' . $weeverapp->domain . $exturl;
-		} else {
-			$url = 'http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl;
-		}
+		// Finally, redirect
+		$url = weever_get_redirect_url( $weeverapp );
 
 		header( 'Location: ' . $url );
 
