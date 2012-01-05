@@ -132,21 +132,40 @@ function weever_get_redirect_url( $weeverapp = false ) {
 	return $url;
 }
 
+// http://www.webcheatsheet.com/PHP/get_current_page_url.php
+function weever_get_current_url() {
+	$page_url = 'http';
+	if ( isset( $_SERVER['HTTPS'] ) and 'on' == $_SERVER['HTTPS'] )
+		$page_url .= "s";
+	$page_url .= "://";
+	if ( isset( $_SERVER['SERVER_PORT'] ) and '80' != $_SERVER['SERVER_PORT'] ) {
+		$page_url .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+	} else {
+		$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+	}
+	return $page_url;
+}
+
 function weever_desktop_print_scripts() {
 	$weeverapp = new WeeverApp( false );
 	
 	wp_register_script( 'weever-desktop', WEEVER_PLUGIN_URL . 'static/js/weever-desktop.js', array( 'jquery' ), WeeverConst::VERSION, true );
-	
 	wp_enqueue_script('weever-desktop');
 	
-	$url = weever_get_redirect_url();
+	$url = weever_get_current_url();
 	
-	// TODO: Add in full=0...
-	// TODO: Just give the current url with full=0?
+	// Replace full param
+	$params = array();
+	$query = parse_url( $url, PHP_URL_QUERY );
+	parse_str( $query, $params );
+	if ( isset( $params['full'] ) )
+		unset( $params['full'] );
+	$params['full'] = 0;
+	$url = preg_replace( '/\?.*/', '', $url ) . '?' . http_build_query( $params );
 	
 	wp_localize_script('weever-desktop', 'WDesktop',
 			array(
-				'url' => weever_get_redirect_url(),						
+				'url' => $url,						
 			)
 	);
 }
@@ -207,8 +226,7 @@ function weever_init() {
 		}
 
 		// Show bar along the bottom if mobile device but we're not redirecting
-		if ( $weever_app_redirect === true and isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
-		{
+		if ( $weever_app_redirect === true and isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' ) {
 			add_action( 'wp_print_scripts', 'weever_desktop_print_scripts' );
 		}
 
