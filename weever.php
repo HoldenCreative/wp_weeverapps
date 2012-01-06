@@ -401,9 +401,9 @@ function weever_app_request() {
 													"<iframe title=\"YouTube video player\" width=\"160\" height=\"130\"", $jsonHtml->html );
 
 				// Add full=1 to the end of all links
-                $jsonHtml->html = preg_replace( '#(href)=("|\')http(.*)(?)([^\2]*)\2#', '$1=$2http$3$4$5&full=1$2', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '#(href)=("|\')http([^?\2]+)(\?+)(.*)\2#', '$1=$2http$3$4$5&full=1$2', $jsonHtml->html );
                 //$jsonHtml->html = preg_replace( '#(href)=("|\')http(.*)(?)([^("|\')]*)\2#', '$1=$2http$3$4$5&full=1$2', $jsonHtml->html );
-                $jsonHtml->html = preg_replace( '#(href)=("|\')http([^?\2]*)\2#', '$1=$2http$3?full=1$2', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '#(href)=("|\')http([^?\2]+)\2#', '$1=$2http$3?full=1$2', $jsonHtml->html );
                 
 				$jsonOutput = new jsonOutput;
 				$jsonOutput->results[] = $jsonHtml;
