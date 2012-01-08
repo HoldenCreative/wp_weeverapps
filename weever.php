@@ -363,7 +363,7 @@ function weever_app_request() {
 				$jsonHtml->html =  ob_get_clean();
 				$jsonHtml->image = null;
 
-				$html = SimpleHTMLDomHelper::str_get_html( $jsonHtml->html );
+				$html = WeeverSimpleHTMLDomHelper::str_get_html( $jsonHtml->html );
 
 				foreach ( @$html->find('img') as $vv )
 				{

@@ -23,13 +23,11 @@
 	$feed->url = str_replace("&feed=r3s","",$feed->url);
 	
 	while ( have_posts() ) {
-	//while ( $wp_query->have_posts() ) {
-	    //$wp_query->the_post();
 	    the_post();
 
 		$image = null;
 
-		$html = SimpleHTMLDomHelper::str_get_html(get_the_content());
+		$html = WeeverSimpleHTMLDomHelper::str_get_html(get_the_content());
 
 		foreach ( @$html->find('img') as $vv )
 		{
