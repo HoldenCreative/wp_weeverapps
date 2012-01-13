@@ -121,6 +121,7 @@ class WeeverMdetect
    var $deviceBBTour = 'blackberry96'; //Tour
    var $deviceBBCurve = 'blackberry89'; //Curve2
    var $deviceBBTorch = 'blackberry 98'; //Torch
+   var $deviceBBBoldTouch = 'blackberry 99'; // Bold Touch
    var $deviceBBPlaybook = 'playbook'; //PlayBook tablet
 
    var $devicePalm = 'palm';
@@ -513,7 +514,8 @@ function DetectAppleTVTwo()
    function DetectBlackBerryTouch()
    {
        if ((stripos($this->useragent, $this->deviceBBStorm) > -1) ||
-                (stripos($this->useragent, $this->deviceBBTorch) > -1))
+			(stripos($this->useragent, $this->deviceBBTorch) > -1) ||
+			(stripos($this->useragent, $this->deviceBBBoldTouch) > -1)) // ###
          return $this->true;
        else
          return $this->false;
