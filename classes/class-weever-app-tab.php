@@ -144,7 +144,7 @@ class WeeverAppTab {
 
     public function & get_subtab($id) {
         foreach ( $this->_subtabs as $subtab ) {
-            if ( $subtab->id == $id or $subtab->cms_feed == $id )
+            if ( $subtab->id == $id )
                 return $subtab;
         }
 
