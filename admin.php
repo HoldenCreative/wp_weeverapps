@@ -364,7 +364,7 @@ add_action('admin_head-post.php', 'weever_post_admin_head');
 
 function weever_save_postdata($post_id) {
 	// Check authorization, permissions, autosave, etc
-	if ( ! wp_verify_nonce( $_POST['weever_nonce'], plugin_basename( __FILE__ ) ) )
+	if ( ! isset( $_POST['weever_nonce'] ) or ! wp_verify_nonce( $_POST['weever_nonce'], plugin_basename( __FILE__ ) ) )
 		return $post_id;
 
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )

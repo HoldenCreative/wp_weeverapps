@@ -500,7 +500,7 @@ jQuery(document).ready(function(){
 		jQuery('.wx-dummy').hide();
 	});
 
-	jQuery('#wx-select-map-settings').click(function() {
+	jQuery('#wx-select-map-settings').click(function(event) {
 		
 		event.preventDefault();
 		
@@ -589,7 +589,7 @@ jQuery(document).ready(function(){
 	});
 	
 
-	jQuery('#wx-select-aboutapp-settings').click(function() {
+	jQuery('#wx-select-aboutapp-settings').click(function(event) {
 		
 		event.preventDefault();
 		
@@ -742,7 +742,7 @@ jQuery(document).ready(function(){
 		
 	});	
 	
-	jQuery('#wx-select-panel-settings').click(function() {
+	jQuery('#wx-select-panel-settings').click(function(event) {
 		
 		event.preventDefault();
 		

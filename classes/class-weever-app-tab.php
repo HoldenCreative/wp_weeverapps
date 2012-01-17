@@ -33,6 +33,7 @@ class WeeverAppTab {
         $this->_data['published'] = $published;
         $this->_data['ordering'] = $ordering;
         $this->_data['var'] = json_decode($var);
+		$this->_data['cms_feed'] = false;
 
         if ( ! $icon_image ) {
             // Load the default if found
@@ -146,6 +147,8 @@ class WeeverAppTab {
             if ( $subtab->id == $id )
                 return $subtab;
         }
+
+		return false;
     }
 
     /**
