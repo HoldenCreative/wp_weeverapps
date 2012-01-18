@@ -402,11 +402,11 @@ function weever_app_request() {
 
 				// Add full=1 to the end of all links
 				// With query param
-                $jsonHtml->html = preg_replace( '#(href)="http([^?"]*)\?([^?"]*)"#', '$1="http$2?$3&full=1"', $jsonHtml->html );
-                $jsonHtml->html = preg_replace( '#(href)=\'http([^?\']*)\?([^?\']*)"#', '$1=\'http$2?$3&full=1\'', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)="http([^?"]*)\?([^?"#]*)(#)?([^?"#]*)"`i', '$1="http$2?$3&full=1$4$5"', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)=\'http([^?\']*)\?([^?\']*)(#)?([^?\'#]*)\'`i', '$1=\'http$2?$3&full=1$4$5\'', $jsonHtml->html );
 				// Without query param
-                $jsonHtml->html = preg_replace( '#(href)="http([^?"]*)"#', '$1="http$2?full=1"', $jsonHtml->html );
-                $jsonHtml->html = preg_replace( '#(href)=\'http([^?\']*)\'#', '$1=\'http$2?full=1\'', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)="http([^?"#]*)(#)?([^?"#]*)"`i', '$1="http$2?full=1$3$4"', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)=\'http([^?\']*)(#)?([^?\'#]*)\'`i', '$1=\'http$2?full=1$3$4\'', $jsonHtml->html );
                 //$jsonHtml->html = preg_replace( '#(href)=("|\')http(.*)(?)([^("|\')]*)\2#', '$1=$2http$3$4$5&full=1$2', $jsonHtml->html );
                 //$jsonHtml->html = preg_replace( '#(href)=("|\')http([^\2]+)(\2)#', '$1=$2http$3?full=1$2', $jsonHtml->html );
                 
