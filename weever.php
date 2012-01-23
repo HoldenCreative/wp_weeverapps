@@ -275,7 +275,14 @@ add_filter( 'plugin_action_links_weever/weever.php', 'weever_settings_link' );
 
 function weever_create_r3sfeed() {
 	status_header(200);
-    load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
+	
+	if ( file_exists( get_stylesheet_directory() . '/feed-r3s.php' ) ) {
+		load_template( get_stylesheet_directory() . '/feed-r3s.php' );
+	} elseif ( file_exists( get_template_directory() . '/feed-r3s.php' ) ) {
+		load_template( get_template_directory() . '/feed-r3s.php' );
+	} else {
+		load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
+	}
 }
 
 add_action( 'do_feed_r3s', 'weever_create_r3sfeed', 10, 1 );
