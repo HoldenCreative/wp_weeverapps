@@ -93,6 +93,11 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.5 =
+* Adds support for flipping between the app and the full desktop site, when an internal link is clicked
+* Fixes issue with Firefox and Advanced Settings
+* Ability to override the R3S feed by copying templates/feed-r3s.php into your current Wordpress theme  
+
 = 1.4.1 =
 * Minor fixes
 
@@ -161,6 +166,11 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5 =
+* Adds support for flipping between the app and the full desktop site, when an internal link is clicked
+* Fixes issue with Firefox and Advanced Settings
+* Ability to override the R3S feed by copying templates/feed-r3s.php into your current Wordpress theme  
 
 = 1.4 =
 * Ability to prompt users to 'install' your app by adding a link to their homescreen
