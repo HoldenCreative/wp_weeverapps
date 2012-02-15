@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5
+Stable tag: 1.5.1
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -166,6 +166,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+* Fixes issue with quotes in tab names
 
 = 1.5 =
 * Adds support for flipping between the app and the full desktop site, when an internal link is clicked
