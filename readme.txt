@@ -93,6 +93,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixes issue with quotes in tab names
+
 = 1.5 =
 * Adds support for flipping between the app and the full desktop site, when an internal link is clicked
 * Fixes issue with Firefox and Advanced Settings
