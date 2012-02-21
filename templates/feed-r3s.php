@@ -107,6 +107,18 @@
 		    }
 		}
 
+		if ( isset( $_GET['geotag'] ) and $_GET['geotag'] = 'true' and ( get_query_var( 'latitude' ) or get_query_var('longitude') ) ) {
+			// Calculate the distance
+			$lat1 = floatval( $feedItem->geo[0]['latitude'] );
+			$lon1 = floatval( $feedItem->geo[0]['longitude'] );
+			
+			$lat2 = floatval( get_query_var( 'latitude' ) );
+			$lon2 = floatval( get_query_var( 'longitude' ) );
+			
+			// Calculate in km for now
+			$feedItem->geo[0]['distance'] = ( 6378.0 * pi() * sqrt( ( $lat2 - $lat1 ) * ( $lat2 - $lat1 ) + cos( $lat2 / 57.29578 ) * cos( $lat1 / 57.29578 ) * ( $lon2 - $lon1 ) * ( $lon2 - $lon1 ) ) / 180 );				
+		}
+		
 		$feed->items[] = $feedItem;
 	}
 

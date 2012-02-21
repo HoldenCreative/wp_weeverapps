@@ -467,6 +467,10 @@ function weever_query_vars($vars) {
     $vars[] = 'callback';
     $vars[] = 'full';
     
+    // Distance
+    $vars[] = 'latitude';
+    $vars[] = 'longitude';
+    
     return $vars;
 }
 
