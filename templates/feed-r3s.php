@@ -72,7 +72,7 @@
     			if ( $geo_on ) {
     				$geo_latitude = get_post_meta( get_the_ID(), 'geo_latitude', true );
     				$geo_longitude = get_post_meta( get_the_ID(), 'geo_longitude', true );
-    				$geo_address = get_post_meta( get_the_ID(), 'geo_address', true );
+    				$geo_address = get_post_meta( get_the_ID(), 'weever_map_address', true ) ? get_post_meta( get_the_ID(), 'weever_map_address', true ) : get_post_meta( get_the_ID(), 'geo_address', true );
 
     				$feedItem->geo[0]['latitude'] = $geo_latitude;
     				$feedItem->geo[0]['longitude'] = $geo_longitude;
@@ -86,10 +86,10 @@
 
 		    if ( ! isset( $feedItem->geo[0] ) and get_post_meta( get_the_ID(), '_wp_geo_latitude', true ) != '' and get_post_meta( get_the_ID(), '_wp_geo_longitude', true ) != '' ) {
 		        // WP Geo
-				$feedItem->geo[0]['latitude'] = get_post_meta( get_the_ID(), '_wp_geo_latitude', true );
+		    	$feedItem->geo[0]['latitude'] = get_post_meta( get_the_ID(), '_wp_geo_latitude', true );
 				$feedItem->geo[0]['longitude'] = get_post_meta( get_the_ID(), '_wp_geo_longitude', true );
 				$feedItem->geo[0]['altitude'] = '';
-				$feedItem->geo[0]['address'] = '';
+				$feedItem->geo[0]['address'] = get_post_meta( get_the_ID(), 'weever_map_address', true );
 				$feedItem->geo[0]['label'] = '';
 				$feedItem->geo[0]['marker'] = get_post_meta( get_the_ID(), 'weever_map_marker', true );
 				$feedItem->geo[0]['kml'] = get_post_meta( get_the_ID(), 'weever_kml', true );
@@ -100,7 +100,7 @@
 		    	$feedItem->geo[0]['latitude'] = '';
 			    $feedItem->geo[0]['longitude'] = '';
 			    $feedItem->geo[0]['altitude'] = '';
-			    $feedItem->geo[0]['address'] = '';
+			    $feedItem->geo[0]['address'] = get_post_meta( get_the_ID(), 'weever_map_address', true );
 			    $feedItem->geo[0]['label'] = '';
 			    $feedItem->geo[0]['marker'] = get_post_meta( get_the_ID(), 'weever_map_marker', true );
 			    $feedItem->geo[0]['kml'] = get_post_meta( get_the_ID(), 'weever_kml', true );

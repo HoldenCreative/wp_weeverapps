@@ -330,6 +330,11 @@ function weever_inner_custom_box() {
 			wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 	echo '
 	<p>
+		<label for="weever-kml">Display Address:</label>
+		<input type="text" id="weever-map-address" name="weever-map-address" value="">
+	</p>
+	
+	<p>
 		<label for="weever-kml">KML File URL:</label>
 		<input type="text" id="weever-kml" name="weever-kml" value="">
 	</p>
@@ -352,6 +357,7 @@ function weever_post_admin_head() {
 	<script type="text/javascript">
 	jQuery(function() {
 		jQuery(document).ready(function() {
+			jQuery('#weever-map-address').val('<?php echo esc_js(get_post_meta($post_id, 'weever_map_address', true)); ?>');
 			jQuery('#weever-kml').val('<?php echo esc_js(get_post_meta($post_id, 'weever_kml', true)); ?>');
 			jQuery('#weever-map-marker').val('<?php echo esc_js(get_post_meta($post_id, 'weever_map_marker', true)); ?>');
 		});
@@ -379,6 +385,7 @@ function weever_save_postdata($post_id) {
 			return $post_id;
 	}
 
+	update_post_meta($post_id, 'weever_map_address', $_POST['weever-map-address']);
 	update_post_meta($post_id, 'weever_kml', $_POST['weever-kml']);
 	update_post_meta($post_id, 'weever_map_marker', $_POST['weever-map-marker']);
 
