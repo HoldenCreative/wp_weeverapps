@@ -95,6 +95,7 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 = 1.5.1 =
 * Fixes issue with quotes in tab names
+* Removed author name and date from default template, copy templates/weever-content-single.php to your current theme folder to modify
 
 = 1.5 =
 * Adds support for flipping between the app and the full desktop site, when an internal link is clicked
