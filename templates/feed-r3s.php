@@ -97,7 +97,7 @@
 
 		    if ( ! isset( $feedItem->geo[0] ) and get_post_meta( get_the_ID(), 'weever_kml', true ) != '' ) {
 		    	// Just KML
-			    $feedItem->geo[0]['latitude'] = '';
+		    	$feedItem->geo[0]['latitude'] = '';
 			    $feedItem->geo[0]['longitude'] = '';
 			    $feedItem->geo[0]['altitude'] = '';
 			    $feedItem->geo[0]['address'] = '';
@@ -116,12 +116,25 @@
 			$lon2 = floatval( get_query_var( 'longitude' ) );
 			
 			// Calculate in km for now
-			$feedItem->geo[0]['distance'] = ( 6378.0 * pi() * sqrt( ( $lat2 - $lat1 ) * ( $lat2 - $lat1 ) + cos( $lat2 / 57.29578 ) * cos( $lat1 / 57.29578 ) * ( $lon2 - $lon1 ) * ( $lon2 - $lon1 ) ) / 180 );				
+			$feedItem->geo[0]['distance'] = (string)( 6378.0 * pi() * sqrt( ( $lat2 - $lat1 ) * ( $lat2 - $lat1 ) + cos( $lat2 / 57.29578 ) * cos( $lat1 / 57.29578 ) * ( $lon2 - $lon1 ) * ( $lon2 - $lon1 ) ) / 180 );				
 		}
 		
 		$feed->items[] = $feedItem;
 	}
 
+	function weever_distance_sort($a, $b)
+	{
+		if ($a->geo[0]['distance'] == $b->geo[0]['distance']) {
+			return 0;
+		}
+		
+		return ($a->geo[0]['distance'] < $b->geo[0]['distance']) ? -1 : 1;
+	}
+	
+	if ( isset( $_GET['geotag'] ) and $_GET['geotag'] = 'true' and ( get_query_var( 'latitude' ) or get_query_var('longitude') ) ) {
+		usort( $feed->items, 'weever_distance_sort' );
+	}	
+	
 	// Set the MIME type for JSON output.
 	header('Content-type: application/json');
 	header('Cache-Control: no-cache, must-revalidate');
