@@ -1,7 +1,7 @@
 <form action='' method='post' name='contactAdminForm' id='contactAdminForm'>
 
 <div class="wx-add-ui formspacer">
-	<!--
+	<?php /*
 	<div class='wx-add-item-contact wx-add-item-dropdown'>
 		<select id='wx-select-contact' name='wx-select-contact'>
 			<option value=''><?php echo __( '+ Add Contact Information', 'weever' ); ?></option>
@@ -29,7 +29,7 @@
         <label for='wx-add-contact-wordpress-select'><?php echo __( 'Wordpress Users', 'weever' ); ?></label>
 
 	</div>
-	-->
+	*/ ?>
 	<div class='wx-add-contact'>
     	<div class='wx-add-title'>
     		<label for='wx-contact-title'><?php echo __( 'Name', 'weever' ); ?></label>
