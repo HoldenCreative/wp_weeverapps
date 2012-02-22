@@ -145,7 +145,7 @@
 
 
     	
-	<div style="text-align:center;clear:both; margin-top:24px;">
+	<div id="weever-plugin-footer" style="text-align:center;clear:both; margin-top:24px;">
 		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?>
 		<?php echo WeeverConst::COPYRIGHT_YEAR; ?> <a target="_blank" href="<?php echo WeeverConst::COPYRIGHT_URL; ?>"><?php echo WeeverConst::COPYRIGHT; ?></a><br />
 		Released <?php echo WeeverConst::RELEASE_DATE; ?> under <a target="_blank" href="<?php echo WeeverConst::LICENSE_URL; ?>"><?php echo WeeverConst::LICENSE; ?></a>.
