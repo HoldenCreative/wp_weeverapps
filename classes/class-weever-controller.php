@@ -23,6 +23,8 @@
 class WeeverController {
 
 	public static function ajaxSaveTabName() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -50,8 +52,9 @@ class WeeverController {
     }
 
     
-	public static function ajaxUpdateTabSettings()
-	{
+	public static function ajaxUpdateTabSettings() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -99,11 +102,13 @@ class WeeverController {
     
     
 	public static function ajaxSubtabDelete() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
             if ( $weeverapp->loaded ) {
-                $tab = $weeverapp->get_tab( $_POST['id'] );
+                $tab = $weeverapp->get_tab( intval( $_POST['id'] ) );
                 if ( $tab !== false ) {
                     try {
                         // Delete this tab
@@ -126,6 +131,8 @@ class WeeverController {
 	}
 
 	public function ajaxPublishSelected() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -148,6 +155,8 @@ class WeeverController {
     }
 
 	public function ajaxUnpublishSelected() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -170,6 +179,8 @@ class WeeverController {
     }
 
 	public function ajaxDeleteSelected() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -192,11 +203,13 @@ class WeeverController {
 	}
 
 	public function ajaxTabPublish() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
             if ( $weeverapp->loaded ) {
-                $tab = $weeverapp->get_tab( $_POST['id'] );
+                $tab = $weeverapp->get_tab( intval( $_POST['id'] ) );
                 if ( $tab !== false ) {
                     try {
                         // Toggle the publish flag based on the status given
@@ -222,6 +235,8 @@ class WeeverController {
     }
 
 	public function ajaxSaveTabIcon() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -251,8 +266,9 @@ class WeeverController {
         die();
     }
 
-	public function ajaxSaveTabOrder()
-	{
+	public function ajaxSaveTabOrder() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -275,6 +291,8 @@ class WeeverController {
 
 
 	public function ajaxSaveSubtabOrder() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -300,8 +318,9 @@ class WeeverController {
         die();
 	}
 
-	public function ajaxToggleAppStatus()
-	{
+	public function ajaxToggleAppStatus() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -329,6 +348,8 @@ class WeeverController {
 	}
 
 	public function ajaxSaveNewTab() {
+		weever_remove_wp_magic_quotes();
+		
 		if ( ! empty($_POST) and check_ajax_referer( 'weever-list-js', 'nonce' ) ) {
             $weeverapp = new WeeverApp();
 
@@ -355,115 +376,4 @@ class WeeverController {
 
         die();
 	}
-
-	public function save()
-	{
-
-		$option = JRequest::getCmd('option');
-		JRequest::checkToken() or jexit('Invalid Token');
-
-		if(JRequest::getVar('view') == "config")
-		{
-			comWeeverHelper::saveConfig();
-			$this->setRedirect('index.php?option=com_weever&view=config&task=config',JText::_('WEEVER_CONFIG_SAVED'));
-			return;
-		}
-
-		if(JRequest::getVar('view') == "theme")
-		{
-			comWeeverHelper::saveTheme();
-			$this->setRedirect('index.php?option=com_weever&view=theme&task=theme',JText::_('WEEVER_THEME_SAVED'));
-			return;
-		}
-
-		if(JRequest::getVar('view') == "account")
-		{
-			if(JRequest::getVar('staging') == 1)
-			{
-				$row =& JTable::getInstance('WeeverConfig', 'Table');
-				$row->load(7);
-				$row->setting = 1;
-				$row->store();
-			}
-
-			comWeeverHelper::saveAccount();
-
-			if(JRequest::getVar("install"))
-				$this->setRedirect('index.php?option=com_weever&view=list',JText::_('WEEVER_ACCOUNT_SAVED'));
-			else
-				$this->setRedirect('index.php?option=com_weever&view=account&task=account',JText::_('WEEVER_ACCOUNT_SAVED'));
-
-			return;
-		}
-
-		$tab_id = null;
-		$hash = md5(microtime() . JRequest::getVar('name'));
-
-		$type = JRequest::getWord('type', 'tab');
-
-		$type_method = "_build".$type."FeedURL";
-
-		// ### check later
-		if(JRequest::getVar('view' == "contact"))
-		{
-			comWeeverHelper::getContactInfo();
-		}
-
-		$rss = comWeeverHelper::$type_method();
-
-		if($rss === false)
-		{
-			$this->setRedirect('index.php?option=com_weever&view=tab&task=add&layout='.JRequest::getVar('layout', 'blog'), JText::_('WEEVER_MUST_CHOOSE_OPTION_FROM_DROPDOWN'), 'error');
-			return;
-		}
-
-
-		JRequest::setVar('rss', $rss, 'post');
-		JRequest::setVar('hash', $hash, 'post');
-		JRequest::setVar('weever_server_response', comWeeverHelper::pushSettingsToCloud(), 'post');
-
-		if(JRequest::getVar('weever_server_response') == "Site key missing or invalid.")
-		{
-			$this->setRedirect('index.php?option='.$option.'&view=list', JText::_('WEEVER_SERVER_ERROR').JRequest::getVar('weever_server_response'), 'notice');
-			return;
-		}
-
-		$row =& JTable::getInstance('weever','Table');
-
-
-		if(!$row->bind(JRequest::get('post')))
-		{
-			JError::raiseError(500, $row->getError());
-		}
-
-		$row->ordering = $row->ordering + 0.1; // for later reorder to sort well if it is in collision with another.
-
-		if(!$row->store())
-		{
-			JError::raiseError(500, $row->getError());
-		}
-
-		comWeeverHelper::reorderTabs($type);
-		comWeeverHelper::pushLocalIdToCloud($row->id, JRequest::getVar('hash'), JRequest::getVar('site_key'));
-
-		if(JRequest::getVar('weever_server_response'))
-		{
-
-			if($this->getTask() == 'apply')
-				$this->setRedirect('index.php?option='.$option.'&view=tab&task=edit'.'&cid[]='.$row->id,
-					JText::_('WEEVER_SERVER_RESPONSE').JRequest::getVar('weever_server_response'));
-			else
-				$this->setRedirect('index.php?option='.$option.'&view=list',JText::_('WEEVER_SERVER_RESPONSE').JRequest::getVar('weever_server_response'));
-
-			return;
-		}
-		else
-		{
-			$this->setRedirect('index.php?option='.$option.'&view=list',JText::_('WEEVER_ERROR_COULD_NOT_CONNECT_TO_SERVER'), 'error');
-
-			return;
-		}
-
-	}
-
 }

@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps - Mobile Web Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry 
-Version: 1.4.2
+Version: 1.5.1
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -96,6 +96,80 @@ function weever_update() {
 
 add_action('init', 'weever_update', 1);
 
+/**
+ * Function to load and show bar along the bottom if we're viewing in a mobile browser
+ */
+/*
+function weever_desktop_init() {
+	wp_register_script( 'weever-desktop', plugins_url( 'static/js/weever-desktop.js' ), array( 'jquery' ), WeeverConst::VERSION, true );		
+}
+
+add_action('init', 'weever_desktop_init');
+*/
+function weever_get_redirect_url( $weeverapp = false ) {
+	if ( $weeverapp === false )
+		$weeverapp = new WeeverApp( false );
+	
+	// Pass through the app url
+	$request_uri = $_SERVER['REQUEST_URI'];
+	
+	$request_uri = str_replace( "?full=0", "", $request_uri );
+	$request_uri = str_replace( "&full=0", "", $request_uri );
+	
+	if ( $request_uri && $request_uri != 'index.php' && $request_uri != '/' )
+		$exturl = '?exturl=' . $request_uri;
+	else
+		$exturl = "";
+	
+	// Redirect either to the app page or their own domain
+	// TODO: Check the tier is 1 also?
+	if ( $weeverapp->domain ) {
+		$url = 'http://' . $weeverapp->domain . $exturl;
+	} else {
+		$url = 'http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl;
+	}
+	
+	return $url;
+}
+
+// http://www.webcheatsheet.com/PHP/get_current_page_url.php
+function weever_get_current_url() {
+	$page_url = 'http';
+	if ( isset( $_SERVER['HTTPS'] ) and 'on' == $_SERVER['HTTPS'] )
+		$page_url .= "s";
+	$page_url .= "://";
+	if ( isset( $_SERVER['SERVER_PORT'] ) and '80' != $_SERVER['SERVER_PORT'] ) {
+		$page_url .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+	} else {
+		$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+	}
+	return $page_url;
+}
+
+function weever_desktop_print_scripts() {
+	$weeverapp = new WeeverApp( false );
+	
+	wp_register_script( 'weever-desktop', WEEVER_PLUGIN_URL . 'static/js/weever-desktop.js', array( 'jquery' ), WeeverConst::VERSION, true );
+	wp_enqueue_script('weever-desktop');
+	
+	$url = weever_get_current_url();
+	
+	// Replace full param
+	$params = array();
+	$query = parse_url( $url, PHP_URL_QUERY );
+	parse_str( $query, $params );
+	if ( isset( $params['full'] ) )
+		unset( $params['full'] );
+	$params['full'] = 0;
+	$url = preg_replace( '/\?.*/', '', $url ) . '?' . http_build_query( $params );
+	
+	wp_localize_script('weever-desktop', 'WDesktop',
+			array(
+				'url' => $url,						
+			)
+	);
+}
+
 function weever_init() {
     // Initialize the session
     if ( ! session_id() && !is_admin() )
@@ -116,6 +190,16 @@ function weever_init() {
 	$weeverapp = new WeeverApp( false );
 	if ( $weeverapp->site_key && $weeverapp->app_enabled && $weeverapp->primary_domain )
 	{
+		// Handle the full param and skipping mobile detection
+		$full = get_query_var( 'full' );
+		if ( $full != '' ) { 
+			if ( $full == '0' and isset( $_SESSION['ignore_mobile'] ) )
+				unset( $_SESSION['ignore_mobile'] );
+			
+			if ( $full == '1' )
+				$_SESSION['ignore_mobile'] = '1';
+		}
+		
 	    // Run the mobile checks
 		$uagent_obj = new WeeverMdetect();
 
@@ -141,30 +225,28 @@ function weever_init() {
 			}
 		}
 
+		// Show bar along the bottom if mobile device but we're not redirecting
+		if ( $weever_app_redirect === true and isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' ) {
+			add_action( 'wp_print_scripts', 'weever_desktop_print_scripts' );
+		}
+
+		if ( isset( $_SESSION['ignore_mobile'] ) and $_SESSION['ignore_mobile'] == '1' )
+			return;
+		
 		if ( $weever_app_redirect === false ) {
 			$_SESSION['ignore_mobile'] = '1';
 			return;
 		}
 
-		$request_uri = $_SERVER['REQUEST_URI'];
+		// Finally, redirect
+		$url = weever_get_redirect_url( $weeverapp );
 
-		$request_uri = str_replace( "?full=0", "", $request_uri );
-		$request_uri = str_replace( "&full=0", "", $request_uri );
-
-		if ( $request_uri && $request_uri != 'index.php' && $request_uri != '/' )
-			$exturl = '?exturl=' . $request_uri;
-		else
-			$exturl = "";
-
-        // Redirect either to the app page or their own domain
-        // TODO: Check the tier is 1 also?
-		if ( $weeverapp->domain ) {
-			$url = 'http://' . $weeverapp->domain . $exturl;
+		if ( ! headers_sent( $filename, $linenum ) ) {
+			header( 'Location: ' . $url );
 		} else {
-			$url = 'http://weeverapp.com/app/' . $weeverapp->primary_domain . $exturl;
+			echo "<!-- Headers sent by $filename (line $linenum) --> ";
+			die('<a href="'.$url.'">View our mobile web app - click here</a>');
 		}
-
-		header( 'Location: ' . $url );
 
 		die();
 	}
@@ -193,7 +275,14 @@ add_filter( 'plugin_action_links_weever/weever.php', 'weever_settings_link' );
 
 function weever_create_r3sfeed() {
 	status_header(200);
-    load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
+	
+	if ( file_exists( get_stylesheet_directory() . '/feed-r3s.php' ) ) {
+		load_template( get_stylesheet_directory() . '/feed-r3s.php' );
+	} elseif ( file_exists( get_template_directory() . '/feed-r3s.php' ) ) {
+		load_template( get_template_directory() . '/feed-r3s.php' );
+	} else {
+		load_template( dirname( __FILE__ ) . '/templates/feed-r3s.php' );
+	}
 }
 
 add_action( 'do_feed_r3s', 'weever_create_r3sfeed', 10, 1 );
@@ -281,7 +370,7 @@ function weever_app_request() {
 				$jsonHtml->html =  ob_get_clean();
 				$jsonHtml->image = null;
 
-				$html = SimpleHTMLDomHelper::str_get_html( $jsonHtml->html );
+				$html = WeeverSimpleHTMLDomHelper::str_get_html( $jsonHtml->html );
 
 				foreach ( @$html->find('img') as $vv )
 				{
@@ -296,35 +385,50 @@ function weever_app_request() {
 					$jsonHtml->image = "";
 
 				// Mask external links so we leave only internal ones to play with.
-				$jsonHtml->html = str_replace("href=\"http://", "hrefmask=\"weever://", $jsonHtml->html);
+				$jsonHtml->html = str_replace( "href=\"http://", "hrefmask=\"weever://", $jsonHtml->html );
+				$jsonHtml->html = str_replace( "href='http://", "hrefmask='weever://", $jsonHtml->html );
 				
 				// For HTML5 compliance, we take out spare target="_blank" links just so we don't duplicate
-				$jsonHtml->html = str_replace("target=\"_blank\"", "", $jsonHtml->html);
-				$jsonHtml->html = str_replace("href=\"", "target=\"_blank\" href=\"", $jsonHtml->html);
+				$jsonHtml->html = str_replace( "target=\"_blank\"", "", $jsonHtml->html );
+				$jsonHtml->html = str_replace( "target='_blank'", "", $jsonHtml->html );
+				
+				//$jsonHtml->html = str_replace( "href=\"", "target=\"_blank\" href=\"", $jsonHtml->html );
 				//$jsonHtml->html = str_replace("src=\"/", "src=\"".get_site_url()."/", $jsonHtml->html);
 				//$jsonHtml->html = str_replace("src=\"images", "src=\"".get_site_url()."/images", $jsonHtml->html);
 
 				// Change all links to absolute vs. relative
 				// http://wintermute.com.au/bits/2005-09/php-relative-absolute-links/
-                $jsonHtml->html = preg_replace( '#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . get_site_url() . '/$2$3', $jsonHtml->html );
-
+                $jsonHtml->html = preg_replace( '#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . get_site_url() . '$2$3', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '#(href|src)=\'([^:\']*)(\'|(?:(?:%20|\s|\+)[^\']*\'))#', '$1=\'' . get_site_url() . '$2$3', $jsonHtml->html );
+                
 				// Restore external links, ensure target="_blank" applies
-				$jsonHtml->html = str_replace("hrefmask=\"weever://", "target=\"_blank\" href=\"http://", $jsonHtml->html);
-				$jsonHtml->html = str_replace("<iframe title=\"YouTube video player\" width=\"480\" height=\"390\"",
-													"<iframe title=\"YouTube video player\" width=\"160\" height=\"130\"", $jsonHtml->html);
+				$jsonHtml->html = str_replace( "hrefmask=\"weever://", "target=\"_blank\" href=\"http://", $jsonHtml->html);
+				$jsonHtml->html = str_replace( "hrefmask='weever://", "target=\"_blank\" href='http://", $jsonHtml->html);
+				$jsonHtml->html = str_replace( "<iframe title=\"YouTube video player\" width=\"480\" height=\"390\"",
+													"<iframe title=\"YouTube video player\" width=\"160\" height=\"130\"", $jsonHtml->html );
 
+				// Add full=1 to the end of all links
+				// With query param
+                $jsonHtml->html = preg_replace( '`(href)="http([^?"]*)\?([^?"#]*)(#)?([^?"#]*)"`i', '$1="http$2?$3&full=1$4$5"', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)=\'http([^?\']*)\?([^?\']*)(#)?([^?\'#]*)\'`i', '$1=\'http$2?$3&full=1$4$5\'', $jsonHtml->html );
+				// Without query param
+                $jsonHtml->html = preg_replace( '`(href)="http([^?"#]*)(#)?([^?"#]*)"`i', '$1="http$2?full=1$3$4"', $jsonHtml->html );
+                $jsonHtml->html = preg_replace( '`(href)=\'http([^?\']*)(#)?([^?\'#]*)\'`i', '$1=\'http$2?full=1$3$4\'', $jsonHtml->html );
+                //$jsonHtml->html = preg_replace( '#(href)=("|\')http(.*)(?)([^("|\')]*)\2#', '$1=$2http$3$4$5&full=1$2', $jsonHtml->html );
+                //$jsonHtml->html = preg_replace( '#(href)=("|\')http([^\2]+)(\2)#', '$1=$2http$3?full=1$2', $jsonHtml->html );
+                
 				$jsonOutput = new jsonOutput;
 				$jsonOutput->results[] = $jsonHtml;
-				$output = json_encode($jsonOutput);
+				$output = json_encode( $jsonOutput );
 
-				if($callback)
-					$json = $callback."(".$output.")";
+				if ( $callback )
+					$json = $callback . '(' . $output . ')';
 				else
 					$json = $output;
 
-				status_header(200);
+				status_header( 200 );
 				
-				print_r($json);
+				print_r( $json );
 
 		        exit;
 
@@ -361,6 +465,7 @@ function weever_query_vars($vars) {
 
     // For including a callback function for R3S feed/document
     $vars[] = 'callback';
+    $vars[] = 'full';
     
     return $vars;
 }

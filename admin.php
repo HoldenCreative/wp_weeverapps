@@ -133,7 +133,7 @@ function weever_admin_page() {
 	
 	    	    case 'weever-account':
 	    	        try {
-	                    $weeverapp->site_key = $_POST['site_key'];
+	                    $weeverapp->site_key = trim( $_POST['site_key'] );
 	
 	                    if ( isset( $_POST['stagingmode'] ) ) {
 	                        // Toggle staging mode
@@ -224,9 +224,10 @@ add_action( 'admin_init', 'weever_admin_init' );
  * Load styles needed for Weever Apps
  */
 function weever_page_styles_init() {
-	wp_register_style( 'weever.css', WEEVER_PLUGIN_URL . 'static/css/weever.css', array( 'jquery-ui.css', 'jquery-ui-new.css', 'thickbox' ), WeeverConst::VERSION );
+	wp_register_style( 'weever.css', WEEVER_PLUGIN_URL . 'static/css/weever.css', array( 'jquery-ui.css', 'jquery-ui-new.css', 'wp-jquery-ui-dialog', 'thickbox' ), WeeverConst::VERSION );
 	wp_register_style( 'jquery-ui.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-new.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui-new.css' );
+	//wp_register_style( 'jquery-ui-bootstrap.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui-1.8.16.custom.css', array( 'wp-jquery-ui-dialog' ) );
 	wp_register_style( 'jquery-impromptu.css', WEEVER_PLUGIN_URL . 'static/css/jquery-impromptu.css' );
 	wp_enqueue_style( 'jquery-ui.css' );
 	wp_enqueue_style( 'jquery-ui-new.css' );
@@ -245,7 +246,7 @@ function weever_page_scripts_init() {
     wp_register_script( 'jquery-validate.js', plugins_url( 'static/js/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );
     wp_enqueue_script( 'jquery-validate.js' );
 
-	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs', 'jquery-ui-sortable' ), WeeverConst::VERSION );
+	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-dialog' ), WeeverConst::VERSION );
 	wp_enqueue_script( 'weever.js' );
 	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
 

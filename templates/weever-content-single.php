@@ -9,18 +9,6 @@
 </h1>
 <?php endif; ?>
 
-	<?php if ( ! is_page() ): ?>
-	
-		<dd class="published">
-		<?php echo sprintf(__('Published: %s', 'weever'), get_the_time(get_option('date_format'))); ?>
-		</dd>
-	
-		<dd class="createdby">
-		<?php echo sprintf(esc_attr__('Written by: %s', 'weever'), get_the_author()); ?>
-		</dd>
-
-	<?php endif; ?>
-
 <p>
 <?php the_content(); ?>
 </p>

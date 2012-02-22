@@ -3,7 +3,7 @@
 final class WeeverConst
 {
 
-	const VERSION		= "1.4.2";
+	const VERSION		= "1.5.1";
 	const RELEASE_TYPE	= "";
 	const RELEASE_NAME	= "Allan Park";
 	const NAME			= "Weever Apps Administrator Component for Wordpress";

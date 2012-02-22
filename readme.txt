@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.4.2
+Stable tag: 1.5.1
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -93,6 +93,15 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixes issue with quotes in tab names
+* Removed author name and date from default template, copy templates/weever-content-single.php to your current theme folder to modify
+
+= 1.5 =
+* Adds support for flipping between the app and the full desktop site, when an internal link is clicked
+* Fixes issue with Firefox and Advanced Settings
+* Ability to override the R3S feed by copying templates/feed-r3s.php into your current Wordpress theme  
+
 = 1.4.1 =
 * Minor fixes
 
@@ -161,6 +170,14 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+* Fixes issue with quotes in tab names
+
+= 1.5 =
+* Adds support for flipping between the app and the full desktop site, when an internal link is clicked
+* Fixes issue with Firefox and Advanced Settings
+* Ability to override the R3S feed by copying templates/feed-r3s.php into your current Wordpress theme  
 
 = 1.4 =
 * Ability to prompt users to 'install' your app by adding a link to their homescreen

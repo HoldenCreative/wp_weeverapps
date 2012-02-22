@@ -53,13 +53,13 @@ define('HDOM_INFO_OUTER',   6);
 define('HDOM_INFO_ENDSPACE',7);
 
 
-class SimpleHTMLDomHelper {
+class WeeverSimpleHTMLDomHelper {
 
 // helper functions
 // -----------------------------------------------------------------------------
 // get html dom form file
 function file_get_html() {
-    $dom = new simple_html_dom;
+    $dom = new weever_simple_html_dom;
     $args = func_get_args();
     $dom->load(call_user_func_array('file_get_contents', $args), true);
     return $dom;
@@ -67,7 +67,7 @@ function file_get_html() {
 
 // get html dom form string
 function str_get_html($str, $lowercase=true) {
-    $dom = new simple_html_dom;
+    $dom = new weever_simple_html_dom;
     $dom->load($str, $lowercase);
     return $dom;
 }
@@ -90,7 +90,7 @@ function dump_html_tree($node, $show_attr=true, $deep=0) {
 
 // get dom form file (deprecated)
 function file_get_dom() {
-    $dom = new simple_html_dom;
+    $dom = new weever_simple_html_dom;
     $args = func_get_args();
     $dom->load(call_user_func_array('file_get_contents', $args), true);
     return $dom;
@@ -98,7 +98,7 @@ function file_get_dom() {
 
 // get dom form string (deprecated)
 function str_get_dom($str, $lowercase=true) {
-    $dom = new simple_html_dom;
+    $dom = new weever_simple_html_dom;
     $dom->load($str, $lowercase);
     return $dom;
 }
@@ -107,7 +107,7 @@ function str_get_dom($str, $lowercase=true) {
 
 // simple html dom node
 // -----------------------------------------------------------------------------
-class simple_html_dom_node {
+class weever_simple_html_dom_node {
     public $nodetype = HDOM_TYPE_TEXT;
     public $tag = 'text';
     public $attr = array();
@@ -505,7 +505,7 @@ class simple_html_dom_node {
 
 // simple html dom parser
 // -----------------------------------------------------------------------------
-class simple_html_dom {
+class weever_simple_html_dom {
     public $root = null;
     public $nodes = array();
     public $callback = null;
@@ -627,7 +627,7 @@ class simple_html_dom {
         $this->noise = array();
         $this->nodes = array();
         $this->lowercase = $lowercase;
-        $this->root = new simple_html_dom_node($this);
+        $this->root = new weever_simple_html_dom_node($this);
         $this->root->tag = 'root';
         $this->root->_[HDOM_INFO_BEGIN] = -1;
         $this->root->nodetype = HDOM_TYPE_ROOT;
@@ -643,7 +643,7 @@ class simple_html_dom {
             return $this->read_tag();
 
         // text
-        $node = new simple_html_dom_node($this);
+        $node = new weever_simple_html_dom_node($this);
         ++$this->cursor;
         $node->_[HDOM_INFO_TEXT] = $s;
         $this->link_nodes($node, false);
@@ -715,7 +715,7 @@ class simple_html_dom {
             return true;
         }
 
-        $node = new simple_html_dom_node($this);
+        $node = new weever_simple_html_dom_node($this);
         $node->_[HDOM_INFO_BEGIN] = $this->cursor;
         ++$this->cursor;
         $tag = $this->copy_until($this->token_slash);
@@ -879,7 +879,7 @@ class simple_html_dom {
 
     // as a text node
     protected function as_text_node($tag) {
-        $node = new simple_html_dom_node($this);
+        $node = new weever_simple_html_dom_node($this);
         ++$this->cursor;
         $node->_[HDOM_INFO_TEXT] = '</' . $tag . '>';
         $this->link_nodes($node, false);
