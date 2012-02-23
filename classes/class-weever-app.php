@@ -34,7 +34,7 @@ class WeeverApp {
      *
      * @return WeeverApp
      */
-    public function __construct( $load_from_server = true ) {
+    public function __construct( $load_from_server = true, $site_key = false ) {
         try {
             // Register the app with the helper class
             WeeverHelper::set_weeverapp($this);
@@ -43,7 +43,7 @@ class WeeverApp {
             $this->_data['theme'] = new WeeverAppThemeStyles();
 			$this->_data['launch'] = new WeeverAppThemeLaunch();
             $this->_data['app_enabled'] = get_option( 'weever_app_enabled', 0 );
-            $this->_data['site_key'] = get_option( 'weever_api_key', '' );
+            $this->_data['site_key'] = ( $site_key === false ? get_option( 'weever_api_key', '' ) : $site_key );
             $this->_data['staging_mode'] = get_option( 'weever_staging_mode', 0 );
             $this->_data['primary_domain'] = get_option( 'weever_primary_domain', '' );
             $this->_data['titlebar_title'] = '';
@@ -143,7 +143,7 @@ class WeeverApp {
 
         	// Try to decode the result
             $state = json_decode($result);
-            
+
         	if ( "Site key missing or invalid." == $result ) {
         	    throw new Exception( __( 'Weever Apps API key is not valid' ) );
             } else {
