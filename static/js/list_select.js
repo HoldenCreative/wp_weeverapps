@@ -347,6 +347,37 @@ jQuery(document).ready(function(){
 			jQuery('.wx-panel-reveal').show();
 		}		
 	});
+	
+	jQuery('#wx-select-proximity').change(function() {
+		
+		jQuery('.wx-title').attr('name','noname');
+		jQuery('#wx-proximity-title').attr('name','name');
+		jQuery('.wx-cms-feed-select').attr('name','noname');
+		jQuery('.wx-blog-help').hide();
+		jQuery('.wx-dummy').hide();
+		
+		// Hide all items initially, then show the options for the selected one
+		jQuery('.wx-proximity-item-choose').hide();
+		jQuery('.wx-proximity-item-choose select').attr('name', 'unnamed');
+		
+		if (jQuery(this).val() == "") {
+			jQuery('.wx-dummy').show();
+			jQuery('.wx-proximity-reveal').hide();
+		} else {
+			jQuery('#wx-add-proximity-' + jQuery(this).val() + '-item').show();
+			jQuery('#wx-add-proximity-' + jQuery(this).val() + '-item select').attr('name', 'proximity_cms_feed');
+			jQuery('.wx-proximity-reveal').show();
+		}	
+
+	});
+	
+	jQuery('.wx-proximity-item-select').change(function() {
+		if (jQuery(this).val() != "") {
+			jQuery('input#wx-proximity-title').val(jQuery('option:selected', this).text());
+		}
+	});
+		
+	
 	jQuery('#wx-select-map').change(function() {
 		
 		jQuery('.wx-title').attr('name','noname');
