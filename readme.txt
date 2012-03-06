@@ -4,7 +4,7 @@ Donate link: http://weeverapps.com/
 Tags: AJAX, android, apple, blackberry, weever, weaver, HTML5, iphone, ipod, mac, mobile, smartphone, theme, mobile, web app
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry - weeverapps.com
 
@@ -93,6 +93,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.5.2 =
+* Adds nearest tab, showing a proximity of map locations near you
+
 = 1.5.1 =
 * Fixes issue with quotes in tab names
 * Removed author name and date from default template, copy templates/weever-content-single.php to your current theme folder to modify
@@ -170,6 +173,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+* Adds nearest tab, showing a proximity of map locations near you
 
 = 1.5.1 =
 * Fixes issue with quotes in tab names
