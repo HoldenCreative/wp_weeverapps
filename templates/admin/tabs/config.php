@@ -60,6 +60,17 @@
 
                 	<table class="admintable">
                     	<tr>
+                        	<td class="key hasTip" title="<?php echo __( "Localize your app language and units", 'weever' ); ?>"><?php echo __( 'App Localization &amp; Language', 'weever' ); ?></td>
+                        	<td>
+                        		<select name="local">
+                        			<?php foreach ($weeverapp->locales as $local => $description): ?>
+                        			<option value="<?php echo $local; ?>" <?php if ( $local == $weeverapp->local or ( ! $weeverapp->local and $local == 'en-US' ) ) echo 'SELECTED'; ?>><?php echo esc_html($description); ?></option>
+                        			<?php endforeach; ?>
+                        		</select>
+                        	</td>
+                    	</tr>
+                	
+                    	<tr>
                         	<td class="key hasTip" title="<?php echo __( "Paste in your code from Google Analytics to track visitors to your app", 'weever' ); ?>"><?php echo __( 'Google Anayltics User-Agent (UA) Code', 'weever' ); ?></td>
                         	<td><input type="textbox" name="google_analytics" value="<?php echo $weeverapp->google_analytics; ?>" id="wx-google-analytics-input" placeholder="UA-XXXXXX-XX" /></td>
                     	</tr>

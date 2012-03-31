@@ -161,6 +161,7 @@ function weever_admin_page() {
 	                    $weeverapp->domain = ( isset( $_POST['domain'] ) ? $_POST['domain'] : '' );
 	                    $weeverapp->loadspinner = ( isset( $_POST['loadspinner'] ) ? $_POST['loadspinner'] : '' );
 	                    $weeverapp->granular = ( isset( $_POST['granular'] ) && $_POST['granular'] ) ? 1 : 0;
+	                    $weeverapp->local = ( isset( $_POST['local'] ) ? $_POST['local'] : '' );
 	                    $weeverapp->save();
 	                    add_settings_error('weever_config', 'weever_settings', __( 'Weever App settings saved', 'weever' ), 'updated');
 	    	        } catch (Exception $e) {
