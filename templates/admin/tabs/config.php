@@ -64,7 +64,7 @@
                         	<td>
                         		<select name="local">
                         			<?php foreach ($weeverapp->locales as $local => $description): ?>
-                        			<option value="<?php echo $local; ?>" <?php if ( $local == $weeverapp->local or ( ! $weeverapp->local and $local == 'en-US' ) ) echo 'SELECTED'; ?>><?php echo esc_html($description); ?></option>
+                        			<option value="<?php echo $local; ?>" <?php if ( $local == $weeverapp->local or ( ! $weeverapp->local and $local == 'en-CA' ) ) echo 'SELECTED'; ?>><?php echo esc_html($description); ?></option>
                         			<?php endforeach; ?>
                         		</select>
                         	</td>
