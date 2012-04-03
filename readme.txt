@@ -117,6 +117,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 
 == Changelog ==
 
+= 1.5.3 =
+* Add ability to change language and localization for the app
+
 = 1.5.2 =
 * Adds nearest tab, showing a proximity of map locations near you
 
@@ -197,6 +200,9 @@ Our support site - http://support.weeverapps.com/ - contains many more answers a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+* Add ability to change language and localization for the app
 
 = 1.5.2 =
 * Adds nearest tab, showing a proximity of map locations near you
