@@ -15,7 +15,7 @@
 
 
 <div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:0.85em; text-transform:uppercase;">
-			<a href="<?php echo admin_url( "admin.php?page=weever-list&quick-start-tour=1" ); ?>" id="wx-quick-start-guide">Quick Start Guide</a> &nbsp; | &nbsp; <a href="#" id="weever-preview-mobile">Preview</a> &nbsp; | &nbsp; <a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp;
+			<a href="<?php echo admin_url( "admin.php?page=weever-list&quick-start-tour=1" ); ?>" id="wx-quick-start-guide">Quick Tour</a> &nbsp; | &nbsp; <a href="#" id="weever-preview-mobile">Preview</a> &nbsp; | &nbsp; <a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp;
 
 
     <?php
