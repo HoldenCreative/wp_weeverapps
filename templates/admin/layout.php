@@ -14,8 +14,8 @@
 
 
 
-<div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:.75em; text-transform:uppercase;">
-			<a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp; | &nbsp; <a href="http://eepurl.com/fP-oD">Newsletter</a>
+<div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:0.85em; text-transform:uppercase;">
+			<a href="<?php echo admin_url( "admin.php?page=weever-list&quick-start-tour=1" ); ?>" id="wx-quick-start-guide">Quick Start Guide</a> &nbsp; | &nbsp; <a href="#" id="weever-preview-mobile">Preview</a> &nbsp; | &nbsp; <a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp;
 
 
     <?php
@@ -37,14 +37,14 @@
 	<span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
     <span id="wx-status-boldonline"><strong><?php echo __( 'online', 'weever' ); ?></strong></span>
     <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
-	<span id="wx-status-takeoffline"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=0" ); ?>"><?php echo __( 'Take App Offline', 'weever' ); ?></a></span>
+	<span id="wx-status-onoffline-link"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=0" ); ?>"><?php echo __( 'Take App Offline', 'weever' ); ?></a></span>
   </span>
     
   <span id="wx-app-status-offline" <?php echo $offlineSpan; ?>>
     <span id="wx-status-current"><?php echo __( 'Status &mdash; App is', 'weever' ); ?></span>
     <span id="wx-status-boldoffline"><strong><?php echo __( 'offline', 'weever' ); ?></strong></span>
     <span id="wx-status-current"><?php echo __( 'for mobile visitors &mdash;', 'weever' ); ?></span>
-	<span id="wx-status-turnonline"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=1" ); ?>"><?php echo __( 'Turn App Online', 'weever' ); ?></a></span>
+	<span id="wx-status-onoffline-link"><a href="<?php echo admin_url( "admin.php?page=$page&weever-app-enabled=1" ); ?>"><?php echo __( 'Turn App Online', 'weever' ); ?></a></span>
   </span>
 
 </span>
@@ -71,9 +71,9 @@
 		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
 			<li class="ui-state-default<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
-			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing + Pro Features', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>" id="wx-mobile-publishing-tab"><?php _e('Mobile Publishing + Pro Features', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
-			<li class="ui-state-default<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a id="wx-support-link" href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>
 		</ul>
 
 
@@ -90,13 +90,13 @@
 	<div>
     
     
-    <fieldset class='adminForm'>
+    <fieldset id="wx-scan-test-code" class='adminForm'>
                 	<legend><?php echo __('<strong>Scan This Code</strong> to Test Your App'); ?></legend>
 
      	<?php
         	$weever_server = $weeverapp->staging_mode ? WeeverConst::LIVE_STAGE : WeeverConst::LIVE_SERVER;
         	?>
-            <img src="<?php echo $weeverapp->qr_code_private; ?>"  class="wx-qr-imgprev" />
+            <img id="wx-scan-test-code-image" src="<?php echo $weeverapp->qr_code_private; ?>"  class="wx-qr-imgprev" />
 
             <p><?php echo __( 'Scan this private QR code to directly preview your Weever App.  You can scan it each time you make a change to see how your app looks.' ); ?><br />
 
@@ -143,8 +143,8 @@
 
 
 
-
-    	
+	<?php include( dirname( __FILE__ ) . '/preview-app.php' ); // Preview App iFrame ?>
+	
 	<div id="weever-plugin-footer" style="text-align:center;clear:both; margin-top:24px;">
 		<?php echo WeeverConst::NAME; ?> v<?php echo WeeverConst::VERSION; ?> <?php echo WeeverConst::RELEASE_TYPE; ?>
 		<?php echo WeeverConst::COPYRIGHT_YEAR; ?> <a target="_blank" href="<?php echo WeeverConst::COPYRIGHT_URL; ?>"><?php echo WeeverConst::COPYRIGHT; ?></a><br />

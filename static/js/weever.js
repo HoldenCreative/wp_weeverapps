@@ -22,6 +22,35 @@
 jQuery(document).ready(function() {
 	jQuery( "#tabs" ).tabs();
 	jQuery( "#toptabs li" ).hover(function(){jQuery(this).addClass('ui-state-hover');}, function(){jQuery(this).removeClass('ui-state-hover');});
+
+	// Dialogs
+    jQuery(".modal-content").each(function() {
+    	jQuery(this).dialog({                   
+	        'dialogClass'   : 'wp-dialog',           
+	        'modal'         : true,
+	        'autoOpen'      : false, 
+	        'closeOnEscape' : true,   
+	        'resizable'		: false,
+	        'buttons'       : {
+	            "Close": function() {
+	                jQuery(this).dialog('close');
+	            }
+	        }
+	    });			    	
+    });
+	
+    // Preview app
+    jQuery("#weever-preview-mobile").click(function(event) {
+        event.preventDefault();
+        
+        if (jQuery.browser.webkit) {
+	        jQuery('#preview-app-dialog-frame').attr('src', jQuery('#preview-app-dialog-frame').attr('rel'));
+	        jQuery('#preview-app-dialog-webkit').dialog('option', 'width', 320);
+	        jQuery('#preview-app-dialog-webkit').dialog('open');
+        } else {
+	        jQuery('#preview-app-dialog-no-webkit').dialog('open');
+        }
+    });			 
 });
 
 // TODO: Remove the below

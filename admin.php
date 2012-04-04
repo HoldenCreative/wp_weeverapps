@@ -225,16 +225,18 @@ add_action( 'admin_init', 'weever_admin_init' );
  * Load styles needed for Weever Apps
  */
 function weever_page_styles_init() {
-	wp_register_style( 'weever.css', WEEVER_PLUGIN_URL . 'static/css/weever.css', array( 'jquery-ui.css', 'jquery-ui-new.css', 'wp-jquery-ui-dialog', 'thickbox' ), WeeverConst::VERSION );
-	wp_register_style( 'jquery-ui.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui.css' );
-	wp_register_style( 'jquery-ui-new.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui-new.css' );
-	//wp_register_style( 'jquery-ui-bootstrap.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui-1.8.16.custom.css', array( 'wp-jquery-ui-dialog' ) );
+	wp_register_style( 'weever.css', WEEVER_PLUGIN_URL . 'static/css/weever.css', array( 'jquery-ui.css', 'jquery-ui-new.css', 'wp-jquery-ui-dialog', 'thickbox', 'joyride-1.0.3.css', 'wp-jquery-ui-dialog' ), WeeverConst::VERSION );
+	wp_register_style( 'jquery-ui.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui.css', array( 'wp-jquery-ui-dialog' ) );
+	wp_register_style( 'jquery-ui-new.css', WEEVER_PLUGIN_URL . 'static/css/jquery-ui-new.css', array( 'wp-jquery-ui-dialog' ) );
 	wp_register_style( 'jquery-impromptu.css', WEEVER_PLUGIN_URL . 'static/css/jquery-impromptu.css' );
+	wp_register_style( 'joyride-1.0.3.css', WEEVER_PLUGIN_URL . 'static/css/joyride-1.0.3.css' );
 	wp_enqueue_style( 'jquery-ui.css' );
 	wp_enqueue_style( 'jquery-ui-new.css' );
 	wp_enqueue_style( 'jquery-impromptu.css' );
 	wp_enqueue_style( 'weever.css' );
 	wp_enqueue_style( 'thickbox' );
+	wp_enqueue_style( 'joyride-1.0.3.css' );
+	wp_enqueue_style( 'wp-jquery-ui-dialog' );
 }
 
 /**
@@ -250,7 +252,8 @@ function weever_page_scripts_init() {
 	wp_register_script( 'weever.js', plugins_url( 'static/js/weever.js', __FILE__ ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-dialog' ), WeeverConst::VERSION );
 	wp_enqueue_script( 'weever.js' );
 	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
-
+	
+	
 	// Page-specific scripts
 	if ( isset( $_GET['page'] ) )
 	{
@@ -274,6 +277,11 @@ function weever_page_scripts_init() {
 
                 wp_register_script( 'weever.list.js', plugins_url( 'static/js/list.js', __FILE__ ), array( 'jquery' ), WeeverConst::VERSION );
                 wp_enqueue_script( 'weever.list.js' );
+                
+                // Feature tour scripts
+                wp_register_script( 'jquery-joyride.js', plugins_url( 'static/js/jquery.joyride-1.0.3.js', __FILE__ ), array( 'jquery', 'weever.js' ), WeeverConst::VERSION );
+                wp_enqueue_script( 'jquery-joyride.js' );
+                
                 break;
 
     	    case 'weever-theme':

@@ -18,6 +18,9 @@
 *
 */
 
+.ui-dialog-titlebar-close { display: none; }
+.ui-dialog-titlebar { display: none; }
+
 /*This class can be set not to display for testing purposes */
 
 .wrap div.updated, .wrap div.error {
