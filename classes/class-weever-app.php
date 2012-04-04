@@ -54,6 +54,8 @@ class WeeverApp {
             $this->_data['tier'] = get_option( 'weever_tier', 0 ); // Payment tier 0-basic 1-pro
             $this->_data['loadspinner'] = '';
             $this->_data['expiry'] = false;
+            $this->_data['local'] = '';
+            $this->_data['locales'] = array();
 
             $this->_data['tabs'] = array();
 
@@ -93,6 +95,14 @@ class WeeverApp {
     public function __set($var, $val) {
 
         switch ( $var ) {
+        	case 'local':
+        		// Only allow locales that are supported 
+        		if ( isset( $this->_data['locales']->$val ) ) {
+        			$this->_changed[$var] = $var;
+        			$this->_data['local'] = $val;
+        		}
+        		break;
+        		
             case 'staging_mode':
                 if ( $val )
                     $this->_data['staging_mode'] = 1;
@@ -225,6 +235,24 @@ class WeeverApp {
 
                 // Re-generate the qr code if needed
                 $this->generate_qr_code();
+                
+                // Localization and other config settings
+                $postdata = array(
+                		'app' => 'json',
+                		'site_key' => $this->_data['site_key'],
+                		'm' => "config_sync",
+                		'version' => WeeverConst::VERSION,
+                		'generator' => WeeverConst::NAME
+                );
+                
+                $result = WeeverHelper::send_to_weever_server($postdata);
+                
+                // Try to decode the result
+                $state = json_decode($result);
+                
+                // Get the data
+                $this->_data['local'] = @$state->local;
+                $this->_data['locales'] = @$state->locales;
             }
         }
     }
@@ -458,6 +486,7 @@ class WeeverApp {
 					'google_analytics' => $this->google_analytics,
 					'app' => 'ajax',
 					'cms' => 'wordpress',
+		    		'local' => $this->local,
 					'm' => "edit_config",
 					);
 	

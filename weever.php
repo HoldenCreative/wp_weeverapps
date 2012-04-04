@@ -3,7 +3,7 @@
 Plugin Name: Weever Apps - Mobile Web Apps
 Plugin URI: http://weeverapps.com/
 Description: Weever Apps: Turn your site into a true HTML5 'web app' for iPhone, Android and Blackberry 
-Version: 1.5.1
+Version: 1.5.3
 Author: Brian Hogg
 Author URI: http://brianhogg.com/
 License: GPL3
@@ -466,6 +466,10 @@ function weever_query_vars($vars) {
     // For including a callback function for R3S feed/document
     $vars[] = 'callback';
     $vars[] = 'full';
+    
+    // Distance
+    $vars[] = 'latitude';
+    $vars[] = 'longitude';
     
     return $vars;
 }

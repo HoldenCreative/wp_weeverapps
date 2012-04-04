@@ -71,7 +71,7 @@
 		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
 			<li class="ui-state-default<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
-			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>"><?php _e('Mobile Publishing + Pro Features', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>
 		</ul>

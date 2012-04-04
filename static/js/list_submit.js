@@ -391,6 +391,72 @@ jQuery(document).ready(function(){
   	  	});
 	});
 	
+
+	
+	jQuery('input#wx-proximity-submit').click(function(e) {
+
+  	  	// Validation
+  	  	jQuery('#proximityAdminForm').validate({ 
+  	  		rules: {
+  	  	  		s: { required: true },
+  	  			cms_feed: { required: true },
+  	  			'weever-cmsfeed': { required: true, url: true },
+  	  			name: { required: true },
+  	  			"wx-select-proximity": { required: true }
+  	  	  	},
+  	  		ignore: ":hidden",
+  	  		
+  	  		// Prevent the error label from appearing at all
+  	  		errorPlacement: function(error, element) { },
+  	  		
+  	  		submitHandler: function(form) {
+  	  			e.preventDefault();
+  	  			
+  	  			var optionVal = jQuery('#wx-select-proximity').val();
+  	    		var cmsFeed = jQuery("select[name=proximity_cms_feed]:visible").val();
+  	    	  	var tabName = jQuery('input#wx-proximity-title').val();
+  	    	  	var tabSearchTerm = jQuery('input[name=proximity_s]:visible').val();
+  	    	  	var nonce = jQuery("input#nonce").val();
+  	    	  	
+  	  			if (optionVal == 's') {
+  	  				// Search feed
+  	  				cmsFeed = 'index.php?s='+encodeURIComponent(tabSearchTerm)+'&feed=r3s';
+	  			} else if (optionVal == 'weever-cmsfeed') {
+  	  				// Custom R3S
+  	  				cmsFeed = jQuery('input[name=weever-cmsfeed]:visible').val();
+	  			}
+  	  			
+  		  	  	jQuery.ajax({
+  		  	  	   type: "POST",
+  		  	  	   url: ajaxurl,
+  		  	  	   data: {
+  		  	  		   action: 'ajaxSaveNewTab',
+  		  	  		   type: 'proximity',
+  		  	  		   component: 'proximity',
+  		  	  		   weever_action: 'add',
+  		  	  		   published: '1',
+  		  	  		   'cms_feed': cmsFeed,
+  		  	  		   name: tabName,
+  		  	  		   nonce: nonce
+  		  	  	   },
+  		  	  	   success: function(msg){
+  		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+
+  		  	  	     	jQuery('#wx-modal-secondary-text').html(WPText.WEEVER_JS_APP_UPDATED);
+  		  	  	     	document.location.href = WPText.WEEVER_JS_ADMIN_LIST_URL+"#proximityTab";
+  		  	  	     	document.location.reload(true);
+  		  	  	   },
+  		  	  	   error: function(v,msg){
+   		  	  	     jQuery('#wx-modal-loading-text').html(msg);
+  		  	  	     	jQuery('#wx-modal-secondary-text').html('');
+  		  	  	     	jQuery('#wx-modal-error-text').html(WPText.WEEVER_JS_SERVER_ERROR);
+  		  	  	   }
+  		  	  	 });
+  	  		}
+  	  	});
+	});
+	
+	
 	
 	
 	jQuery('input#wx-map-submit').click(function(e) {
