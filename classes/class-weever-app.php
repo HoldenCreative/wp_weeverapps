@@ -233,6 +233,10 @@ class WeeverApp {
         return isset( $this->_data['site_key'] ) && ! empty( $this->_data['site_key'] ) && ! empty( $this->_data['primary_domain'] );
     }
 
+	public function is_free() {
+		return ( $this->_data['tier'] == 1 or $this->_data['tier'] == 2.1 );
+	}
+
     public function & get_device_option_names() {
         $option_names = array_keys( $this->_device_options );
         return $option_names;
