@@ -15,7 +15,7 @@
 
 
 <div class="weever-pricing-bar" style="margin: 0; border: 1px solid #dfdfdf; border-bottom:0; background:none repeat scroll 0 0 #fdfdf4; padding:.5em 1.75em .5em 1.5em; text-align:right; font-size:0.85em; text-transform:uppercase;">
-			<a href="<?php echo admin_url( "admin.php?page=weever-list&quick-start-tour=1" ); ?>" id="wx-quick-start-guide">Quick Tour</a> &nbsp; | &nbsp; <a href="#" id="weever-preview-mobile">Preview</a> &nbsp; | &nbsp; <a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp;
+			<a href="<?php echo admin_url( "admin.php?page=weever-list&quick-start-tour=1" ); ?>" id="wx-quick-start-guide">Quick Tour</a> &nbsp; | &nbsp; <a href="#" id="weever-preview-mobile">Preview App</a> &nbsp; | &nbsp; <a href="http://weeverapps.com/pricing">Plans & Pricing</a> &nbsp; | &nbsp; <a href="http://twitter.com/weeverapps">Follow us on Twitter</a> &nbsp;
 
 
     <?php
@@ -70,7 +70,7 @@
 	<div id="toptabs" class="ui-tabs ui-widget ui-widget-content">
 		<ul class="tabline ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
 			<li class="ui-state-default<?php echo $page == 'weever-list' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-list' ); ?>"><?php _e('App Features + Navigation', 'weever'); ?></a></li>
-			<li class="ui-state-default<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
+			<li class="ui-state-default<?php echo $page == 'weever-theme' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-theme' ); ?>" id="wx-logo-images-theme-tab"><?php _e('Logo, Images and Theme', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-config' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-config' ); ?>" id="wx-mobile-publishing-tab"><?php _e('Mobile Publishing + Pro Features', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-account' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a href="<?php echo admin_url( 'admin.php?page=weever-account' ); ?>"><?php _e('Subscription Key + Staging Mode', 'weever'); ?></a></li>
 			<li class="ui-state-default<?php echo $page == 'weever-support' ? ' ui-tabs-selected ui-state-active' : ''; ?>"><a id="wx-support-link" href="<?php echo admin_url( 'admin.php?page=weever-support' ); ?>"><?php _e('Support', 'weever'); ?></a></li>

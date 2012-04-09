@@ -211,15 +211,19 @@ $tabsUnpublished = 0;
         <input type="hidden" name="filter_order" value="<?php //echo $weeverapp->lists['order']; ?>" />
         <input type="hidden" name="filter_order_Dir" value="<?php //echo $weeverapp->lists['order_Dir']; ?>" />
 
-        <?php if ( true or ( isset( $_GET['quick-start-tour'] ) && $_GET['quick_start_tour'] ) ): ?>
+        <?php if ( get_option( 'weever-quick-tour', 1 ) || ( isset( $_GET['quick-start-tour'] ) && $_GET['quick-start-tour'] == 1 ) ): ?>
         <!-- Feature tour -->
         <ol id="wx-feature-tour-content">
   			<li data-id="appmanager-header" data-options="tipLocation:bottom" data-text="Next"><p>Welcome to Weever Apps!</p><p>Weever Apps lets you create great mobile apps using your Wordpress site!  This feature tour will show you the basics, and will only take a minute...</p></li>
-  			<li data-id="blogTabID" data-options="tipLocation:top" data-text="Great!"><p>You can add many kinds of content to your app, such as your Twitter feed, YouTube videos, and content from your Wordpress site.</p><p>To add content, click on a tab, select the content you want to add using the dropdowns, then click Submit to add it to your app.</p></li>
-  			<li data-id="wx-scan-test-code-image" data-options="tipLocation:top" data-text="Cool!"><p>You can preview the content by scanning this QR code using your touch-based smartphone, or clicking the link to preview the app (<b>Chrome</b> and <b>Safari</b> only)</p></li>
+  			<li data-id="blogTabID" data-options="tipLocation:bottom" data-text="Great!"><p>You can add many kinds of content to your app, such as your Twitter feed, YouTube videos, and content from your Wordpress site.</p><p>To add content, click on a tab, select the content you want to add using the dropdowns, then click Submit to add it to your app.</p></li>
+  			<li data-id="wx-scan-test-code-image" data-options="tipLocation:top" data-text="Cool!"><p>You can preview the content by scanning this QR code using your touch-based smartphone, or clicking the link to preview the app (<b>Chrome</b> and <b>Safari</b> browsers only)</p></li>
+
+  			
   			<li data-id="wx-status-onoffline-link" data-options="tipLocation:bottom" data-text="Great!"><p>When you're happy with your app, click here to turn your app online so mobile visitors to your website will see your app automatically.</p></li>
-  			<li data-id="wx-mobile-publishing-tab" data-options="tipLocation:bottom" data-text="Great!"><p>You can customize all the graphics in your app by uploading them in the <b>Mobile Publishing + Pro Features</b> tab.</p><p>Rather us help with the graphics and design?  View details on our <a target="_blank" href="http://weeverapps.com/custom-graphics/">custom graphics package</a>.</p></li>
-  			<li data-id="wx-support-link" data-options="tipLocation:bottom" data-text="Finish"><p>If you have any questions or run into trouble, you can visit our community forms.  <a target="_blank" href="https://weeverapps.com/upgrade/?site_url=<?php echo urlencode( $weeverapp->primary_domain); ?>&subscription_type=weever-apps-pro">Weever Apps Pro</a> subscribers are able to get priority support by submitting a ticket to the Weever Apps team.</p><p>Have fun creating your mobile app!</p></li>
+  			<li data-id="wx-logo-images-theme-tab" data-options="tipLocation:bottom" data-text="Great!"><p>You can customize all the graphics in your app by uploading them in the <b>Logo, Images and Theme</b> tab.</p><p>Rather us help with the graphics and design?  View details on our <a target="_blank" href="http://weeverapps.com/custom-graphics/">custom graphics package</a>.</p></li>
+  			<li data-id="wx-mobile-publishing-tab" data-options="tipLocation:bottom" data-text="Great!"><p>When your app is online, you app will launch <b>instantly</b> for mobile visitors to your site.  You can choose which kinds of smart phones and/or tablets to launch your app for here.</p></li>
+  			<li data-id="wx-support-link" data-options="tipLocation:bottom" data-text="Finish"><p>If you have any questions or run into trouble, you can visit our community forms.  <a target="_blank" href="https://weeverapps.com/upgrade/?site_url=<?php echo urlencode( $weeverapp->primary_domain); ?>&subscription_type=weever-apps-pro">Weever Apps Pro</a> subscribers are able to get priority support by submitting a ticket to the Weever Apps team.</p></li>
+  			<li data-id="wx-quick-start-guide" data-options="tipLocation:bottom" data-text="Finish"><p>You can view this tour again at anytime by clicking here.</p><p>Have fun creating your mobile app!</p></li>
   		</ol>
         <!-- End feature tour -->
         
