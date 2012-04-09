@@ -73,5 +73,22 @@
         	</div>
         </div>
 
+        <ol id="wx-account-content">
+  			<li data-id="wx-app-features-navigation" data-options="tipLocation:top" data-text="Thanks!"><p>Once you've entered your subscription key from <a target="_blank" href="http://weeverapps.com/signup">weeverapps.com</a> click here to add features to your app!</p></li>
+  		</ol>
+        <!-- End feature tour -->
+        
+        <script type="text/javascript">
+  		jQuery(window).load(function() {
+    		jQuery(this).joyride({
+        		//'timer': 8000,
+        		//'startTimerOnClick': false,
+    			'tipContent': '#wx-account-content', // The ID of the <ol> used for content
+    			'tipAnimation': 'fade'
+      			/* Options will go here */
+    		});
+  		});
+  		</script>
+        
     </form>
 </div>

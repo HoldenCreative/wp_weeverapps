@@ -253,6 +253,8 @@ function weever_page_scripts_init() {
 	wp_enqueue_script( 'weever.js' );
 	wp_localize_script( 'weever.js', 'WPText', WeeverHelper::get_js_strings() );
 	
+	// Register the feature tour script
+	wp_register_script( 'jquery-joyride.js', plugins_url( 'static/js/jquery.joyride-1.0.3.js', __FILE__ ), array( 'jquery', 'weever.js' ), WeeverConst::VERSION );
 	
 	// Page-specific scripts
 	if ( isset( $_GET['page'] ) )
@@ -263,6 +265,9 @@ function weever_page_scripts_init() {
     	    case 'weever-account':
                 wp_register_script( 'weever.account.js', plugins_url( 'static/js/account.js', __FILE__ ), array( 'jquery' ), WeeverConst::VERSION );
                 wp_enqueue_script( 'weever.account.js' );
+                
+                // Feature tour scripts
+                wp_enqueue_script( 'jquery-joyride.js' );
                 break;
 
             case 'weever-list':
@@ -279,7 +284,6 @@ function weever_page_scripts_init() {
                 wp_enqueue_script( 'weever.list.js' );
                 
                 // Feature tour scripts
-                wp_register_script( 'jquery-joyride.js', plugins_url( 'static/js/jquery.joyride-1.0.3.js', __FILE__ ), array( 'jquery', 'weever.js' ), WeeverConst::VERSION );
                 wp_enqueue_script( 'jquery-joyride.js' );
                 
                 break;
