@@ -212,6 +212,7 @@ $tabsUnpublished = 0;
         <input type="hidden" name="filter_order_Dir" value="<?php //echo $weeverapp->lists['order_Dir']; ?>" />
 
         <?php if ( get_option( 'weever-quick-tour', 1 ) || ( isset( $_GET['quick-start-tour'] ) && $_GET['quick-start-tour'] == 1 ) ): ?>
+        <?php update_option( 'weever-quick-tour', 0 ); // Ensure only shown once! ?>
         <!-- Feature tour -->
         <ol id="wx-feature-tour-content">
   			<li data-id="appmanager-header" data-options="tipLocation:bottom" data-text="Next"><p>Welcome to Weever Apps!</p><p>Weever Apps lets you create great mobile apps using your Wordpress site!  This feature tour will show you the basics, and will only take a minute...</p></li>
