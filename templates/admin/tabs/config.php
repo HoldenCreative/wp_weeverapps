@@ -71,7 +71,7 @@
                     	</tr>
                 	
                     	<tr>
-                        	<td class="key hasTip" title="<?php echo __( "Paste in your code from Google Analytics to track visitors to your app", 'weever' ); ?>"><?php echo __( 'Google Anayltics User-Agent (UA) Code', 'weever' ); ?></td>
+                        	<td class="key hasTip" title="<?php echo __( "Paste in your code from Google Analytics to track visitors to your app", 'weever' ); ?>"><?php echo __( 'Google Analytics User-Agent (UA) Code', 'weever' ); ?></td>
                         	<td><input type="textbox" name="google_analytics" value="<?php echo $weeverapp->google_analytics; ?>" id="wx-google-analytics-input" placeholder="UA-XXXXXX-XX" /></td>
                     	</tr>
 
