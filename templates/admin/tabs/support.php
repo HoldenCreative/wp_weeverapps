@@ -57,10 +57,10 @@
 		
 		<h3>API Specifications</h3>
 		<p><a target="_blank" href="http://developers.weeverapps.com/">View details on our API</a></p>
-		<p><a target="_blank" href="http://developers.weeverapps.com/R3S_Specifications">R3S Feed Specifications</a> <br />
+		<p><a target="_blank" href="http://developers.weeverapps.com/R3S_Specifications">R3S Object Specifications</a> <br />
 		
 		Really Simple Semantic Syndication (R3S) is a specification designed by Weever Apps for generating relevant data from any kind of web object. This could include a blog, a web page, a category of content in a CMS, geo-tagged content, and so on.
-		You can use this specification to create an R3S feed for transfering content from a non-Wordpress site into your app, or to create an API for another CMS.
+		You can use this specification to create an R3S Object for transfering content from a non-Wordpress site into your app, or to create an API for another CMS.
 		</p>
 		</div>
     </fieldset>

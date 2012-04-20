@@ -5,7 +5,7 @@
 		<select id='wx-select-page' name='wx-select-page'>
 			<option value=''><?php echo __( '+ Add Site Page(s)', 'weever' ); ?></option>
 			<option value='menu'><?php echo __( 'Wordpress Page', 'weever' ); ?></option>
-			<option value="weever-cmsfeed"><?php echo __( 'From another R3S item (Advanced)', 'weever' ); ?></option>
+			<option value="weever-cmsfeed"><?php echo __( 'From another R3S Object (Advanced)', 'weever' ); ?></option>
 		</select>
 	</div>
 	
@@ -27,7 +27,7 @@
 
 		<div id="wx-add-page-weever-cmsfeed-item" class="wx-page-item-choose">
     		<input type='text' value='' id='wx-add-page-weever-cmsfeed-input' class='wx-input wx-page-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
-    		<label for='wx-add-page-weever-cmsfeed-input' id='wx-add-page-weever-cmsfeed-input-label' class='wx-page-label'><?php echo __( 'R3S Item - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
+    		<label for='wx-add-page-weever-cmsfeed-input' id='wx-add-page-weever-cmsfeed-input-label' class='wx-page-label'><?php echo __( 'R3S Object - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
 		</div>
 		
 	</div>

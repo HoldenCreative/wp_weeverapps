@@ -18,7 +18,7 @@
 			?></option>
 			<?php endforeach; ?>
 			<option value="s"><?php echo __( 'From a Search Term', 'weever' ); ?></option>
-			<option value="weever-cmsfeed"><?php echo __( 'From another R3S feed (Advanced)', 'weever' ); ?></option>
+			<option value="weever-cmsfeed"><?php echo __( 'From another R3S Object (Advanced)', 'weever' ); ?></option>
 		</select>
 	</div>
 
@@ -52,7 +52,7 @@
 
 		<div id="wx-add-map-weever-cmsfeed-item" class="wx-map-item-choose">
     		<input type='text' value='' id='wx-add-map-weever-cmsfeed-input' class='wx-input wx-map-input' name='weever-cmsfeed' placeholder='<?php echo __( 'http://', 'weever' ); ?>' />
-    		<label for='wx-add-map-weever-cmsfeed-input' id='wx-add-map-weever-cmsfeed-input-label' class='wx-map-label'><?php echo __( 'R3S Feed - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
+    		<label for='wx-add-map-weever-cmsfeed-input' id='wx-add-map-weever-cmsfeed-input-label' class='wx-map-label'><?php echo __( 'R3S Object - <a target="_blank" href="http://support.weeverapps.com/entries/20786801-what-is-the-add-an-r3s-feed-url-option-for">Details</a>', 'weever' ); ?></label>
 		</div>
 		
 		
